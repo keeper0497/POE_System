@@ -12,29 +12,28 @@
 To install this project, follow these steps:
 
 1. clone the main branch:
+
     "git clone https://github.com/keeper0497/POE_System.git"
 
 2. install python:
 
     note: if you already install this feel free to skip
 
-    if there is no python install follow this:
+    2.1 download python in this link https://www.python.org/downloads/
 
-        2.1 download python in this link https://www.python.org/downloads/
+    2.2 after installing try to check if the python is install by using this command
 
-        2.2 after installing try to check if the python is install by using this command
+        "python --version"
 
-            "python --version"
-
-        2.3 if you incounter error just contact me hahaha!
+    2.3 if you incounter error just contact me hahaha!
 
 3. install virtual environment:
 
     note: if you already install this feel free to skip
 
-        3.1 to install virtualenv use this command
-
-            "pip install virtualenv"
+    3.1 to install virtualenv use this command
+    
+        "pip install virtualenv"
 
 4. Create a virtual environment:
     
@@ -75,7 +74,7 @@ To install this project, follow these steps:
 8. Then last is to run the server to access its content
 
     8.1 use this command
-    
+
         "python manage.py runserver"
 
 ## Usage
