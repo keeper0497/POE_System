@@ -1,0 +1,9 @@
+Collecting numpy
+  Using cached numpy-2.1.0-cp311-cp311-win_amd64.whl.metadata (59 kB)
+Collecting wheel
+  Using cached wheel-0.44.0-py3-none-any.whl.metadata (2.3 kB)
+Requirement already satisfied: setuptools in c:\users\jhon rey\documents\ivy\geofencing\poe_system\.env\lib\site-packages (65.5.0)
+Using cached numpy-2.1.0-cp311-cp311-win_amd64.whl (12.9 MB)
+Using cached wheel-0.44.0-py3-none-any.whl (67 kB)
+Installing collected packages: wheel, numpy
+Successfully installed numpy-2.1.0 wheel-0.44.0
