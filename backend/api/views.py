@@ -1,33 +1,43 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import generics
-from .serializers import UserSerializer, NoteSerializer
+from .serializers import UserSerializer, UserProfileSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from .models import Note
+from .models import UserProfile
 
 
-class NoteListCreate(generics.ListCreateAPIView):
-    serializer_class = NoteSerializer
+
+# UserProfile CRUD Views
+class UserProfileCreateView(generics.CreateAPIView):
+    serializer_class = UserProfileSerializer
     permission_classes = [IsAuthenticated]
-
-    def get_queryset(self):
-        user = self.request.user
-        return Note.objects.filter(author=user)
 
     def perform_create(self, serializer):
-        if serializer.is_valid():
-            serializer.save(author=self.request.user)
-        else:
-            print(serializer.errors)
+        serializer.save(user=self.request.user)
 
-
-class NoteDelete(generics.DestroyAPIView):
-    serializer_class = NoteSerializer
+class UserProfileDetailView(generics.RetrieveAPIView):
+    queryset = UserProfile.objects.all()
+    serializer_class = UserProfileSerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        user = self.request.user
-        return Note.objects.filter(author=user)
+        return UserProfile.objects.filter(user=self.request.user)
+
+class UserProfileUpdateView(generics.UpdateAPIView):
+    queryset = UserProfile.objects.all()
+    serializer_class = UserProfileSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return UserProfile.objects.filter(user=self.request.user)
+
+class UserProfileDeleteView(generics.DestroyAPIView):
+    queryset = UserProfile.objects.all()
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return UserProfile.objects.filter(user=self.request.user)
+    
 
 
 class CreateUserView(generics.CreateAPIView):
