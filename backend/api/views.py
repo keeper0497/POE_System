@@ -4,7 +4,7 @@ from rest_framework import generics
 from .serializers import UserSerializer, UserProfileSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .models import UserProfile
-
+from rest_framework.exceptions import NotFound
 
 
 # UserProfile CRUD Views
@@ -13,23 +13,29 @@ class UserProfileCreateView(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
+        print("serializer", serializer.validated_data)
         serializer.save(user=self.request.user)
 
 class UserProfileDetailView(generics.RetrieveAPIView):
-    queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         return UserProfile.objects.filter(user=self.request.user)
+
+    def get_object(self):
+        queryset = self.get_queryset()
+        if not queryset.exists():
+            raise NotFound("UserProfile not found.")
+        return queryset.first()
 
 class UserProfileUpdateView(generics.UpdateAPIView):
-    queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
     permission_classes = [IsAuthenticated]
 
-    def get_queryset(self):
-        return UserProfile.objects.filter(user=self.request.user)
+    def get_object(self):
+        return UserProfile.objects.get(user=self.request.user)
+
 
 class UserProfileDeleteView(generics.DestroyAPIView):
     queryset = UserProfile.objects.all()

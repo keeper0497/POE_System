@@ -9,7 +9,7 @@ class UserProfile(models.Model):
     start_date = models.DateField()
     num_sickleave = models.IntegerField()
     num_vacationleave = models.IntegerField()
-    contact_number = models.IntegerField()
+    contact_number = models.CharField(max_length=250, unique=True, blank=False, null=True)
     custom_user_id = models.CharField(max_length=250, unique=True, blank=False, null=False)
     first_name = models.CharField(max_length=2500, blank=False, null=False)
     last_name = models.CharField(max_length=2500, blank=False, null=False)

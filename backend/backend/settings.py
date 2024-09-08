@@ -20,8 +20,8 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# # Set the GDAL library path
-# GDAL_LIBRARY_PATH = os.path.join(os.getenv('OSGEO4W_ROOT', r'C:\OSGeo4W'), 'bin', 'gdal309.dll')
+# Set the GDAL library path
+GDAL_LIBRARY_PATH = os.path.join(os.getenv('OSGEO4W_ROOT', r'C:\OSGeo4W'), 'bin', 'gdal309.dll')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "api",
+    "features",
     "rest_framework",
     "corsheaders",
 ]
@@ -99,8 +100,8 @@ WSGI_APPLICATION = "backend.wsgi.application"
 
 DATABASES = {
     "default": {
-        # "ENGINE": "django.contrib.gis.db.backends.postgis",
-        "ENGINE": "django.db.backends.postgresql",
+        "ENGINE": "django.contrib.gis.db.backends.postgis",
+        # "ENGINE": "django.db.backends.postgresql",
         "NAME": "peosystem",
         "USER": "postgres",
         "PASSWORD": "password",

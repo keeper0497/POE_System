@@ -20,4 +20,4 @@ class UserProfileSerializer(serializers.ModelSerializer):
         model = UserProfile
         fields = ['first_name', 'last_name', 'middle_name', 'suffix', 'email', 'position', 'division', 'start_date', 'num_sickleave', 
             'num_vacationleave', 'contact_number', 'custom_user_id']
-        extra_kwargs = {"author": {"read_only": True}}
+        
