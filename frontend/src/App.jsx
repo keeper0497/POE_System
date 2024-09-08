@@ -5,7 +5,16 @@ import Register from "./pages/Register"
 import Home from "./pages/Home"
 import NotFound from "./pages/NotFound"
 import ProtectedRoute from "./components/ProtectedRoute"
-// import Navbar from "./components/Navbar"
+import CreateProfile from "./components/employee/create"
+import ReadProfile from "./components/employee/read"
+import UpdateProfile from "./components/employee/update"
+import EmployeeProfile from "./pages/EmployeeProfile"
+import CreateProject from "./components/task/create"
+import ProjectList from "./components/task/read"
+import ProjectDetail from "./components/task/details"
+import UpdateProject from "./components/task/update"
+import ProjectCalendar from "./components/task/calendar"
+
 
 function Logout() {
   localStorage.clear()
@@ -26,9 +35,81 @@ function App() {
           element={
             <ProtectedRoute>
               {/* <Navbar /> */}
-              <NotFound />
+              <Home />
             </ProtectedRoute>
           }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <EmployeeProfile />
+            </ProtectedRoute>
+          }
+        />
+        <Route 
+          path="/create-profile" 
+          element={
+            <ProtectedRoute>
+              <CreateProfile />
+            </ProtectedRoute>
+            } 
+        />
+        <Route 
+          path="/view-profile" 
+          element={
+            <ProtectedRoute>
+              <ReadProfile />
+            </ProtectedRoute>
+            } 
+        />
+        <Route 
+          path="/update-profile" 
+          element={
+            <ProtectedRoute>
+              <UpdateProfile />
+            </ProtectedRoute>
+            } 
+        />
+        <Route 
+          path="/create-project" 
+          element={
+            <ProtectedRoute>
+              <CreateProject />
+            </ProtectedRoute>
+            } 
+        />
+        <Route 
+          path="/view-project" 
+          element={
+            <ProtectedRoute>
+              <ProjectList />
+            </ProtectedRoute>
+            } 
+        />
+        <Route 
+          path="/detail-project/:id" 
+          element={
+            <ProtectedRoute>
+              <ProjectDetail />
+            </ProtectedRoute>
+            } 
+        />
+        <Route 
+          path="/update-project/:id" 
+          element={
+            <ProtectedRoute>
+              <UpdateProject />
+            </ProtectedRoute>
+            } 
+        />
+        <Route 
+          path="/calendar-project" 
+          element={
+            <ProtectedRoute>
+              <ProjectCalendar />
+            </ProtectedRoute>
+            } 
         />
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />

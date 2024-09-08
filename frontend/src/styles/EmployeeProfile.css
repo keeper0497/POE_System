@@ -1,0 +1,47 @@
+.employee-profile {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f6eeee;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.employee-profile h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.employee-profile p {
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.employee-profile button {
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.employee-profile button:hover {
+    background-color: #0069d9;
+}
+
+
+.logout-btn {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f44336; /* Red color for the logout button */
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.logout-btn:hover {
+    background-color: #d32f2f; /* Darker red when hovering */
+}

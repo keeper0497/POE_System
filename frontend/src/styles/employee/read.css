@@ -1,0 +1,46 @@
+.read-profile {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f6eeee;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.read-profile h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+}
+
+.read-profile p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.read-profile p strong {
+    color: #333;
+}
+
+.read-profile p:last-child {
+    margin-bottom: 0;
+}
+
+@media (max-width: 600px) {
+    .read-profile {
+        padding: 15px;
+        margin: 20px;
+    }
+
+    .read-profile h2 {
+        font-size: 20px;
+    }
+
+    .read-profile p {
+        font-size: 16px;
+    }
+}
