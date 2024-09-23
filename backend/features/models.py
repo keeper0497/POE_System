@@ -28,3 +28,18 @@ class Geofence(models.Model):
 
     def __str__(self):
         return f"Geofence for {self.project.project_name}"
+
+
+class EmployeeLocation(models.Model):
+    employee = models.ForeignKey(User, on_delete=models.CASCADE)
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+    timestamp = models.DateTimeField(auto_now=True)
+
+class Task(models.Model):
+    task_duration_start = models.DateField()
+    task_duration_end = models.DateField()
+    file_attachment = models.FileField()
+    task_name = models.CharField(blank=False, null=False, max_length=250)
+    remarks = models.CharField(max_length=500, blank=True, null=True)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)

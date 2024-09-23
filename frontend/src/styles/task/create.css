@@ -1,8 +1,12 @@
 .create-project {
     margin-bottom: 20px;
     padding: 20px;
-    background-color: #f6eeee;
+    background-color: #DAD4B5;
     font-family: 'Courier New', Courier, monospace;
+}
+
+.root{
+    background-color: #DAD4B5;
 }
 
 .create-project h2{

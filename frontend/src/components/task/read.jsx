@@ -7,43 +7,36 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 
 function ProjectList() {
     const [projects, setProjects] = useState([]);
-    const navigate = useNavigate(); // Use useNavigate instead of useHistory
+    const [isSuperUser, setIsSuperUser] = useState(false); // State to track superuser status
     const [statusSummary, setStatusSummary] = useState({
         done: 0,
         ongoing: 0,
         upcoming: 0,
-    }); // State for status summary
+    });
+    const navigate = useNavigate();
 
-    useEffect(() => {
-        fetchProjects();
-    }, []);
-
-    const fetchProjects = () => {
+    // Fetch user details to determine if the user is a superuser
+    const fetchUserDetails = () => {
         api
-            .get("/api/projects/")
-            .then((res) => setProjects(res.data))
+            .get("/api/user/") // Assuming this endpoint provides user info
+            .then((res) => {
+                setIsSuperUser(res.data.is_superuser); // Check if the user is a superuser
+            })
             .catch((err) => alert(`Error: ${err.message}`));
     };
 
-    const handleCreateProject = () => {
-        navigate("/create-project"); // Use navigate instead of history.push
-    };
-
-    useEffect(() => {
-        getProjects(); // Fetch projects on component mount
-    }, []);
-
-    const getProjects = () => {
+    // Fetch project data
+    const fetchProjects = () => {
         api
             .get("/api/projects/")
-            .then((res) => res.data)
-            .then((data) => {
-                setProjects(data);
-                calculateStatusSummary(data); // Calculate the status summary
+            .then((res) => {
+                setProjects(res.data);
+                calculateStatusSummary(res.data);
             })
-            .catch((err) => alert(err));
+            .catch((err) => alert(`Error: ${err.message}`));
     };
 
+    // Calculate project status summary
     const calculateStatusSummary = (projects) => {
         const summary = { done: 0, ongoing: 0, upcoming: 0 };
 
@@ -60,6 +53,19 @@ function ProjectList() {
         setStatusSummary(summary);
     };
 
+    // Triggered when the user wants to create a new project
+    const handleCreateProject = () => {
+        if (isSuperUser) {
+            navigate("/create-project");
+        }
+    };
+
+    // On component mount, fetch user details and projects
+    useEffect(() => {
+        fetchUserDetails(); // Fetch user details to check superuser status
+        fetchProjects();
+    }, []);
+
     const getStatusClassName = (status) => {
         if (status === "done") return "status-done";
         if (status === "ongoing") return "status-ongoing";
@@ -70,17 +76,22 @@ function ProjectList() {
     return (
         <div>
             <Navbar />
-            <div className="project-list"> 
+            <div className="project-list">
                 <h2>Projects</h2>
                 <div className="status-summary">
                     <p className="statuscode-done"><strong>Done:</strong> {statusSummary.done}</p>
                     <p className="statuscode-ongoing"><strong>Ongoing:</strong> {statusSummary.ongoing}</p>
                     <p className="statuscode-upcoming"><strong>Upcoming:</strong> {statusSummary.upcoming}</p>
                 </div>
-                <button onClick={handleCreateProject} className="create-project-btn">
-                    Create New Project
-                </button>
-                <div className="map-container"> {/* Add map-container class here */}
+
+                {/* Conditionally render "Create New Project" button for superusers */}
+                {isSuperUser && (
+                    <button onClick={handleCreateProject} className="create-project-btn">
+                        Create New Project
+                    </button>
+                )}
+
+                <div className="map-container">
                     <MapContainer center={[13.6051, 124.2460]} zoom={13} style={{ height: "400px", width: "100%" }}>
                         <TileLayer
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

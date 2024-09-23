@@ -5,26 +5,52 @@ import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
 
 function Home() {
-    const [projects, setProjects] = useState([]); // State for projects
+    const [projects, setProjects] = useState([]);
     const [statusSummary, setStatusSummary] = useState({
         done: 0,
         ongoing: 0,
         upcoming: 0,
-    }); // State for status summary
+    });
+    const [isSuperUser, setIsSuperUser] = useState(false);
 
     useEffect(() => {
-        getProjects(); // Fetch projects on component mount
+        fetchUserDetails();
     }, []);
 
-    const getProjects = () => {
+    const fetchUserDetails = () => {
         api
-            .get("/api/projects/")
-            .then((res) => res.data)
-            .then((data) => {
-                setProjects(data);
-                calculateStatusSummary(data); // Calculate the status summary
+            .get("/api/user/")
+            .then((res) => {
+                setIsSuperUser(res.data.is_superuser);
+                getProjects(res.data.is_superuser); // Fetch projects based on user status
             })
-            .catch((err) => alert(err));
+            .catch((err) => alert(`Error fetching user details: ${err.message}`));
+    };
+
+    const getProjects = (isSuperUser) => {
+        let endpoint = "/api/projects/";
+
+        if (!isSuperUser) {
+            // Fetch only projects assigned to the current user
+            api
+                .get(endpoint, { params: { assigned_employee: 'me' } }) // Adjust query param as needed
+                .then((res) => res.data)
+                .then((data) => {
+                    setProjects(data);
+                    calculateStatusSummary(data);
+                })
+                .catch((err) => alert(`Error fetching projects: ${err.message}`));
+        } else {
+            // Fetch all projects
+            api
+                .get(endpoint)
+                .then((res) => res.data)
+                .then((data) => {
+                    setProjects(data);
+                    calculateStatusSummary(data);
+                })
+                .catch((err) => alert(`Error fetching projects: ${err.message}`));
+        }
     };
 
     const calculateStatusSummary = (projects) => {
@@ -51,35 +77,33 @@ function Home() {
     };
 
     return (
-        <div>
-            <Navbar />
-            <div className="home-container">
-                <h2>Projects Summary</h2>
-                <div className="status-summary">
-                    <p className="statuscode-done"><strong>Done:</strong> {statusSummary.done}</p>
-                    <p className="statuscode-ongoing"><strong>Ongoing:</strong> {statusSummary.ongoing}</p>
-                    <p className="statuscode-upcoming"><strong>Upcoming:</strong> {statusSummary.upcoming}</p>
-                </div>
-                <div className="projects-summary">
-                    {projects.length > 0 ? (
-                        projects.map((project) => (
-                            <div key={project.id} className="project-summary">
-                                <Link to={`/detail-project/${project.id}`} className="project-link">
-                                    <div className={`project-details ${getStatusClassName(project.status)}`}>
-                                        <h3>{project.project_name}</h3>
-                                        <p><strong>Start Date:</strong> {project.project_start}</p>
-                                        <p><strong>End Date:</strong> {project.project_end}</p>
-                                    </div>
-                                    <div className={`project-status ${getStatusClassName(project.status)}`}>
-                                        <p>{project.status}</p>
-                                    </div>
-                                </Link>
-                            </div>
-                        ))
-                    ) : (
-                        <p>No projects available.</p>
-                    )}
-                </div>
+        <div className="home-container">
+            <Navbar />  
+            <h2>Projects Summary</h2>
+            <div className="status-summary">
+                <p className="statuscode-done"><strong>Done:</strong> {statusSummary.done}</p>
+                <p className="statuscode-ongoing"><strong>Ongoing:</strong> {statusSummary.ongoing}</p>
+                <p className="statuscode-upcoming"><strong>Upcoming:</strong> {statusSummary.upcoming}</p>
+            </div>
+            <div className="projects-summary">
+                {projects.length > 0 ? (
+                    projects.map((project) => (
+                        <div key={project.id} className="project-summary">
+                            <Link to={`/detail-project/${project.id}`} className="project-link">
+                                <div className={`project-details ${getStatusClassName(project.status)}`}>
+                                    <h3>{project.project_name}</h3>
+                                    <p><strong>Start Date:</strong> {project.project_start}</p>
+                                    <p><strong>End Date:</strong> {project.project_end}</p>
+                                </div>
+                                <div className={`project-status ${getStatusClassName(project.status)}`}>
+                                    <p>{project.status}</p>
+                                </div>
+                            </Link>
+                        </div>
+                    ))
+                ) : (
+                    <p>No projects available.</p>
+                )}
             </div>
         </div>
     );

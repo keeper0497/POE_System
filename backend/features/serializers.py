@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Project, Geofence
+from .models import Project, Geofence, Task
 from django.contrib.gis.geos import Point
 
 class ProjectSerializer(serializers.ModelSerializer):
@@ -21,3 +21,8 @@ class GeofenceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Geofence
         fields = ['id', 'project', 'area']
+
+class TaskSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Task
+        fields = '__all__'

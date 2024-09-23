@@ -1,0 +1,43 @@
+.notification-modal-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000; /* Ensure it appears above other content */
+}
+
+.notification-modal {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 300px;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.notification-modal h2 {
+    margin-top: 0;
+}
+
+.notification-modal ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.notification-modal li {
+    margin-bottom: 10px;
+}
+
+.close-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    background-color: #0056b3;
+}

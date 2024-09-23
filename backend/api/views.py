@@ -5,7 +5,9 @@ from .serializers import UserSerializer, UserProfileSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .models import UserProfile
 from rest_framework.exceptions import NotFound
-
+from rest_framework import permissions
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 # UserProfile CRUD Views
 class UserProfileCreateView(generics.CreateAPIView):
@@ -50,3 +52,15 @@ class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [AllowAny]
+
+
+class CurrentUserView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        return Response({
+            'id': user.id,
+            'username': user.username,
+            'is_superuser': user.is_superuser
+        })

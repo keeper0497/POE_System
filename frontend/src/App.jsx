@@ -14,6 +14,7 @@ import ProjectList from "./components/task/read"
 import ProjectDetail from "./components/task/details"
 import UpdateProject from "./components/task/update"
 import ProjectCalendar from "./components/task/calendar"
+import NotificationModal from "./components/NotificationModal"
 
 
 function Logout() {
@@ -108,6 +109,14 @@ function App() {
           element={
             <ProtectedRoute>
               <ProjectCalendar />
+            </ProtectedRoute>
+            } 
+        />
+        <Route 
+          path="/notification" 
+          element={
+            <ProtectedRoute>
+              <NotificationModal />
             </ProtectedRoute>
             } 
         />

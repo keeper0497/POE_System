@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     "features",
     "rest_framework",
     "corsheaders",
+    "channels",
 ]
 
 MIDDLEWARE = [
@@ -92,7 +93,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "backend.wsgi.application"
+# WSGI_APPLICATION = "backend.wsgi.application"
+ASGI_APPLICATION = 'backend.asgi.application'
 
 
 # Database
@@ -108,6 +110,16 @@ DATABASES = {
         "HOST": "127.0.0.1",
         "PORT": "5432",
     }
+}
+
+# Add Channels Redis configuration (optional, for production)
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
 }
 
 
