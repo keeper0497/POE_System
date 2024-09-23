@@ -24,6 +24,12 @@ function ReadProfile() {
             });
     };
 
+    const handleLogout = () => {
+        // Add your logout logic here, e.g., clearing tokens, etc.
+        // For demonstration, we just navigate to the login page.
+        navigate('/login');
+    };
+
     if (error) {
         return (
             <div>
@@ -31,6 +37,7 @@ function ReadProfile() {
                 <div className="read-profile">
                     <h2>{error}</h2>
                     <button onClick={() => navigate('/create-profile')}>Create Profile</button>
+                    <button onClick={handleLogout} className="logout-btn">Log Out</button>
                 </div>
             </div>
         );
@@ -65,6 +72,7 @@ function ReadProfile() {
                 {profile.suffix && <p><strong>Suffix:</strong> {profile.suffix}</p>}
                 <p><strong>Email:</strong> {profile.email}</p>
                 <button onClick={() => navigate('/update-profile')}>Edit Profile</button>
+                <button onClick={handleLogout} className="logout-btn">Log Out</button>
             </div>
         </div>
     );

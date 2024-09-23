@@ -19,7 +19,7 @@ const Navbar = () => {
                     <Link to="/calendar-project" className="navbar-link">Calendar</Link>
                 </li>
                 <li>
-                    <Link to="/profile" className="navbar-link">Profile</Link>
+                    <Link to="/view-profile" className="navbar-link">Profile</Link>
                 </li>
                 <li>
                     <Link to="/notification" className="navbar-link">Notification</Link>
