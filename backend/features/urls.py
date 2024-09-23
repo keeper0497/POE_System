@@ -1,4 +1,6 @@
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 from .views import (
     ProjectListCreateAPIView, ProjectRetrieveUpdateDestroyAPIView,
     GeofenceListCreateAPIView, GeofenceRetrieveUpdateDestroyAPIView, 
@@ -15,4 +17,4 @@ urlpatterns = [
     path('employee-location/<int:employee_id>/', EmployeeLocationDetailView.as_view(), name='employee-location'),
     path('task/<int:pk>/', TaskRetrieveUpdateDestroyAPIView.as_view(), name='task-detail-update-delete'),
     path('task/', TaskListCreateAPIView.as_view(), name='task-list-create'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
