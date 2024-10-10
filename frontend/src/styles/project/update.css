@@ -1,0 +1,45 @@
+.update-project {
+    margin-left: 260px; /* Adjust this to match the width of the navbar */
+    padding: 20px;
+    background-color: #fafafa;
+    font-family: "Arial", sans-serif;
+    color: #102C57;
+    min-height: 100vh;
+}
+
+/* Add border to map container */
+.map-container {
+    border: 2px solid #ccc; /* Border color */
+    border-radius: 8px; /* Rounded corners */
+    overflow: hidden; /* Ensures that the map fits within the rounded corners */
+    margin-top: 40px;
+}
+
+.update-project h2{
+  padding: 20px;
+  font-family: Tahoma, sans-serif;
+  color: #102C57;
+  margin-top: 0px;
+}
+
+.update-project form {
+    display: flex;
+    flex-direction: column;
+}
+
+.update-project label {
+    margin-bottom: 10px;
+}
+
+.update-project button {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.update-project button:hover {
+    background-color: #45a049;
+}

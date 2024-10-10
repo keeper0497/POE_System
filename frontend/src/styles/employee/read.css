@@ -1,64 +1,94 @@
-.read-profile {
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 20px;
-    background-color: #f6eeee;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+/* Container for the profile */
+.profile-container {
+    max-width: 1000px; /* Maximize width */
+    margin: 0 auto;
+    padding: 40px;
+    background-color: #f9f9f9;
+    border: none; /* Remove the card-like border */
 }
 
-.read-profile h2 {
-    font-size: 24px;
+/* Profile Title */
+.profile-container h2 {
+    font-size: 28px;
+    color: #333;
     font-weight: bold;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
     margin-bottom: 20px;
-    text-align: center;
-    color: #333;
 }
 
-.read-profile p {
+/* Profile Details */
+.profile-details p {
     font-size: 18px;
-    line-height: 1.6;
     color: #555;
-    margin-bottom: 15px;
+    margin: 10px 0;
 }
 
-.read-profile p strong {
+.profile-details p strong {
     color: #333;
 }
 
-.read-profile p:last-child {
-    margin-bottom: 0;
+/* Profile Buttons Container */
+.profile-buttons {
+    display: flex;
+    justify-content: space-between; /* Place buttons on separate corners */
+    align-items: center;
+    margin-top: 30px;
 }
 
-@media (max-width: 600px) {
-    .read-profile {
-        padding: 15px;
-        margin: 20px;
-    }
-
-    .read-profile h2 {
-        font-size: 20px;
-    }
-
-    .read-profile p {
-        font-size: 16px;
-    }
-}
-
-.logout-btn {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    margin-top: 20px;
-    background-color: #fa5246; /* Red color for emphasis */
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
+/* Button styles for both buttons */
+.btn {
+    width: 150px; /* Ensure same width for both buttons */
+    padding: 10px 0; /* Same padding for height */
     text-align: center;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* Edit button styles */
+.edit-btn {
+    background-color: #007bff;
+    color: white;
+}
+
+.edit-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Logout button styles */
+.logout-btn {
+    background-color: #dc3545;
+    color: white;
 }
 
 .logout-btn:hover {
-    background-color: #d32f2f; /* Darker red for hover effect */
+    background-color: #c82333;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+    .profile-container {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .profile-container h2 {
+        font-size: 24px;
+    }
+
+    .profile-details p {
+        font-size: 16px;
+    }
+
+    .profile-buttons {
+        flex-direction: column; /* Stack buttons vertically on smaller screens */
+        gap: 15px; /* Add space between buttons */
+    }
+
+    .btn {
+        width: 100%; /* Full-width buttons on mobile */
+    }
 }

@@ -9,12 +9,17 @@ import CreateProfile from "./components/employee/create"
 import ReadProfile from "./components/employee/read"
 import UpdateProfile from "./components/employee/update"
 import EmployeeProfile from "./pages/EmployeeProfile"
-import CreateProject from "./components/task/create"
-import ProjectList from "./components/task/read"
-import ProjectDetail from "./components/task/details"
-import UpdateProject from "./components/task/update"
-import ProjectCalendar from "./components/task/calendar"
-import NotificationModal from "./components/NotificationModal"
+import CreateProject from "./components/project/create"
+import ProjectList from "./components/project/read"
+import ProjectDetail from "./components/project/details"
+import UpdateProject from "./components/project/update"
+import ProjectCalendar from "./components/project/calendar"
+// import NotificationModal from "./components/NotificationModal"
+import NotificationsPage from "./components/NotificationPage"
+import CreateTask from "./components/task/create_task"
+import TaskList from "./components/task/view_task"
+import TaskUpdate from "./components/task/update_task"
+import ViewTask from "./components/task/details_task"
 
 
 function Logout() {
@@ -113,12 +118,44 @@ function App() {
             } 
         />
         <Route 
-          path="/notification" 
+          path="/messages" 
           element={
             <ProtectedRoute>
-              <NotificationModal />
+              <NotificationsPage />
             </ProtectedRoute>
             } 
+        />
+        <Route 
+          path="/task/:id/create" 
+          element={
+            <ProtectedRoute>
+              <CreateTask />
+            </ProtectedRoute>
+            } 
+        />
+        <Route 
+          path="/task/:id/list" 
+          element={
+            <ProtectedRoute>
+              <TaskList />
+            </ProtectedRoute>
+            } 
+        />
+        <Route 
+          path="/update-task/:id" 
+          element={
+            <ProtectedRoute>
+              <TaskUpdate />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/detail-task/:id" 
+          element={
+            <ProtectedRoute>
+              <ViewTask />
+            </ProtectedRoute>
+          } 
         />
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />

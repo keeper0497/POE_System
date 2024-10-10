@@ -1,0 +1,41 @@
+.calendar-container {
+    background-color: #FEFAF6;
+    font-family: "Arial", sans-serif;
+    margin-bottom: 20px;
+    /* padding: 20px; */
+    padding-left: 270px;
+    padding-right: 20px;
+}
+
+.calendar-container h2{
+  padding: 20px;
+  font-family: Tahoma, sans-serif;
+  color: #102C57;
+  margin-top: 0px;
+}
+
+.rbc-event {
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.status-summary{
+  margin-bottom: 20px;
+}
+
+
+.statuscode-done {
+    border: 3px solid #28a745; /* Thicker green border for done */
+    background-color: #60e37f; /* Light green background */
+  }
+  
+.statuscode-ongoing {
+    border: 3px solid #ffbf00; /* Thicker yellow border for ongoing */
+    background-color: #f1c951; /* Light yellow background */
+  }
+  
+.statuscode-upcoming {
+    border: 3px solid #007bff; /* Thicker blue border for upcoming */
+    background-color: #398fea; /* Light blue background */
+  }

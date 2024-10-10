@@ -10,6 +10,7 @@ class Project(models.Model):
     project_start = models.DateField()
     project_end = models.DateField()
     assign_employee = models.ForeignKey(User, on_delete=models.CASCADE)
+    # created_by = models.IntegerField()
     status = models.CharField(max_length=20, choices=[('ongoing', 'Ongoing'), ('done', 'Done'), ('upcoming', 'Upcoming')], default='upcoming')
 
     def __str__(self):
@@ -39,7 +40,8 @@ class EmployeeLocation(models.Model):
 class Task(models.Model):
     task_duration_start = models.DateField()
     task_duration_end = models.DateField()
-    file_attachment = models.FileField()
+    file_attachment = models.FileField(blank=True, null=True)
+    status = models.CharField(max_length=20, choices=[('ongoing', 'Ongoing'), ('done', 'Done'), ('pending', 'Pending')], default='pending')
     task_name = models.CharField(blank=False, null=False, max_length=250)
     remarks = models.CharField(max_length=500, blank=True, null=True)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, blank=True)

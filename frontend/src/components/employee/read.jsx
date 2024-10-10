@@ -26,7 +26,6 @@ function ReadProfile() {
 
     const handleLogout = () => {
         // Add your logout logic here, e.g., clearing tokens, etc.
-        // For demonstration, we just navigate to the login page.
         navigate('/login');
     };
 
@@ -34,10 +33,10 @@ function ReadProfile() {
         return (
             <div>
                 <Navbar />
-                <div className="read-profile">
+                <div className="profile-container">
                     <h2>{error}</h2>
-                    <button onClick={() => navigate('/create-profile')}>Create Profile</button>
-                    <button onClick={handleLogout} className="logout-btn">Log Out</button>
+                    <button onClick={() => navigate('/create-profile')} className="btn default-btn">Create Profile</button>
+                    <button onClick={handleLogout} className="btn logout-btn">Log Out</button>
                 </div>
             </div>
         );
@@ -47,7 +46,7 @@ function ReadProfile() {
         return (
             <div>
                 <Navbar />
-                <div className="read-profile">
+                <div className="profile-container">
                     <h2>Loading Profile...</h2>
                 </div>
             </div>
@@ -57,22 +56,26 @@ function ReadProfile() {
     return (
         <div>
             <Navbar />
-            <div className="read-profile">
+            <div className="profile-container">
                 <h2>User Profile</h2>
-                <p><strong>Position:</strong> {profile.position}</p>
-                <p><strong>Division:</strong> {profile.division}</p>
-                <p><strong>Start Date:</strong> {profile.start_date}</p>
-                <p><strong>Number of Sick Leaves:</strong> {profile.num_sickleave}</p>
-                <p><strong>Number of Vacation Leaves:</strong> {profile.num_vacationleave}</p>
-                <p><strong>Contact Number:</strong> {profile.contact_number}</p>
-                <p><strong>Custom User ID:</strong> {profile.custom_user_id}</p>
-                <p><strong>First Name:</strong> {profile.first_name}</p>
-                <p><strong>Last Name:</strong> {profile.last_name}</p>
-                <p><strong>Middle Name:</strong> {profile.middle_name}</p>
-                {profile.suffix && <p><strong>Suffix:</strong> {profile.suffix}</p>}
-                <p><strong>Email:</strong> {profile.email}</p>
-                <button onClick={() => navigate('/update-profile')}>Edit Profile</button>
-                <button onClick={handleLogout} className="logout-btn">Log Out</button>
+                <div className="profile-details">
+                    <p><strong>Position:</strong> {profile.position}</p>
+                    <p><strong>Division:</strong> {profile.division}</p>
+                    <p><strong>Start Date:</strong> {profile.start_date}</p>
+                    <p><strong>Number of Sick Leaves:</strong> {profile.num_sickleave}</p>
+                    <p><strong>Number of Vacation Leaves:</strong> {profile.num_vacationleave}</p>
+                    <p><strong>Contact Number:</strong> {profile.contact_number}</p>
+                    <p><strong>Custom User ID:</strong> {profile.custom_user_id}</p>
+                    <p><strong>First Name:</strong> {profile.first_name}</p>
+                    <p><strong>Last Name:</strong> {profile.last_name}</p>
+                    <p><strong>Middle Name:</strong> {profile.middle_name}</p>
+                    {profile.suffix && <p><strong>Suffix:</strong> {profile.suffix}</p>}
+                    <p><strong>Email:</strong> {profile.email}</p>
+                </div>
+                <div className="profile-buttons">
+                    <button onClick={() => navigate('/update-profile')} className="btn edit-btn">Edit Profile</button>
+                    <button onClick={handleLogout} className="btn logout-btn">Log Out</button>
+                </div>
             </div>
         </div>
     );

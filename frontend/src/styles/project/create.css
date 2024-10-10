@@ -1,0 +1,115 @@
+.create-project {
+    background-color: #FEFAF6;
+    font-family: "Arial", sans-serif;
+    margin-bottom: 20px;
+    /* padding: 20px; */
+    padding-left: 270px;
+    padding-right: 20px;
+}
+
+.root{
+    background-color: #FEFAF6;
+}
+
+.create-project h2{
+  padding: 20px;
+  font-family: Tahoma, sans-serif;
+  color: #102C57;
+  margin-top: 0px;
+}
+
+.create-project form {
+    display: flex;
+    flex-direction: column;
+    color: #102C57;
+}
+
+.create-project label {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 2px solid #ccc; /* Border color for labels */
+    border-radius: 8px; /* Rounded corners for labels */
+}
+
+.create-project .map-container {
+    /* margin-top: 20px; */
+    height: 400px;
+}
+
+.create-project button {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.create-project button:hover {
+    background-color: #45a049;
+}
+
+/* Styles for the Assign Employee dropdown */
+.select-employee {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #333;
+}
+
+.select-employee option {
+    font-size: 16px;
+    color: #333;
+}
+
+/* Styles for the Status dropdown */
+.select-status {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #333;
+}
+
+.select-status option {
+    font-size: 16px;
+    color: #333;
+}
+
+/* Styles for the Project end dropdown */
+.project-end {
+    width: 98.7%;
+    padding: 8px;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #333;
+}
+
+/* Styles for the Project start dropdown */
+.project-start {
+    width: 98.7%;
+    padding: 8px;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #333;
+}
+
+/* Styles for the Project name dropdown */
+.project-name {
+    width: 98.7%;
+    padding: 8px;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #333;
+}

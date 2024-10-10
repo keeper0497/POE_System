@@ -1,7 +1,7 @@
 .notification-modal-container {
-    position: fixed;
-    top: 20px;
-    right: 20px;
+    position: absolute; /* Changed to absolute */
+    top: 50px; /* Adjust this to move the modal down from the bell icon */
+    right: 0; /* Align it to the right */
     z-index: 1000; /* Ensure it appears above other content */
 }
 
@@ -10,7 +10,7 @@
     padding: 20px;
     border-radius: 5px;
     width: 300px;
-    max-height: 80vh;
+    max-height: 300px;
     overflow-y: auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }

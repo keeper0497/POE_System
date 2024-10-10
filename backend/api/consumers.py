@@ -1,78 +1,35 @@
-# api/consumers.py
+# consumers.py
 
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
-from django.contrib.auth.models import User
-from .models import EmployeeLocation, Geofence
-from django.contrib.gis.geos import Point
 
-class LocationConsumer(AsyncWebsocketConsumer):
+class NotificationConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.employee_id = self.scope['url_route']['kwargs']['employee_id']
-        self.room_group_name = f'location_{self.employee_id}'
+        self.group_name = f"user_{self.employee_id}"
 
-        # Join the room group
+        # Join user-specific group
         await self.channel_layer.group_add(
-            self.room_group_name,
+            self.group_name,
             self.channel_name
         )
 
         await self.accept()
 
     async def disconnect(self, close_code):
-        # Leave the room group
+        # Leave user-specific group
         await self.channel_layer.group_discard(
-            self.room_group_name,
+            self.group_name,
             self.channel_name
         )
 
-    async def receive(self, text_data):
-        data = json.loads(text_data)
-        latitude = data.get('latitude')
-        longitude = data.get('longitude')
+    # Receive notification from group
+    async def send_notification(self, event):
+        notification = event['message']
 
-        if latitude is not None and longitude is not None:
-            user_location = Point(float(longitude), float(latitude), srid=4326)
-            geofences = Geofence.objects.all()
-            outside_geofence = True
-            
-            for geofence in geofences:
-                if geofence.area.contains(user_location):
-                    outside_geofence = False
-                    break
+        print("test", notification)
 
-            if outside_geofence:
-                # Notify the user and admin
-                self.notify_user()
-                self.notify_admin()
-
-            # Broadcast the location data
-            await self.channel_layer.group_send(
-                self.room_group_name,
-                {
-                    'type': 'location_update',
-                    'latitude': latitude,
-                    'longitude': longitude,
-                    'outside_geofence': outside_geofence
-                }
-            )
-
-    async def location_update(self, event):
-        latitude = event['latitude']
-        longitude = event['longitude']
-        outside_geofence = event['outside_geofence']
-
-        # Send the location data to WebSocket
+        # Send the notification to the WebSocket
         await self.send(text_data=json.dumps({
-            'latitude': latitude,
-            'longitude': longitude,
-            'outside_geofence': outside_geofence
+            'notification': notification
         }))
-
-    def notify_user(self):
-        # Implement your notification logic here
-        pass
-
-    def notify_admin(self):
-        # Implement your notification logic here
-        pass

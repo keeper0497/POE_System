@@ -1,37 +1,41 @@
-/* Ensure the html and body cover the full viewport height */
+/* Global background settings */
 html, body {
   background-color: #FEFAF6;
 }
 
+/* Container styling */
 .home-container {
-  /* padding: 20px; */
   background-color: #FEFAF6;
+  padding-left: 260px;
 }
 
+/* Headings */
 .home-container h2{
   padding: 20px;
   font-family: Tahoma, sans-serif;
   color: #102C57;
+  margin-top: 0px;
 }
 
+/* Status summary */
 .status-summary {
   margin-bottom: 20px;
   display: flex;
   justify-content: space-around;
-  
 }
 
 .status-summary p {
   margin: 0;
-  font-size: 24px; /* Increase the font size */
+  font-size: 24px;
   font-weight: bold;
-  padding: 20px 30px; /* Increase the padding for larger size */
-  border-radius: 20px; /* Make the border more rounded */
+  padding: 20px 30px;
+  border-radius: 20px;
   text-align: center;
   font-family: Tahoma, sans-serif;
   color: #102C57;
 }
 
+/* Projects summary grid */
 .projects-summary {
   display: flex;
   flex-wrap: wrap;
@@ -39,11 +43,11 @@ html, body {
   color: #102C57;
 }
 
+/* Project cards */
 .project-summary {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* border: 2px solid; */
   border-radius: 8px;
   padding: 20px;
   width: 100%;
@@ -52,14 +56,13 @@ html, body {
   transition: transform 0.2s;
   font-family: Tahoma, sans-serif;
   margin: auto;
-  color: #102C57;
 }
 
 .project-summary:hover {
   transform: scale(1.02);
-  color: #102C57;
 }
 
+/* Project link styles */
 .project-link {
   display: flex;
   justify-content: space-between;
@@ -68,65 +71,88 @@ html, body {
   color: inherit;
 }
 
+/* Details section */
 .project-details {
   flex: 1;
-  border: 2px solid #000;
-  border-radius: 4px;
   padding: 5px 10px;
-  color: #102C57;
   font-weight: bold;
   text-transform: capitalize;
 }
 
-.project-details:hover{
-  color: #f4a261;
-}
-
-.project-status:hover{
-  color: #f4a261;
-}
-
+/* Status section */
 .project-status {
-  border: 2px solid #000;
-  border-radius: 4px;
-  width: 68px;
-  padding: 5px 10px;
-  color: #102C57;
+  width: 80px;
+  padding: 10px 15px;
+  text-align: center;
   font-weight: bold;
+  border-radius: 4px;
+  color: white;
   text-transform: capitalize;
-  background-color: #982B1C;
 }
 
-.status-done {
-  background-color: #60e37f; /* Green for done */
-  border-color: #28a745;
+/* Done status styling */
+.project-summary.done .project-status {
+  background-color: #28a745;
 }
 
-.status-ongoing {
-  background-color: #f1c951; /* Yellow for ongoing */
-  border-color: #ffbf00;
+.project-summary.done .project-details {
+  border-left: 4px solid #28a745;
 }
 
-.status-upcoming {
-  background-color: #398fea; /* Blue for upcoming */
-  border-color: #007bff;
+/* Ongoing status styling */
+.project-summary.ongoing .project-status {
+  background-color: #f1c951;
 }
 
+.project-summary.ongoing .project-details {
+  border-left: 4px solid #f1c951;
+}
 
+/* Upcoming status styling */
+.project-summary.upcoming .project-status {
+  background-color: #007bff;
+}
+
+.project-summary.upcoming .project-details {
+  border-left: 4px solid #007bff;
+}
+
+/* Done, ongoing, upcoming styling */
 .statuscode-done {
-  border: 3px solid #28a745; /* Thicker green border for done */
-  background-color: #60e37f; /* Light green background */
-  background-image: url('../styles/image/done.png');
+  border: 3px solid #28a745;
+  background-color: #60e37f;
 }
 
 .statuscode-ongoing {
-  border: 3px solid #ffbf00; /* Thicker yellow border for ongoing */
-  background-color: #f1c951; /* Light yellow background */
-  background-image: url('../styles/image/ongoing.png');
+  border: 3px solid #ffbf00;
+  background-color: #f1c951;
 }
 
 .statuscode-upcoming {
-  border: 3px solid #007bff; /* Thicker blue border for upcoming */
-  background-color: #398fea; /* Light blue background */
-  background-image: url('../styles/image/upcoming.png');
+  border: 3px solid #007bff;
+  background-color: #398fea;
+}
+
+/* Notification styles */
+.bell-icon-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+}
+
+.bell-icon {
+  font-size: 24px;
+  color: #333;
+}
+
+.notification-count {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 5px;
+  font-size: 12px;
 }

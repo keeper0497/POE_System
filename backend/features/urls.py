@@ -16,5 +16,5 @@ urlpatterns = [
     path('update-location/', UpdateLocationView.as_view(), name='update-location'),
     path('employee-location/<int:employee_id>/', EmployeeLocationDetailView.as_view(), name='employee-location'),
     path('task/<int:pk>/', TaskRetrieveUpdateDestroyAPIView.as_view(), name='task-detail-update-delete'),
-    path('task/', TaskListCreateAPIView.as_view(), name='task-list-create'),
+    path('projects/<int:project_id>/tasks/', TaskListCreateAPIView.as_view(), name='task-list-create'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

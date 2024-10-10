@@ -50,18 +50,21 @@ SIMPLE_JWT = {
 
 # Application definition
 
-INSTALLED_APPS = [
+INSTALLED_APPS = [    
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    'daphne',
     "django.contrib.staticfiles",
     "api",
     "features",
     "rest_framework",
     "corsheaders",
     "channels",
+    
+
 ]
 
 MIDDLEWARE = [
@@ -104,22 +107,12 @@ DATABASES = {
     "default": {
         "ENGINE": "django.contrib.gis.db.backends.postgis",
         # "ENGINE": "django.db.backends.postgresql",
-        "NAME": "peosystem",
+        "NAME": "geofence",
         "USER": "postgres",
         "PASSWORD": "password",
         "HOST": "127.0.0.1",
         "PORT": "5432",
     }
-}
-
-# Add Channels Redis configuration (optional, for production)
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
-        },
-    },
 }
 
 
@@ -169,3 +162,37 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWS_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://localhost:5173",
+]
+
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('192.168.230.239', 6379)],
+        },
+    },
+}
+
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'console': {
+#             'class': 'logging.StreamHandler',
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['console'],
+#             'level': 'DEBUG',
+#         },
+#         '': {
+#             'handlers': ['console'],
+#             'level': 'DEBUG',
+#         },
+#     },
+# }

@@ -1,0 +1,54 @@
+.update-task {
+    margin-left: 260px; /* Adjust this to match the width of the navbar */
+    padding: 20px;
+    background-color: #fafafa;
+    font-family: "Arial", sans-serif;
+    color: #102C57;
+    min-height: 100vh;
+}
+
+.update-task h2 {
+    padding: 20px;
+    font-family: Tahoma, sans-serif;
+    color: #102C57;
+    margin-top: 0px;
+}
+
+.update-task form {
+    display: flex;
+    flex-direction: column;
+}
+
+.update-task label {
+    margin-bottom: 10px;
+}
+
+.update-task button {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.update-task button:hover {
+    background-color: #45a049;
+}
+
+/* Additional styling for input fields */
+.update-task input,
+.update-task textarea {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 100%;
+}
+
+/* Error message styling */
+.update-task .error-message {
+    color: red;
+    margin-top: 10px;
+}
