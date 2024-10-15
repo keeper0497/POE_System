@@ -177,7 +177,7 @@ CORS_ALLOWS_CREDENTIALS = True
 #     "http://localhost:5173",
 # ]
 # CORS settings using environment variables
-CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', '').split(',')
+CORS_ALLOWED_ORIGINS = [origin.strip() for origin in os.getenv('CORS_ALLOWED_ORIGINS', '').split(',')]
 
 
 
