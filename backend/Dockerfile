@@ -8,8 +8,10 @@ RUN apt-get update && apt-get install -y \
     gdal-bin \
     libgdal-dev \
     geos \
-    libgeos-dev \
-    && rm -rf /var/lib/apt/lists/*
+    libgeos-dev
+
+# Clean up
+RUN rm -rf /var/lib/apt/lists/*
 
 # Set environment variables for GeoDjango
 ENV GDAL_LIBRARY_PATH=/usr/lib/libgdal.so
@@ -25,7 +27,7 @@ RUN pip install -r requirements.txt
 # Copy the rest of the project files
 COPY . .
 
-# Run collectstatic and migrate during build
+# Run Django management commands
 RUN python manage.py collectstatic --noinput
 RUN python manage.py migrate
 
