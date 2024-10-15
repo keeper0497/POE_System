@@ -1,17 +1,15 @@
 # Use an official Python runtime as a parent image
 FROM python:3.11-slim
 
-# Install system dependencies
+# Install system dependencies for GDAL, GEOS, and PROJ
 RUN apt-get update && apt-get install -y \
     binutils \
     libproj-dev \
     gdal-bin \
     libgdal-dev \
-    geos \
-    libgeos-dev
-
-# Clean up
-RUN rm -rf /var/lib/apt/lists/*
+    libgeos-dev \
+    libgeos-c1v5 \
+    && rm -rf /var/lib/apt/lists/*
 
 # Set environment variables for GeoDjango
 ENV GDAL_LIBRARY_PATH=/usr/lib/libgdal.so
