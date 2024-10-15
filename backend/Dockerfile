@@ -11,8 +11,11 @@ RUN apt-get update && apt-get install -y \
     libgeos-c1v5 \
     && rm -rf /var/lib/apt/lists/*
 
-# Set environment variables for GeoDjango
-ENV GDAL_LIBRARY_PATH=/usr/lib/libgdal.so
+# Check GDAL installation path
+RUN ldconfig -p | grep gdal
+
+# Set environment variables for GeoDjango with a verified path
+ENV GDAL_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/libgdal.so
 ENV GEOS_LIBRARY_PATH=/usr/lib/libgeos_c.so
 
 # Set the working directory in the container
