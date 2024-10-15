@@ -23,11 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Set the GDAL library path
 # GDAL_LIBRARY_PATH = os.path.join(os.getenv('OSGEO4W_ROOT', r'C:\OSGeo4W'), 'bin', 'gdal309.dll')
-if os.name == 'posix':  # For Linux-based systems (Render)
-    GDAL_LIBRARY_PATH = '/usr/lib/libgdal.so'
-else:  # Fallback for Windows (if you're developing locally on Windows)
-    GDAL_LIBRARY_PATH = os.path.join(os.getenv('OSGEO4W_ROOT', r'C:\OSGeo4W'), 'bin', 'gdal309.dll')
-    
+GDAL_LIBRARY_PATH = '/usr/lib/libgdal.so'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
