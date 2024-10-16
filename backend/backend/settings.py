@@ -131,8 +131,9 @@ DATABASES = {
     'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
 }
 
-if not DATABASES['default'].get('ENGINE'):
-    DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
+if not DATABASES['default'].get('NAME'):
+    DATABASES['default']['NAME'] = 'peo_vi7s'
+
 
 
 # Password validation
