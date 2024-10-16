@@ -111,21 +111,28 @@ ASGI_APPLICATION = 'backend.asgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     # "default": {
+#     #     "ENGINE": "django.contrib.gis.db.backends.postgis",
+#     #     # "ENGINE": "django.db.backends.postgresql",
+#     #     "NAME": "geofence",
+#     #     "USER": "postgres",
+#     #     "PASSWORD": "password",
+#     #     "HOST": "127.0.0.1",
+#     #     "PORT": "5432",
+#     # }
+#     'default': dj_database_url.config(
+#         default=os.getenv('DATABASE_URL'),
+#         engine='django.contrib.gis.db.backends.postgis'
+#     )
+# }
+
 DATABASES = {
-    # "default": {
-    #     "ENGINE": "django.contrib.gis.db.backends.postgis",
-    #     # "ENGINE": "django.db.backends.postgresql",
-    #     "NAME": "geofence",
-    #     "USER": "postgres",
-    #     "PASSWORD": "password",
-    #     "HOST": "127.0.0.1",
-    #     "PORT": "5432",
-    # }
-    'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL'),
-        engine='django.contrib.gis.db.backends.postgis'
-    )
+    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
 }
+
+if not DATABASES['default'].get('ENGINE'):
+    DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 
 
 # Password validation
