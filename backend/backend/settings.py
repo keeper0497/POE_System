@@ -128,7 +128,14 @@ ASGI_APPLICATION = 'backend.asgi.application'
 # }
 
 DATABASES = {
-    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
+    'default': {
+            'ENGINE': 'django.contrib.gis.db.backends.postgis',
+            'NAME': 'peo_vi7s',
+            'USER': 'peo_admin',
+            'PASSWORD': '4EbjUZ7abHHYzghDjddeViJxkrTI0GuC',
+            'HOST': 'dpg-cs77ouaj1k6c73cldpvg-a',
+            'PORT': '5432',
+        }
 }
 
 # Explicitly set the engine to PostGIS if not already present

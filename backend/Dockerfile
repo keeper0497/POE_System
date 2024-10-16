@@ -1,5 +1,5 @@
-# Use an official Python runtime as a parent image
-FROM python:3.11-slim
+# Use an official PostGIS image as the base
+FROM postgis/postgis:14-3.2
 
 # Install system dependencies for GDAL, GEOS, PROJ, and PostgreSQL client
 RUN apt-get update && apt-get install -y \
