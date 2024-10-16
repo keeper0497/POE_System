@@ -18,7 +18,7 @@ RUN apt-get update && apt-get install -y \
 RUN ldconfig -p | grep gdal
 
 # Set environment variables for GeoDjango with a verified path
-ENV GDAL_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/libgdal.so
+ENV GDAL_LIBRARY_PATH=/usr/lib/libgdal.so.28
 ENV GEOS_LIBRARY_PATH=/usr/lib/libgeos_c.so
 
 # Set the environment variable for the database URL
