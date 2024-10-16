@@ -25,6 +25,9 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
+# Test PostgreSQL connection
+RUN psql postgresql://peo_admin:4EbjUZ7abHHYzghDjddeViJxkrTI0GuC@dpg-cs77ouaj1k6c73cldpvg-a:5432/peo_vi7s -c '\l' || echo "Postgres connection failed"
+
 # Copy the rest of the project files
 COPY . .
 
