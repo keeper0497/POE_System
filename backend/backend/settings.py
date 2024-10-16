@@ -199,11 +199,15 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "https://poe-system.vercel.app",
     "http://localhost:8000",
-    
+
 ]
 # CORS settings using environment variables
 # CORS_ALLOWED_ORIGINS = [origin.strip() for origin in os.getenv('CORS_ALLOWED_ORIGINS', '').split(',')]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://poe-system.onrender.com',
+    'https://poe-system.vercel.app',
+]
 
 
 CHANNEL_LAYERS = {
