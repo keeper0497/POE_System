@@ -19,6 +19,9 @@ RUN ldconfig -p | grep gdal
 ENV GDAL_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/libgdal.so
 ENV GEOS_LIBRARY_PATH=/usr/lib/libgeos_c.so
 
+# Set the environment variable for the database URL
+ENV DATABASE_URL=postgresql://peo_admin:4EbjUZ7abHHYzghDjddeViJxkrTI0GuC@dpg-cs77ouaj1k6c73cldpvg-a:5432/peo_vi7s
+
 # Set the working directory in the container
 WORKDIR /app
 
