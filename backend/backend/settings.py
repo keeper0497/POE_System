@@ -198,7 +198,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://localhost:5173",
     "https://poe-system.vercel.app",
-    "http://localhost:8000"
+    "http://localhost:8000",
+    
 ]
 # CORS settings using environment variables
 # CORS_ALLOWED_ORIGINS = [origin.strip() for origin in os.getenv('CORS_ALLOWED_ORIGINS', '').split(',')]
@@ -210,7 +211,8 @@ CHANNEL_LAYERS = {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
             # "hosts": [('192.168.230.239', 6379)],
-            "hosts": [os.getenv('REDIS_URL', 'redis://localhost:6379')],
+            # "hosts": [os.getenv('REDIS_URL', 'redis://red-cs71lmbtq21c73clh2kg:6379')],
+            "hosts": [("red-cs71lmbtq21c73clh2kg",6379)],
         },
     },
 }
