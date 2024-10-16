@@ -24,6 +24,12 @@ ENV GEOS_LIBRARY_PATH=/usr/lib/libgeos_c.so
 # Set the environment variable for the database URL
 ENV DATABASE_URL=postgresql://peo_admin:4EbjUZ7abHHYzghDjddeViJxkrTI0GuC@dpg-cs77ouaj1k6c73cldpvg-a:5432/peo_vi7s
 
+# Environment variables for superuser
+ENV DJANGO_SUPERUSER_USERNAME=admin
+ENV DJANGO_SUPERUSER_PASSWORD=adminpass
+ENV DJANGO_SUPERUSER_EMAIL=admin01@yopmail.com
+
+
 # Set the working directory in the container
 WORKDIR /app
 
@@ -41,6 +47,9 @@ COPY . .
 RUN python3 manage.py collectstatic --noinput
 RUN python3 manage.py makemigrations
 RUN python3 manage.py migrate
+
+# Create a superuser non-interactively
+RUN python3 manage.py createsuperuser --noinput || echo "Superuser already created"
 
 # Expose port 8000 and run the app
 EXPOSE 8000
