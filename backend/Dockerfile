@@ -1,7 +1,7 @@
 # Use an official Python runtime as a parent image
 FROM python:3.11-slim
 
-# Install system dependencies for GDAL, GEOS, and PROJ
+# Install system dependencies for GDAL, GEOS, PROJ, and PostgreSQL client
 RUN apt-get update && apt-get install -y \
     binutils \
     libproj-dev \
@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y \
     libgdal-dev \
     libgeos-dev \
     libgeos-c1v5 \
+    postgresql-client \
     && rm -rf /var/lib/apt/lists/*
 
 # Check GDAL installation path
@@ -22,10 +23,10 @@ ENV GEOS_LIBRARY_PATH=/usr/lib/libgeos_c.so
 WORKDIR /app
 
 # Copy the requirements file and install dependencies
-COPY requirements.txt .
+COPY requirements.txt . 
 RUN pip install -r requirements.txt
 
-# Test PostgreSQL connection
+# Test PostgreSQL connection (Optional)
 RUN psql postgresql://peo_admin:4EbjUZ7abHHYzghDjddeViJxkrTI0GuC@dpg-cs77ouaj1k6c73cldpvg-a:5432/peo_vi7s -c '\l' || echo "Postgres connection failed"
 
 # Copy the rest of the project files
