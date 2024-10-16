@@ -3,6 +3,8 @@ FROM postgis/postgis:14-3.2
 
 # Install system dependencies for GDAL, GEOS, PROJ, and PostgreSQL client
 RUN apt-get update && apt-get install -y \
+    python3 \
+    python3-pip \
     binutils \
     libproj-dev \
     gdal-bin \
