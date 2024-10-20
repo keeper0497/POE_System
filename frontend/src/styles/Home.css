@@ -1,20 +1,104 @@
 /* Global background settings */
-html, body {
+/* html, body {
   background-color: #FEFAF6;
-}
+  margin: 0;
+  padding: 0;
+} */
 
 /* Container styling */
 .home-container {
   background-color: #FEFAF6;
-  padding-left: 260px;
+  padding-left: 260px; /* Default for desktop */
+  padding-right: 20px;
+}
+
+.navbar {
+  background-color: #262626;
+  color: #fff;
+  height: 100vh;
+  width: 250px;
+  position: fixed;
+  top: 0;
+  left: -250px; /* Start off-screen */
+  transition: left 0.3s ease;
+  z-index: 1000;
+}
+
+.navbar.active {
+  left: 0; /* Slide in when active */
+}
+
+.navbar-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-left: 0;
+  margin-top: 20px;
+}
+
+.navbar-link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.1rem;
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.navbar-link:hover {
+  background-color: #EADBC8;
+  color: #000;
+}
+
+.burger-icon {
+  display: none;
+  position: fixed;
+  top: 10px;
+  left: 15px;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #333;
+  z-index: 1100; /* Ensure it stays on top */
+}
+
+@media (max-width: 768px) {
+  .burger-icon {
+    display: block;
+  }
+
+  .navbar.active ~ .home-container {
+    padding-left: 250px; /* Shift content when navbar is open */
+  }
+
+  .home-container {
+    padding-left: 60px; /* Reset padding when navbar is collapsed */
+    transition: padding-left 0.3s ease;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-container {
+    padding-left: 10px; /* No padding for mobile */
+    padding-right: 10px;
+  }
 }
 
 /* Headings */
-.home-container h2{
+.home-container h2 {
   padding: 20px;
   font-family: Tahoma, sans-serif;
   color: #102C57;
   margin-top: 0px;
+  font-size: 2rem;
+}
+
+@media (max-width: 480px) {
+  .home-container h2 {
+    font-size: 1.5rem; /* Smaller heading on mobile */
+    padding-left: 10px;
+  }
 }
 
 /* Status summary */
@@ -22,6 +106,7 @@ html, body {
   margin-bottom: 20px;
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
 }
 
 .status-summary p {
@@ -35,40 +120,57 @@ html, body {
   color: #102C57;
 }
 
+@media (max-width: 480px) {
+  .status-summary p {
+    font-size: 16px; /* Smaller font size */
+    padding: 10px 15px; /* Adjust padding */
+  }
+}
+
 /* Projects summary grid */
 .projects-summary {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Make the blocks wider */
   gap: 20px;
   color: #102C57;
 }
 
-/* Project cards */
+@media (max-width: 480px) {
+  .projects-summary {
+    grid-template-columns: 1fr; /* Single-column grid for mobile */
+    gap: 15px;
+  }
+}
+
+/* Project card blocks */
 .project-summary {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   justify-content: space-between;
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 20px;
   width: 100%;
-  max-width: 90%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s;
+  background-color: #fff; /* White background for the blocks */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow to give a card-like effect */
+  border: 1px solid #ddd; /* Subtle border for separation */
+  transition: transform 0.2s ease-in-out;
   font-family: Tahoma, sans-serif;
   margin: auto;
+  box-sizing: border-box; /* Make sure padding is counted inside the width */
 }
 
 .project-summary:hover {
   transform: scale(1.02);
 }
 
-/* Project link styles */
 .project-link {
   display: flex;
   justify-content: space-between;
   width: 100%;
   text-decoration: none;
   color: inherit;
+  flex-direction: column; /* Stack content vertically on mobile */
 }
 
 /* Details section */
@@ -81,54 +183,29 @@ html, body {
 
 /* Status section */
 .project-status {
-  width: 80px;
+  width: 100%; /* Full width for status on mobile */
   padding: 10px 15px;
   text-align: center;
   font-weight: bold;
   border-radius: 4px;
   color: white;
   text-transform: capitalize;
-}
-
-/* Done status styling */
-.project-summary.done .project-status {
-  background-color: #28a745;
-}
-
-.project-summary.done .project-details {
-  border-left: 4px solid #28a745;
-}
-
-/* Ongoing status styling */
-.project-summary.ongoing .project-status {
-  background-color: #f1c951;
-}
-
-.project-summary.ongoing .project-details {
-  border-left: 4px solid #f1c951;
-}
-
-/* Upcoming status styling */
-.project-summary.upcoming .project-status {
-  background-color: #007bff;
-}
-
-.project-summary.upcoming .project-details {
-  border-left: 4px solid #007bff;
+  background-color: #ccc; /* Fallback color if dynamic class is not applied */
+  box-sizing: border-box;
 }
 
 /* Done, ongoing, upcoming styling */
-.statuscode-done {
+.project-status.done {
   border: 3px solid #28a745;
   background-color: #60e37f;
 }
 
-.statuscode-ongoing {
+.project-status.ongoing {
   border: 3px solid #ffbf00;
   background-color: #f1c951;
 }
 
-.statuscode-upcoming {
+.project-status.upcoming {
   border: 3px solid #007bff;
   background-color: #398fea;
 }
@@ -155,4 +232,10 @@ html, body {
   border-radius: 50%;
   padding: 2px 5px;
   font-size: 12px;
+}
+
+@media (max-width: 480px) {
+  .bell-icon {
+    font-size: 18px; /* Reduce size for mobile */
+  }
 }

@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import api from "../../api";
 import Navbar from "../../components/Navbar";
 import "../../styles/project/update.css";
-import { MapContainer, TileLayer, Marker, Popup, Circle } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, useMapEvents, Popup, Circle } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
 function UpdateProject() {
@@ -16,8 +16,12 @@ function UpdateProject() {
         project_start: "",
         project_end: "",
         assign_employee: "",
+        status: "ongoing",  // Add status initialization
     });
+    const [employees, setEmployees] = useState([]);
+    const [location, setLocation] = useState(null);  // State for location
 
+    // Fetch project details
     useEffect(() => {
         api.get(`/api/projects/${id}/`)
             .then((response) => {
@@ -27,10 +31,22 @@ function UpdateProject() {
                     project_start: response.data.project_start,
                     project_end: response.data.project_end,
                     assign_employee: response.data.assign_employee,
+                    status: response.data.status,  // Ensure status is captured
+                });
+                setLocation({
+                    lat: response.data.location.latitude,
+                    lng: response.data.location.longitude,
                 });
             })
             .catch((err) => setError(err.message));
     }, [id]);
+
+    // Fetch list of employees for the dropdown
+    useEffect(() => {
+        api.get("/api/users/")
+            .then((res) => setEmployees(res.data))
+            .catch((err) => alert(`Error fetching employees: ${err.message}`));
+    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -39,12 +55,29 @@ function UpdateProject() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        api.put(`/api/projects/${id}/`, formData)
+
+        const updatedData = {
+            ...formData,
+            location: location ? { latitude: location.lat, longitude: location.lng } : null,
+        };
+
+        api.put(`/api/projects/${id}/`, updatedData)
             .then(() => {
                 navigate(`/detail-project/${id}`);
             })
             .catch((err) => setError(err.message));
     };
+
+    // Update location based on user click
+    function LocationMarker() {
+        useMapEvents({
+            click(e) {
+                setLocation(e.latlng);
+            },
+        });
+
+        return location ? <Marker position={location}></Marker> : null;
+    }
 
     if (error) {
         return <div>Error: {error}</div>;
@@ -54,7 +87,7 @@ function UpdateProject() {
         return <div>Loading...</div>;
     }
 
-    const geofenceRadius = 800;  // 800 km radius
+    const geofenceRadius = 800;  // 800 meters radius
 
     return (
         <div>
@@ -94,40 +127,64 @@ function UpdateProject() {
                     </label>
                     <label>
                         Assign Employee:
-                        <input
-                            type="number"
+                        <select
                             name="assign_employee"
                             value={formData.assign_employee}
                             onChange={handleChange}
                             required
-                        />
+                            className="select-employee"
+                        >
+                            <option value="">Select Employee</option>
+                            {employees.map((employee) => (
+                                <option key={employee.id} value={employee.id}>
+                                    {employee.username}
+                                </option>
+                            ))}
+                        </select>
+                    </label>
+                    <label>
+                        Status:
+                        <select
+                            name="status"
+                            value={formData.status}
+                            onChange={handleChange}
+                            required
+                        >
+                            <option value="ongoing">Ongoing</option>
+                            <option value="done">Done</option>
+                            <option value="upcoming">Upcoming</option>
+                        </select>
                     </label>
                     <button type="submit">Update Project</button>
                 </form>
 
                 <div className="map-container">
-                    {project.location && (
-                        <MapContainer
-                            center={[project.location.latitude, project.location.longitude]}
-                            zoom={13}
-                            style={{ height: "545px", width: "100%", marginTop: "0px" }}
-                        >
-                            <TileLayer
-                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                            />
-                            <Marker position={[project.location.latitude, project.location.longitude]}>
-                                <Popup>{project.project_name}</Popup>
-                            </Marker>
-                            <Circle
-                                center={[project.location.latitude, project.location.longitude]}
-                                radius={geofenceRadius}
-                                color="blue"
-                                fillColor="blue"
-                                fillOpacity={0.2}
-                            />
-                        </MapContainer>
-                    )}
+                    <MapContainer
+                        center={location || [13.6051, 124.2460]} // Default center if no location
+                        zoom={13}
+                        key={location ? location.lat : 'default'} // Force re-render of map on location change
+                        style={{ height: "400px", width: "100%" }}
+                    >
+                        <TileLayer
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        />
+                        {location && (
+                            <>
+                                <Marker position={location}>
+                                    <Popup>{formData.project_name}</Popup>
+                                </Marker>
+                                <Circle
+                                    center={location}
+                                    radius={geofenceRadius}
+                                    color="blue"
+                                    fillColor="blue"
+                                    fillOpacity={0.2}
+                                />
+                            </>
+                        )}
+                        <LocationMarker />
+                    </MapContainer>
                 </div>
             </div>
         </div>

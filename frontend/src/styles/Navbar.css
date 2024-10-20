@@ -1,58 +1,80 @@
+
 .navbar {
-    background-color: #262626;
-    color: #ffff;
-    height: 100vh;
-    width: 250px;
-    /* padding-top: 2rem; */
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    position: fixed;
-    left: 0;
-    font-family: "Arial", sans-serif;
+    font-family: Tahoma, sans-serif;
 }
 
-.navbar-brand {
-    font-size: 1.75rem;
-    color: #ffff;
-    font-weight: bold;
-    margin-left: 1rem;
+
+/* For smaller screens */
+@media (max-width: 768px) {
+    .burger-icon-container {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        color: white;
+        font-size: 1.5rem;
+    }
+
+    .burger-icon {
+        margin-right: 15px; /* Add space between burger icon and name */
+        font-size: 2rem;
+        cursor: pointer;
+        color: #102C57;
+    }
+    .burger-icon.active {
+        color: white; /* Color when active (navbar is open) */
+        padding-bottom: 20px;
+    }
+
+    /* Display the web app name beside the burger icon on small screens */
+    .navbar-brand-small {
+        display: inline-block;
+        color: white;
+        font-size: 1.25rem;
+        font-weight: bold;
+        padding-left: 30px;
+        font-family: Tahoma, sans-serif;
+    }
+
+    .navbar {
+        left: -250px; /* Hidden by default on smaller screens */
+        font-family: Tahoma, sans-serif;
+    }
+
+    .navbar.active {
+        left: 0; /* Slide in when burger menu is clicked */
+        font-family: Tahoma, sans-serif;
+    }
+
+    /* Hide full brand name inside the navbar */
+    .navbar-brand {
+        display: none;
+    }
+
+    /* Adjust spacing for the navbar links */
+    .navbar-links li {
+        margin-top: 20px; /* Add space between each link */
+    }
 }
 
-.navbar-links {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    width:200px;
-    padding-left: 0;
-}
+/* For larger screens */
+@media (min-width: 768px) {
+    .burger-icon-container {
+        display: none; /* Hide burger and name on larger screens */
+    }
 
-.navbar-link {
-    color: #ffff;
-    text-decoration: none;
-    font-size: 1.1rem;
-    padding: 0.75rem 1.5rem;
-    display: flex;
-    align-items: center;
-    transition: background-color 0.3s ease;
-    width: 200px;
-}
+    .navbar {
+        left: 0; /* Visible by default on larger screens */
+    }
 
-.navbar-link:hover {
-    background-color: #EADBC8;
-    color: #000;
-}
+    .navbar-brand {
+        display: block; /* Show app name inside navbar on larger screens */
+    }
 
-.navbar-icon {
-    margin-right: 1rem;
-    font-size: 1.25rem;
-}
+    .overlay {
+        display: none; /* No overlay required on larger screens */
+    }
 
-.navbar-link-active {
-    background-color: #EADBC8;
-    color: #000;
-}
-
-.navbar h1{
-    padding: 20px;
+    .home-container {
+        padding-left: 250px; /* Space for the visible navbar */
+    }
 }

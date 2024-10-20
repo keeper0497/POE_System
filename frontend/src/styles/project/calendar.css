@@ -5,6 +5,7 @@
     /* padding: 20px; */
     padding-left: 270px;
     padding-right: 20px;
+    z-index: 1; /* Ensure content stays below the navbar */
 }
 
 .calendar-container h2{
@@ -22,20 +23,87 @@
 
 .status-summary{
   margin-bottom: 20px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
 }
 
 
 .statuscode-done {
     border: 3px solid #28a745; /* Thicker green border for done */
     background-color: #60e37f; /* Light green background */
+    padding: 10px 20px;
+    margin-bottom: 10px;  
   }
+
   
 .statuscode-ongoing {
     border: 3px solid #ffbf00; /* Thicker yellow border for ongoing */
     background-color: #f1c951; /* Light yellow background */
+    padding: 10px 20px;
+    margin-bottom: 10px;
   }
+
   
 .statuscode-upcoming {
     border: 3px solid #007bff; /* Thicker blue border for upcoming */
     background-color: #398fea; /* Light blue background */
+    padding: 10px 20px;
+    margin-bottom: 10px;
   }
+
+  @media (max-width: 768px) {
+    .calendar-container {
+        padding-left: 10px; /* Further reduce padding on mobile */
+        padding-right: 10px;
+    }
+
+    /* .calendar-container h2 {
+        font-size: 20px;
+        padding: 10px;
+    } */
+
+    /* Further reduce calendar height */
+    .rbc-calendar {
+        height: 350px;
+    }
+
+    /* Stack status summary vertically */
+    .status-summary {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .status-summary p {
+        font-size: 16px;
+        padding: 8px 10px;
+    }
+}
+
+@media (max-width: 480px) {
+  .calendar-container {
+    padding-left: 10px; /* Further reduce padding on mobile */
+    padding-right: 10px;
+}
+
+/* .calendar-container h2 {
+    font-size: 20px;
+    padding: 10px;
+} */
+
+/* Further reduce calendar height */
+.rbc-calendar {
+    height: 350px;
+}
+
+/* Stack status summary vertically */
+.status-summary {
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.status-summary p {
+    font-size: 16px;
+    padding: 8px 10px;
+}
+}

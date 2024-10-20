@@ -1,10 +1,17 @@
+html, body {
+  background-color: #FEFAF6;
+  margin: 0;
+  padding: 0;
+}
+
 .create-profile {
     max-width: 600px;
-    margin: 0 auto;
+    /* margin: 0 auto; */
     padding: 2rem;
-    background-color: #f6eeee;
+    background-color: #FEFAF6;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+    padding-left: 260px;
 }
 
 .create-profile h2 {
@@ -41,4 +48,49 @@
 
 .create-profile button:hover {
     background-color: #0056b3;
+}
+
+
+/* Responsive adjustments for tablets */
+@media (max-width: 768px) {
+    .create-profile {
+        padding: 1.5rem;
+    }
+
+    .create-profile h2 {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .create-profile input {
+        padding: 0.5rem;
+        font-size: 1rem;
+    }
+
+    .create-profile button {
+        padding: 0.6rem;
+        font-size: 1rem;
+    }
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 480px) {
+    .create-profile {
+        padding: 1rem;
+    }
+
+    .create-profile h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .create-profile input {
+        padding: 0.4rem;
+        font-size: 0.9rem;
+    }
+
+    .create-profile button {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+    }
 }

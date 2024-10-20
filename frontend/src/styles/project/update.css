@@ -1,34 +1,40 @@
 .update-project {
-    margin-left: 260px; /* Adjust this to match the width of the navbar */
-    padding: 20px;
-    background-color: #fafafa;
+    background-color: #FEFAF6;
     font-family: "Arial", sans-serif;
+    margin-bottom: 20px;
+    padding-left: 270px;
+    padding-right: 20px;
+    padding-top: 20px;
+}
+
+.update-project h2 {
+    padding: 20px;
+    font-family: Tahoma, sans-serif;
     color: #102C57;
-    min-height: 100vh;
-}
-
-/* Add border to map container */
-.map-container {
-    border: 2px solid #ccc; /* Border color */
-    border-radius: 8px; /* Rounded corners */
-    overflow: hidden; /* Ensures that the map fits within the rounded corners */
-    margin-top: 40px;
-}
-
-.update-project h2{
-  padding: 20px;
-  font-family: Tahoma, sans-serif;
-  color: #102C57;
-  margin-top: 0px;
+    margin-top: 0px;
 }
 
 .update-project form {
     display: flex;
     flex-direction: column;
+    color: #102C57;
 }
 
 .update-project label {
     margin-bottom: 10px;
+    padding: 10px;
+    border: 2px solid #ccc; /* Border color for labels */
+    border-radius: 8px; /* Rounded corners for labels */
+}
+
+.update-project input {
+    width: 98.7%; /* Same as in Create Project */
+    padding: 8px;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #333;
 }
 
 .update-project button {
@@ -42,4 +48,70 @@
 
 .update-project button:hover {
     background-color: #45a049;
+}
+
+.map-container {
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    /* Stack the form and map vertically on smaller screens */
+    .update-project {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .update-project h2 {
+        font-size: 24px;
+        padding-left: 10px;
+    }
+
+    /* Reduce the width of form inputs */
+    .update-project input {
+        width: 100%; /* Full width on smaller screens */
+    }
+
+    .update-project button {
+        width: 100%; /* Button takes full width on smaller screens */
+        padding: 12px;
+    }
+
+    .map-container {
+        margin-top: 15px;
+    }
+
+    /* Reduce the height of the map for smaller screens */
+    .update-project .leaflet-container {
+        height: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Further adjustments for mobile */
+    .update-project h2 {
+        font-size: 20px;
+    }
+
+    .update-project label {
+        font-size: 14px;
+    }
+
+    .update-project input {
+        font-size: 14px;
+        padding: 6px;
+    }
+
+    .update-project button {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .update-project .leaflet-container {
+        height: 250px; /* Reduce map height further for mobile */
+    }
 }

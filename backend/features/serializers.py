@@ -16,6 +16,22 @@ class ProjectSerializer(serializers.ModelSerializer):
                 "longitude": obj.location.x
             }
         return None
+    
+    def update(self, instance, validated_data):
+        # Update the location
+        location_data = self.context['request'].data.get('location', None)  # Get location from request data
+        if location_data and 'latitude' in location_data and 'longitude' in location_data:
+            instance.location = Point(float(location_data['longitude']), float(location_data['latitude']))  # Create a new Point object
+        
+        # Update other fields
+        instance.project_name = validated_data.get('project_name', instance.project_name)
+        instance.project_start = validated_data.get('project_start', instance.project_start)
+        instance.project_end = validated_data.get('project_end', instance.project_end)
+        instance.assign_employee = validated_data.get('assign_employee', instance.assign_employee)
+        instance.status = validated_data.get('status', instance.status)
+
+        instance.save()
+        return instance
         
 class GeofenceSerializer(serializers.ModelSerializer):
     class Meta:

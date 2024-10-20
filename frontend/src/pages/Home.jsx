@@ -41,7 +41,7 @@ function Home() {
 
     useEffect(() => {
         if (employeeId) {
-            const ws = new WebSocket(`ws://127.0.0.1:8000/ws/notifications/${employeeId}/`);
+            const ws = new WebSocket(`ws://poe-system.onrender.com:8000/ws/notifications/${employeeId}/`);
 
             ws.onopen = () => {
                 console.log('WebSocket connection established');
@@ -76,32 +76,32 @@ function Home() {
             .catch((err) => alert(`Error fetching notifications: ${err.message}`));
     };
 
-    // WebSocket connection for receiving notifications in real-time
-    const listenForNotifications = (userId, isSuperUser) => {
-        const ws = new WebSocket(`ws://127.0.0.1:8000/ws/notifications/${userId}/`);
+    // // WebSocket connection for receiving notifications in real-time
+    // const listenForNotifications = (userId, isSuperUser) => {
+    //     const ws = new WebSocket(`ws://poe-system.onrender.com:8000/ws/notifications/${userId}/`);
 
-        ws.onopen = () => {
-            console.log('WebSocket connection established');
-        };
+    //     ws.onopen = () => {
+    //         console.log('WebSocket connection established');
+    //     };
 
-        ws.onmessage = (event) => {
-            const data = JSON.parse(event.data);
-            const notificationMessage = data.notification;
+    //     ws.onmessage = (event) => {
+    //         const data = JSON.parse(event.data);
+    //         const notificationMessage = data.notification;
 
-            setNotifications((prev) => [...prev, { message: notificationMessage, created_at: new Date().toISOString() }]);
-            setShowModal(true);
-        };
+    //         setNotifications((prev) => [...prev, { message: notificationMessage, created_at: new Date().toISOString() }]);
+    //         setShowModal(true);
+    //     };
 
-        ws.onerror = (error) => {
-            console.error('WebSocket error: ', error);
-        };
+    //     ws.onerror = (error) => {
+    //         console.error('WebSocket error: ', error);
+    //     };
 
-        ws.onclose = (event) => {
-            console.warn('WebSocket closed: ', event);
-        };
+    //     ws.onclose = (event) => {
+    //         console.warn('WebSocket closed: ', event);
+    //     };
 
-        return () => ws.close(); // Clean up WebSocket on component unmount
-    };
+    //     return () => ws.close(); // Clean up WebSocket on component unmount
+    // };
 
     const getProjects = (isSuperUser) => {
         let endpoint = "/api/projects/";
@@ -244,8 +244,8 @@ function Home() {
                                     <p><strong>Start Date:</strong> {project.project_start}</p>
                                     <p><strong>End Date:</strong> {project.project_end}</p>
                                 </div>
-                                <div className="project-status">
-                                    <p>{project.status}</p>
+                                <div className={`project-status ${project.status}`}>
+                                    {project.status.charAt(0).toUpperCase() + project.status.slice(1)}
                                 </div>
                             </Link>
                         </div>

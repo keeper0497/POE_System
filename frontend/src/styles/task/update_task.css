@@ -52,3 +52,55 @@
     color: red;
     margin-top: 10px;
 }
+
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .update-task {
+        margin-left: 20px; /* Reduce margin for tablet */
+        margin-right: 20px;
+    }
+
+    .update-task h2 {
+        font-size: 24px; /* Reduce font size for headings on smaller screens */
+        padding: 10px;
+    }
+
+    .update-task button {
+        padding: 12px; /* Adjust button padding */
+        font-size: 14px; /* Adjust button font size */
+    }
+
+    .update-task input,
+    .update-task textarea {
+        font-size: 14px; /* Adjust input font size */
+        padding: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .update-task {
+        margin-left: 10px; /* Further reduce margin for mobile */
+        margin-right: 10px;
+    }
+
+    .update-task h2 {
+        font-size: 20px;
+        padding: 8px;
+    }
+
+    .update-task label {
+        font-size: 14px;
+    }
+
+    .update-task input,
+    .update-task textarea {
+        font-size: 12px; /* Smaller input text on mobile */
+        padding: 6px;
+    }
+
+    .update-task button {
+        font-size: 12px; /* Smaller button font size */
+        padding: 10px;
+    }
+}

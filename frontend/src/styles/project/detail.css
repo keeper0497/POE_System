@@ -6,6 +6,7 @@
     font-family: "Arial", sans-serif;
     color: #102C57;
     min-height: 100vh;
+    box-sizing: border-box;
 }
 
 .project-detail h2 {
@@ -62,18 +63,20 @@
 
 /* Button styles */
 .btn {
-    padding: 12px 18px;
+    padding: 10px 18px;
     border: none;
     cursor: pointer;
     font-size: 16px;
     border-radius: 8px;
     transition: background-color 0.3s ease, transform 0.2s ease;
+    
 }
 
 .default-btn {
     background-color: #007BFF;
     color: white;
     font-weight: bold;
+    /* width: 48%; */
 }
 
 .default-btn:hover {
@@ -85,6 +88,7 @@
     background-color: #4CAF50;
     color: white;
     font-weight: bold;
+    width: 48%;
 }
 
 .update-btn:hover {
@@ -96,6 +100,7 @@
     background-color: #f44336;
     color: white;
     font-weight: bold;
+    width: 48%;
 }
 
 .delete-btn:hover {
@@ -107,6 +112,7 @@
     background-color: #28a745;
     color: white;
     font-weight: bold;
+    /* width: 48%; */
 }
 
 .add-task-btn:hover {
@@ -197,4 +203,60 @@
 
 .close-btn:hover {
     background-color: #0056b3;
+}
+
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    /* Stack buttons vertically on smaller screens */
+    .project-button {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    /* Adjust padding and font sizes for smaller screens */
+    .project-detail {
+        margin-left: 0;
+        padding: 15px;
+    }
+
+    .project-detail h2 {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    .project-detail p {
+        font-size: 16px;
+        padding: 8px 10px;
+    }
+
+    /* Map container adjustments for smaller screens */
+    .project-detail .leaflet-container {
+        height: 300px; /* Reduce height on smaller screens */
+    }
+
+    .map-container {
+        margin-top: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Further adjustments for mobile */
+    .project-detail h2 {
+        font-size: 20px;
+    }
+
+    .project-detail p {
+        font-size: 14px;
+        padding: 6px 8px;
+    }
+
+    .project-button .btn {
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+
+    .project-detail .leaflet-container {
+        height: 250px;
+    }
 }

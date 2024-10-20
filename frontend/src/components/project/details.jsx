@@ -199,7 +199,7 @@ function ProjectDetail() {
 
                 <div className="project-button">
                     <div className="project-task">
-                        <button onClick={handelTaskDetails} className="btn default-btn">Task Details</button>
+                        <button onClick={handelTaskDetails} className="btn default-btn">Task Info</button>
                         {!isSuperUser && (
                             <button onClick={handleAddTask} className="btn add-task-btn">Add Task</button>
                         )}

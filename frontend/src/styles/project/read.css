@@ -77,3 +77,36 @@
   margin-top: 40px;
 }
 
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+  .project-list {
+      padding-left: 60px; /* Reduce padding for tablets */
+      padding-right: 10px;
+  }
+
+  .create-project-btn {
+      width: 100%; /* Full-width button on small screens */
+      padding: 12px;
+  }
+
+  .map-container {
+      margin-top: 20px;
+  }
+
+}
+
+@media (max-width: 480px) {
+  .project-list {
+      padding-left: 10px; /* Remove padding for mobile screens */
+      padding-right: 10px;
+  }
+
+  .leaflet-container {
+      height: 350px; /* Reduce map height on mobile */
+  }
+
+  .create-project-btn {
+      font-size: 14px; /* Smaller button text */
+      padding: 10px;
+  }
+}

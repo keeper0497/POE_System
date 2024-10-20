@@ -18,8 +18,8 @@
     margin-top: 0px;
     padding: 20px;
     background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    /* border-radius: 10px; */
+    /* box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1); */
 }
 
 /* Task summary box */
@@ -54,6 +54,11 @@
 /* Task details */
 .task-details {
     margin-bottom: 15px;
+    font-size: 20px;
+}
+.task-details p{
+    margin-bottom: 15px;
+    font-size: 20px;
 }
 
 /* Task title */
@@ -141,12 +146,6 @@
     background-color: #c82333;
 }
 
-/* Responsive styling */
-@media (max-width: 768px) {
-    .tasks-summary {
-        flex-direction: column;
-    }
-}
 
 /* Container for Add Task Button */
 .add-task-container {
@@ -171,4 +170,76 @@
 .add-task-btn:hover {
     background-color: #218838;
     transform: translateY(-2px); /* Lift effect */
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+    .tasklist-container {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .project-title {
+        font-size: 24px;
+        padding: 15px;
+    }
+
+    .task-card {
+        padding: 15px;
+    }
+
+    .task-details h3 {
+        font-size: 20px;
+    }
+
+    .task-status {
+        font-size: 12px;
+        padding: 4px 12px;
+    }
+
+    .task-actions {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .update-btn, .delete-btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .tasklist-container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .project-title {
+        font-size: 20px;
+        padding: 10px;
+    }
+
+    .task-card {
+        padding: 10px;
+    }
+
+    .task-details h3 {
+        font-size: 18px;
+    }
+
+    .task-description {
+        font-size: 14px;
+    }
+
+    .task-status {
+        font-size: 10px;
+        padding: 4px 10px;
+    }
+
+    .update-btn, .delete-btn {
+        width: 100%;
+        padding: 12px;
+        font-size: 12px;
+    }
 }

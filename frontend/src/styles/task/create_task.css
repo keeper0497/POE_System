@@ -71,3 +71,55 @@
   color: #333;
   resize: vertical;  /* Allow vertical resizing */
 }
+
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+  .create-task {
+    padding-left: 20px; /* Remove large left padding for smaller screens */
+    padding-right: 20px;
+  }
+
+  .create-task h2 {
+    font-size: 24px;
+    padding-left: 10px; /* Add padding to match the smaller screen size */
+  }
+
+  .create-task input,
+  .create-task select,
+  .create-task textarea {
+    width: 100%; /* Make inputs and text areas full width */
+  }
+
+  .create-task label {
+    font-size: 14px; /* Adjust label font size for smaller screens */
+  }
+
+  .create-task button {
+    width: 100%; /* Make the button full width */
+    font-size: 14px; /* Adjust button font size */
+    padding: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .create-task h2 {
+    font-size: 20px;
+  }
+
+  .create-task label {
+    font-size: 12px; /* Smaller font size for mobile */
+  }
+
+  .create-task input,
+  .create-task select,
+  .create-task textarea {
+    font-size: 14px; /* Adjust input font size for mobile */
+    padding: 6px; /* Smaller padding for inputs */
+  }
+
+  .create-task button {
+    font-size: 12px; /* Smaller font size for the button */
+    padding: 10px; /* Adjust button padding */
+  }
+}

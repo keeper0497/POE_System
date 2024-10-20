@@ -113,3 +113,50 @@
     border-radius: 4px;
     color: #333;
 }
+
+
+/* Responsive styling for smaller screens */
+@media (max-width: 768px) {
+    .create-project {
+        padding-left: 60px; /* Further reduce padding for tablets */
+        padding-right: 10px;
+    }
+
+    /* .create-project h2 {
+        font-size: 20px; /* Smaller heading for tablets */   
+     */
+
+    .select-employee, .select-status, .project-end, .project-start, .project-name {
+        width: 100%; /* Ensure dropdowns are full width on smaller screens */
+    }
+
+    .create-project button {
+        font-size: 14px; /* Reduce button size */
+        padding: 8px;
+    }
+
+    .map-container {
+        height: 300px; /* Reduce map height on tablets */
+    }
+}
+
+@media (max-width: 480px) {
+    .create-project {
+        padding-left: 10px; /* Remove padding on small screens */
+        padding-right: 10px;
+    }
+
+    /* .create-project h2 {
+        font-size: 18px; /* Adjust heading size for mobile */
+        /* padding: 10px; */
+    */
+
+    .leaflet-container {
+        height: 250px; /* Further reduce map height for mobile */
+    }
+
+    .create-project button {
+        font-size: 12px; /* Smaller button size */
+        padding: 6px;
+    }
+}

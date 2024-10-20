@@ -1,10 +1,16 @@
+html, body {
+    background-color: #FEFAF6;
+    margin: 0;
+    padding: 0;
+  }
 .update-profile {
     max-width: 600px;
-    margin: 0 auto;
+    /* margin: 0 auto; */
     padding: 20px;
-    background-color: #f6eeee;
+    padding-left: 270px;
+    /* background-color: #f6eeee; */
     border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
     /* padding-left: 260px;  */
 }
 
@@ -44,4 +50,55 @@
 
 .update-profile form button:hover {
     background-color: #0056b3;
+}
+
+
+/* Responsive styling for tablets */
+@media (max-width: 768px) {
+    .update-profile {
+        padding: 15px;
+        max-width: 100%;
+    }
+
+    .update-profile h2 {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    .update-profile form input,
+    .update-profile form select,
+    .update-profile form textarea {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .update-profile form button {
+        font-size: 14px;
+        padding: 8px;
+    }
+}
+
+/* Responsive styling for mobile */
+@media (max-width: 480px) {
+    .update-profile {
+        padding: 10px;
+        max-width: 100%;
+    }
+
+    .update-profile h2 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .update-profile form input,
+    .update-profile form select,
+    .update-profile form textarea {
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    .update-profile form button {
+        font-size: 12px;
+        padding: 6px;
+    }
 }
