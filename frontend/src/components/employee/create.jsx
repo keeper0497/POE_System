@@ -36,8 +36,8 @@
                             position: "",
                             division: "",
                             start_date: "",
-                            num_sickleave: "",
-                            num_vacationleave: "",
+                            // num_sickleave: "",
+                            // num_vacationleave: "",
                             contact_number: "",
                             custom_user_id: "",
                             first_name: "",
@@ -89,7 +89,7 @@
                                 required
                             />
                         </label>
-                        <label>
+                        {/* <label>
                             Number of Sick Leaves:
                             <input
                                 type="number"
@@ -108,7 +108,7 @@
                                 onChange={handleChange}
                                 required
                             />
-                        </label>
+                        </label> */}
                         <label>
                             Contact Number:
                             <input

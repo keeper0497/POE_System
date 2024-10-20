@@ -62,8 +62,8 @@ function ReadProfile() {
                     <p><strong>Position:</strong> {profile.position}</p>
                     <p><strong>Division:</strong> {profile.division}</p>
                     <p><strong>Start Date:</strong> {profile.start_date}</p>
-                    <p><strong>Number of Sick Leaves:</strong> {profile.num_sickleave}</p>
-                    <p><strong>Number of Vacation Leaves:</strong> {profile.num_vacationleave}</p>
+                    {/* <p><strong>Number of Sick Leaves:</strong> {profile.num_sickleave}</p> */}
+                    {/* <p><strong>Number of Vacation Leaves:</strong> {profile.num_vacationleave}</p> */} 
                     <p><strong>Contact Number:</strong> {profile.contact_number}</p>
                     <p><strong>Custom User ID:</strong> {profile.custom_user_id}</p>
                     <p><strong>First Name:</strong> {profile.first_name}</p>

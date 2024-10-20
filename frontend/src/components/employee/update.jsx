@@ -8,8 +8,8 @@ function UpdateProfile() {
         position: "",
         division: "",
         start_date: "",
-        num_sickleave: "",
-        num_vacationleave: "",
+        // num_sickleave: "",
+        // num_vacationleave: "",
         contact_number: "",
         custom_user_id: "",
         first_name: "",
@@ -88,7 +88,7 @@ function UpdateProfile() {
                             required
                         />
                     </label>
-                    <label>
+                    {/* <label>
                         Number of Sick Leaves:
                         <input
                             type="number"
@@ -97,8 +97,8 @@ function UpdateProfile() {
                             onChange={handleChange}
                             required
                         />
-                    </label>
-                    <label>
+                    </label> */}
+                    {/* <label>
                         Number of Vacation Leaves:
                         <input
                             type="number"
@@ -107,7 +107,7 @@ function UpdateProfile() {
                             onChange={handleChange}
                             required
                         />
-                    </label>
+                    </label> */}
                     <label>
                         Contact Number:
                         <input
