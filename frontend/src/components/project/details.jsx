@@ -8,7 +8,7 @@ import "leaflet/dist/leaflet.css";
 import "../../styles/project/detail.css";
 // import NotificationModal from "../../components/NotificationModal"; // Import NotificationModal
 
-const SOCKET_URL = "ws://poe-system.onrender.com:8000/ws/location/";
+const SOCKET_URL = "wss://poe-system.onrender.com:8000/ws/location/";
 
 function ProjectDetail() {
     const { id } = useParams();  // Get the project ID from the URL
