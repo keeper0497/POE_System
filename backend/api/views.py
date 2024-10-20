@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import generics
-from .serializers import NotificationSerializer, UserSerializer, UserProfileSerializer
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from .serializers import NotificationSerializer, UserSerializer, UserProfileSerializer, UserUpdateSerializer
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from .models import Notification, UserProfile
 from rest_framework.exceptions import NotFound
 from rest_framework import permissions, status
@@ -10,6 +10,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
+
 
 # UserProfile CRUD Views
 class UserProfileCreateView(generics.CreateAPIView):
@@ -69,6 +70,32 @@ class CreateUserView(generics.CreateAPIView):
     serializer_class = UserSerializer
     permission_classes = [AllowAny]
 
+class DeleteUserView(generics.DestroyAPIView):
+    queryset = User.objects.all()
+    permission_classes = [IsAdminUser]  # Only admins can delete users
+
+    def delete(self, request, *args, **kwargs):
+        try:
+            user = self.get_object()
+            if user.is_superuser:
+                return Response({"error": "Cannot delete an admin user"}, status=status.HTTP_400_BAD_REQUEST)
+            self.perform_destroy(user)
+            return Response({"message": "User deleted successfully"}, status=status.HTTP_200_OK)
+        except NotFound:
+            return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+        
+
+class UpdateUserView(generics.UpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserUpdateSerializer
+    permission_classes = [IsAdminUser]  # Only admins can update users
+
+    def patch(self, request, *args, **kwargs):
+        user = self.get_object()
+        serializer = self.get_serializer(user, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)
 
 class CurrentUserView(APIView):
     permission_classes = [permissions.IsAuthenticated]

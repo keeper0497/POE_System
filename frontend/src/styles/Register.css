@@ -1,0 +1,99 @@
+html, body {
+  background-color: #FEFAF6;
+  margin: 0;
+  padding: 0;
+}
+
+.register-container {
+    /* max-width: 600px; */
+    /* margin: 0 auto; */
+    padding: 2rem;
+    /* background-color: #f6eeee; */
+    /* border-radius: 8px; */
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+    padding-left: 260px;
+}
+
+.register-container h2 {
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    text-align: center;
+    color: #102C57;
+}
+
+.register-container label {
+    display: block;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.register-container input {
+    width: 100%;
+    padding: 0.75rem;
+    margin-top: 0.25rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.register-container button {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.register-container button:hover {
+    background-color: #0056b3;
+}
+
+.error-message {
+    color: red;
+    margin-top: 1rem;
+}
+
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .register-container {
+        padding: 1.5rem;
+        box-shadow: none; /* Remove box-shadow for smaller screens for simplicity */
+    }
+
+    .register-container h2 {
+        font-size: 1.75rem; /* Slightly reduce the font size */
+    }
+
+    .register-container input {
+        padding: 0.65rem; /* Adjust padding for smaller screens */
+    }
+
+    .register-container button {
+        font-size: 1rem; /* Reduce font size for the button */
+        padding: 0.65rem; /* Adjust padding for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .register-container {
+        padding: 1rem;
+    }
+
+    .register-container h2 {
+        font-size: 1.5rem; /* Reduce font size further on very small screens */
+    }
+
+    .register-container input {
+        padding: 0.6rem;
+    }
+
+    .register-container button {
+        font-size: 0.9rem;
+        padding: 0.6rem;
+    }
+}

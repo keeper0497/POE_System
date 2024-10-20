@@ -14,6 +14,18 @@ class UserSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(**validated_data)
         return user
 
+class UserUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username', 'password']  # Exclude password here
+
+    def update(self, instance, validated_data):
+        # If password is present in the data, set it properly using set_password
+        password = validated_data.pop('password', None)
+        if password:
+            instance.set_password(password)
+
+        return super().update(instance, validated_data)
 
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:

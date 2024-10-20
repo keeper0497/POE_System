@@ -1,10 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { FaHome, FaBook, FaCalendarAlt, FaSignOutAlt, FaUser, FaBell, FaEnvelope } from "react-icons/fa";
+import { FaHome, FaBook, FaCalendarAlt, FaSignOutAlt, FaUser, FaRegistered, FaEnvelope, FaUserCircle, FaUserFriends } from "react-icons/fa";
 import "../styles/Navbar.css";
+import api from "../api"; 
 
 const Navbar = () => {
     const [menuActive, setMenuActive] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);  // State to track if the user is an admin
+
+    // Fetch user details on component mount to determine if they are an admin
+    useEffect(() => {
+        api.get("/api/user/")  // Assuming this endpoint returns the user data
+            .then((res) => {
+                setIsAdmin(res.data.is_superuser);  // Assuming 'is_superuser' indicates if the user is an admin
+            })
+            .catch((err) => {
+                console.error("Error fetching user data:", err);
+            });
+    }, []);
 
     const toggleMenu = () => {
         setMenuActive(!menuActive);
@@ -63,6 +76,21 @@ const Navbar = () => {
                             <FaEnvelope className="navbar-icon" /> Messages
                         </Link>
                     </li>
+                    {/* Conditionally render the Register link only if the user is an admin */}
+                    {isAdmin && (
+                        <li>
+                            <Link to="/register" className="navbar-link" onClick={toggleMenu}>
+                                <FaRegistered className="navbar-icon" /> Register
+                            </Link>
+                        </li>
+                    )}
+                     {isAdmin && (
+                        <li>
+                            <Link to="/users" className="navbar-link" onClick={toggleMenu}>
+                                <FaUserFriends className="navbar-icon" /> Users
+                            </Link>
+                        </li>
+                    )}
                     <li>
                         <Link to="/logout" className="navbar-link" onClick={toggleMenu}>
                             <FaSignOutAlt className="navbar-icon" /> Sign Out

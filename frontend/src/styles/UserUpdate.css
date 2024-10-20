@@ -1,0 +1,93 @@
+/* Styling for update user page */
+html, body {
+    background-color: #FEFAF6;
+    margin: 0;
+    padding: 0;
+  }
+
+.update-user-container {
+    /* max-width: 600px; */
+    /* margin: 0 auto; */
+    padding: 20px;
+    padding-left: 260px;
+    /* background-color: #f6eeee; */
+    /* border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); */
+}
+
+.update-user-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.update-user-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.update-user-container label {
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.update-user-container input {
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.update-user-container button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.update-user-container button:hover {
+    background-color: #0056b3;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .update-user-container {
+        padding: 15px;
+    }
+
+    .update-user-container h2 {
+        font-size: 22px;
+    }
+
+    .update-user-container input {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .update-user-container button {
+        padding: 8px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .update-user-container {
+        padding: 10px;
+    }
+
+    .update-user-container h2 {
+        font-size: 20px;
+    }
+
+    .update-user-container input {
+        padding: 6px;
+        font-size: 12px;
+    }
+
+    .update-user-container button {
+        padding: 6px;
+        font-size: 12px;
+    }
+}
