@@ -49,7 +49,7 @@ RUN python3 manage.py makemigrations
 RUN python3 manage.py migrate
 
 # Create a superuser non-interactively
-RUN python3 manage.py createsuperuser --noinput || echo "Superuser already created"
+# RUN python3 manage.py createsuperuser --noinput || echo "Superuser already created"
 
 # Expose port 8000 and run the app
 EXPOSE 8000
