@@ -21,7 +21,7 @@ function NotificationsPage() {
             });
 
         const employeeId = 1;  // Set dynamic employee ID
-        const ws = new WebSocket(`wss://poe-system.onrender.com:8000/ws/notifications/${employeeId}/`);
+        const ws = new WebSocket(`wss://poe-system.onrender.com/ws/notifications/${employeeId}/`);
 
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data);

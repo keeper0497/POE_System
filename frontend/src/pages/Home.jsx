@@ -41,7 +41,7 @@ function Home() {
 
     useEffect(() => {
         if (employeeId) {
-            const ws = new WebSocket(`wss://poe-system.onrender.com:8000/ws/notifications/${employeeId}/`);
+            const ws = new WebSocket(`wss://poe-system.onrender.com/ws/notifications/${employeeId}/`);
 
             ws.onopen = () => {
                 console.log('WebSocket connection established');
