@@ -8,7 +8,8 @@ import "leaflet/dist/leaflet.css";
 import "../../styles/project/detail.css";
 // import NotificationModal from "../../components/NotificationModal"; // Import NotificationModal
 
-const SOCKET_URL = "wss://poe-system.onrender.com:8000/ws/location/";
+const SOCKET_URL = "wss://poe-system.onrender.com/ws/location/";
+// const SOCKET_URL = "ws://localhost:8000/ws/location/";
 
 function ProjectDetail() {
     const { id } = useParams();  // Get the project ID from the URL
@@ -17,6 +18,7 @@ function ProjectDetail() {
     const [isSuperUser, setIsSuperUser] = useState(false);
     const [employeeLocation, setEmployeeLocation] = useState(null);
     const [assignedUser, setAssignedUser] = useState(null);
+    const [loggedInUserId, setLoggedInUserId] = useState(null);
     const [error, setError] = useState(null);
     const [notifications, setNotifications] = useState([]);
     const [showModal, setShowModal] = useState(false);
@@ -32,6 +34,7 @@ function ProjectDetail() {
             .get("/api/user/")
             .then((res) => {
                 setIsSuperUser(res.data.is_superuser);
+                setLoggedInUserId(res.data.id);
             })
             .catch((err) => alert(`Error: ${err.message}`));
     };
@@ -78,6 +81,7 @@ function ProjectDetail() {
             })
             .then((response) => {
                 console.log("Location updated:", response.data);
+                console.log(employee_id)
             })
             .catch((err) => {
                 console.error("Error updating location:", err.message);
@@ -136,31 +140,51 @@ function ProjectDetail() {
         }
     };
 
-    // Fetch the employee location and automatically post updates every 10 seconds if project is ongoing
-    useEffect(() => {
-        if (project?.status === "ongoing" && navigator.geolocation) {
-            const updateLocation = () => {
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        const { latitude, longitude } = position.coords;
-
-                        updateLocationInBackend(latitude, longitude);
-                        setEmployeeLocation({ latitude, longitude });
-                        checkLocationAndNotify(latitude, longitude);
-                    },
-                    (error) => {
-                        console.error("Error getting location:", error);
-                        setError("Unable to fetch employee location. Please allow location access.");
-                    }
-                );
-            };
-
-            updateLocation();  // Initial fetch
-            const locationInterval = setInterval(updateLocation, 10000);  // Fetch every 10 seconds
-
-            return () => clearInterval(locationInterval);
-        }
-    }, [project]);
+        // Update location if logged-in user is the assigned employee
+        useEffect(() => {
+            if (project?.status === "ongoing" && navigator.geolocation && project.assign_employee === loggedInUserId) {
+                const updateLocation = () => {
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                            const { latitude, longitude } = position.coords;
+    
+                            updateLocationInBackend(latitude, longitude);
+                            setEmployeeLocation({ latitude, longitude });
+                            checkLocationAndNotify(latitude, longitude);
+                        },
+                        (error) => {
+                            console.error("Error getting location:", error);
+                            setError("Unable to fetch employee location. Please allow location access.");
+                        }
+                    );
+                };
+    
+                updateLocation();
+                const locationInterval = setInterval(updateLocation, 10000);
+    
+                return () => clearInterval(locationInterval);
+            }
+        }, [project, loggedInUserId]);
+    
+        // Fetch assigned employee's location for admin view
+        useEffect(() => {
+            if (isSuperUser && project?.assign_employee) {
+                const fetchEmployeeLocation = () => {
+                    api.get(`/api/employee-location/${project.assign_employee}/`)
+                        .then((response) => {
+                            setEmployeeLocation(response.data); // Assuming response.data contains latitude and longitude
+                        })
+                        .catch((err) => {
+                            console.error("Error fetching employee location:", err.message);
+                        });
+                };
+    
+                fetchEmployeeLocation();
+                const locationInterval = setInterval(fetchEmployeeLocation, 10000);
+    
+                return () => clearInterval(locationInterval);
+            }
+        }, [isSuperUser, project]);
 
     // Handle project actions (add, update, delete)
     const handleAddTask = () => navigate(`/task/${id}/create`);
@@ -218,7 +242,7 @@ function ProjectDetail() {
                         </Marker>
                         {employeeLocation && (
                             <Marker position={[employeeLocation.latitude, employeeLocation.longitude]}>
-                                <Popup>Your Current Location</Popup>
+                                <Popup>Employee Current Location</Popup>
                             </Marker>
                         )}
                         <Circle center={[project.location.latitude, project.location.longitude]} radius={geofenceRadius} color="red" fillOpacity={0.1} />

@@ -76,6 +76,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -83,7 +84,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
+
 ]
 
 ROOT_URLCONF = "backend.urls"
@@ -139,7 +140,7 @@ DATABASES = {
 # Explicitly set the engine to PostGIS if not already present
 if not DATABASES['default'].get('ENGINE'):
     DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
-
+ 
 if not DATABASES['default'].get('NAME'):
     DATABASES['default']['NAME'] = 'peo_vi7s'
 

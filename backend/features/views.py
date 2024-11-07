@@ -109,57 +109,50 @@ class UpdateLocationView(APIView):
         longitude = request.data.get('longitude')
 
         try:
-            # Fetch the employee and the current project the employee is assigned to
+            # Fetch the employee and the assigned ongoing project
             employee = User.objects.get(id=employee_id)
             employee_location = Point(x=longitude, y=latitude, srid=4326)
 
-            # Fetch the active project assigned to the employee
             project = Project.objects.filter(assign_employee=employee, status="ongoing").first()
             if not project:
                 return Response({'status': 'No ongoing project found for this employee'}, status=404)
 
-            # Fetch the associated geofence for the project
             geofence = Geofence.objects.filter(project=project).first()
             if not geofence:
                 return Response({'status': 'No geofence found for this project'}, status=404)
 
-            # Check if the employee's location is within the geofence
-            geofence_area = geofence.area
-
-            if not geofence_area.contains(employee_location):
-                # If the employee is outside the geofence, send a notification
+            # Check if the employee is outside the geofence
+            if not geofence.area.contains(employee_location):
                 notification_message = f"User {employee.username} has moved outside the geofence for project {project.project_name}."
 
-                # Send notification to WebSocket for the assigned employee
+                # Initialize channel layer for WebSocket notifications
                 channel_layer = get_channel_layer()
 
-                # Notify assigned employee
-                async_to_sync(channel_layer.group_send)(
-                    f"user_{employee.id}",
-                    {
-                        "type": "send_notification",
-                        "notification": notification_message,
-                    }
-                )
-
-                # Notify all superusers (admins)
-                admins = User.objects.filter(is_superuser=True)
-                for admin in admins:
+                # Send notifications asynchronously to assigned employee
+                try:
                     async_to_sync(channel_layer.group_send)(
-                        f"user_{admin.id}",
-                        {
-                            "type": "send_notification",
-                            "notification": notification_message,
-                        }
+                        f"user_{employee.id}",
+                        {"type": "send_notification", "notification": notification_message},
                     )
 
-                    # Save the notification in the database for the admin
-                    Notification.objects.create(user=admin, message=notification_message)
+                    # Notify all admins and save the notifications
+                    admins = User.objects.filter(is_superuser=True)
+                    notifications = [Notification(user=admin, message=notification_message) for admin in admins]
+                    notifications.append(Notification(user=employee, message=notification_message))  # For the assigned user
 
-                # Save the notification in the database for the assigned user
-                Notification.objects.create(user=employee, message=notification_message)
+                    Notification.objects.bulk_create(notifications)
 
-            # Save the employee location in the database
+                    # Send WebSocket notifications to all superusers (admins)
+                    for admin in admins:
+                        async_to_sync(channel_layer.group_send)(
+                            f"user_{admin.id}",
+                            {"type": "send_notification", "notification": notification_message},
+                        )
+
+                except Exception as e:
+                    print(f"Error sending WebSocket notification: {e}")
+
+            # Save the employee's location in the database
             EmployeeLocation.objects.create(employee=employee, latitude=latitude, longitude=longitude)
 
             return Response({'status': 'Location updated'}, status=200)
@@ -167,9 +160,6 @@ class UpdateLocationView(APIView):
         except User.DoesNotExist:
             return Response({'status': 'Employee not found'}, status=404)
 
-
-
-        
 
 class EmployeeLocationDetailView(APIView):
     def get(self, request, employee_id):
