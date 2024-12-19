@@ -125,14 +125,26 @@ ASGI_APPLICATION = 'backend.asgi.application'
 # }
 
 
-# For deployment
+# For deployment 1.0
+# DATABASES = {
+#     'default': {
+#             'ENGINE': 'django.contrib.gis.db.backends.postgis',
+#             'NAME': 'peo_vi7s',
+#             'USER': 'peo_admin',
+#             'PASSWORD': '4EbjUZ7abHHYzghDjddeViJxkrTI0GuC',
+#             'HOST': 'dpg-cs77ouaj1k6c73cldpvg-a',
+#             'PORT': '5432',
+#         }
+# }
+
+# For deployment 2.0
 DATABASES = {
     'default': {
             'ENGINE': 'django.contrib.gis.db.backends.postgis',
-            'NAME': 'peo_vi7s',
-            'USER': 'peo_admin',
-            'PASSWORD': '4EbjUZ7abHHYzghDjddeViJxkrTI0GuC',
-            'HOST': 'dpg-cs77ouaj1k6c73cldpvg-a',
+            'NAME': 'geodb_e48a',
+            'USER': 'geodb_e48a_user',
+            'PASSWORD': 'OeGGHrVEYxbIh75IVg753OKQHDDLBKLi',
+            'HOST': 'dpg-cthvm02j1k6c739ibrm0-a',
             'PORT': '5432',
         }
 }

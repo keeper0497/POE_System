@@ -22,7 +22,7 @@ ENV GDAL_LIBRARY_PATH=/usr/lib/libgdal.so.28
 ENV GEOS_LIBRARY_PATH=/usr/lib/libgeos_c.so
 
 # Set the environment variable for the database URL
-ENV DATABASE_URL=postgresql://peo_admin:4EbjUZ7abHHYzghDjddeViJxkrTI0GuC@dpg-cs77ouaj1k6c73cldpvg-a:5432/peo_vi7s
+ENV DATABASE_URL=postgresql://geodb_e48a_user:OeGGHrVEYxbIh75IVg753OKQHDDLBKLi@dpg-cthvm02j1k6c739ibrm0-a/geodb_e48a
 
 # Environment variables for superuser
 ENV DJANGO_SUPERUSER_USERNAME=admin
@@ -38,7 +38,7 @@ COPY requirements.txt .
 RUN pip3 install -r requirements.txt
 
 # Test PostgreSQL connection (Optional)
-RUN psql postgresql://peo_admin:4EbjUZ7abHHYzghDjddeViJxkrTI0GuC@dpg-cs77ouaj1k6c73cldpvg-a:5432/peo_vi7s -c '\l' || echo "Postgres connection failed"
+RUN psql postgresql://geodb_e48a_user:OeGGHrVEYxbIh75IVg753OKQHDDLBKLi@dpg-cthvm02j1k6c739ibrm0-a/geodb_e48a -c '\l' || echo "Postgres connection failed"
 
 # Copy the rest of the project files
 COPY . .
