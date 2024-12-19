@@ -48,6 +48,7 @@ function Home() {
                     setEmployeeId(res.data.id);
                     console.log("Employee ID set to:", res.data.id);
                     getProjects(res.data.id);
+                    setIsSuperUser(res.data.is_superuser);
                     fetchNotifications();
                 } else {
                     console.error("Invalid employee ID in user details:", res.data.id);
