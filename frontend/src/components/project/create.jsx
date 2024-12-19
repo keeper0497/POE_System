@@ -85,21 +85,26 @@ function CreateProject() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-    
-        // Combine date and time into ISO 8601 format
-        const timeInDatetime = formData.project_start && formData.time_in
-            ? `${formData.project_start}T${formData.time_in}:00Z`
-            : null;
-    
-        const timeOutDatetime = formData.project_end && formData.time_out
-            ? `${formData.project_end}T${formData.time_out}:00Z`
-            : null;
+
+         // Validate required fields
+        if (!formData.project_name || !formData.project_start || !formData.project_end || !formData.assign_employee) {
+            alert("Please fill in all required fields.");
+            return;
+        }
+
+        if (!formData.time_in || !formData.time_out) {
+            alert("Please provide both Time In and Time Out.");
+            return;
+        }
+
+        if (!location) {
+            alert("Please select a location on the map.");
+            return;
+        }
     
         // Prepare data payload
         const data = {
             ...formData,
-            time_in: timeInDatetime,
-            time_out: timeOutDatetime,
             location: location ? { latitude: location.lat, longitude: location.lng } : null,
         };
     

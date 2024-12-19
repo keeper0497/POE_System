@@ -83,7 +83,6 @@ function ProjectDetail() {
             })
             .then((response) => {
                 console.log("Location updated:", response.data);
-                console.log(employee_id)
             })
             .catch((err) => {
                 console.error("Error updating location:", err.message);
@@ -209,6 +208,16 @@ function ProjectDetail() {
 
     const geofenceRadius = 800;  // 800 meters radius for geofence
 
+    const formatTime = (time) => {
+        if (!time) return "Not set";
+        try {
+            const [hours, minutes] = time.split(":");
+            return `${hours}:${minutes}`;
+        } catch {
+            return "Invalid time";
+        }
+    };
+
     return (
         <div>
             <Navbar />
@@ -217,8 +226,8 @@ function ProjectDetail() {
                 <h2>{project.project_name}</h2>
                 <p><strong>Start Date:</strong> {project.project_start}</p>
                 <p><strong>End Date:</strong> {project.project_end}</p>
-                <p><strong>Time In:</strong> {project.time_in ? format(new Date(project.time_in), "p") : "Not set"}</p>
-                <p><strong>Time Out:</strong> {project.time_out ? format(new Date(project.time_out), "p") : "Not set"}</p>
+                <p><strong>Time In:</strong> {formatTime(project.time_in)}</p>
+                <p><strong>Time Out:</strong> {formatTime(project.time_out)}</p>
                 <p><strong>Assigned Employee:</strong> {assignedUser || "Not assigned"}</p>
                 <p><strong>Status:</strong> {project.status}</p>
                 
@@ -230,6 +239,14 @@ function ProjectDetail() {
                         <button onClick={handelTaskDetails} className="btn default-btn">Task Info</button>
                         {!isSuperUser && (
                             <button onClick={handleAddTask} className="btn add-task-btn">Add Task</button>
+                        )}
+                        {isSuperUser && (
+                            <button
+                                onClick={() => navigate(`/project/${id}/update-time`)}
+                                className="btn update-time-btn"
+                            >
+                                Update Time
+                            </button>
                         )}
                     </div>
                 </div>
@@ -257,6 +274,7 @@ function ProjectDetail() {
                     <div className="project-actions">
                         <button onClick={handleUpdate} className="btn update-btn">Update Project</button>
                         <button onClick={handleDelete} className="btn delete-btn">Delete Project</button>
+                        
                     </div>
                 )}
 

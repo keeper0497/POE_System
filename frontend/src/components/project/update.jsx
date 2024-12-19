@@ -60,21 +60,21 @@ function UpdateProject() {
         api.get(`/api/projects/${id}/`)
             .then((response) => {
                 setProject(response.data);
-                // Extract time from ISO string (HH:MM format)
-                const timeIn = response.data.time_in
-                    ? response.data.time_in.split("T")[1].slice(0, 5)
-                    : "";
-                const timeOut = response.data.time_out
-                    ? response.data.time_out.split("T")[1].slice(0, 5)
-                    : "";
+                // // Extract time from ISO string (HH:MM format)
+                // const timeIn = response.data.time_in
+                //     ? response.data.time_in.split("T")[1].slice(0, 5)
+                //     : "";
+                // const timeOut = response.data.time_out
+                //     ? response.data.time_out.split("T")[1].slice(0, 5)
+                //     : "";
                 setFormData({
                     project_name: response.data.project_name,
                     project_start: response.data.project_start,
                     project_end: response.data.project_end,
                     assign_employee: response.data.assign_employee,
                     status: response.data.status,  // Ensure status is captured
-                    time_in: timeIn,
-                    time_out: timeOut,
+                    time_in: response.data.time_in || "",
+                    time_out: response.data.time_out || "",
                     address: response.data.address
                 });
                 setLocation({
@@ -100,21 +100,24 @@ function UpdateProject() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-
-        // Combine date and time into ISO 8601 format
-        const timeInDatetime = formData.project_start && formData.time_in
-        ? `${formData.project_start}T${formData.time_in}:00Z`
-        : null;
+        if (!location) {
+            alert("Please select a location on the map.");
+            return;
+        }
+        // // Combine date and time into ISO 8601 format
+        // const timeInDatetime = formData.project_start && formData.time_in
+        // ? `${formData.project_start}T${formData.time_in}:00Z`
+        // : null;
  
-        const timeOutDatetime = formData.project_end && formData.time_out
-            ? `${formData.project_end}T${formData.time_out}:00Z`
-            : null;
+        // const timeOutDatetime = formData.project_end && formData.time_out
+        //     ? `${formData.project_end}T${formData.time_out}:00Z`
+        //     : null;
     
         // Prepare data payload
         const data = {
             ...formData,
-            time_in: timeInDatetime,
-            time_out: timeOutDatetime,
+            // time_in: timeInDatetime,
+            // time_out: timeOutDatetime,
             location: location ? { latitude: location.lat, longitude: location.lng } : null,
         };
 

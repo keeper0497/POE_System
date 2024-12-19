@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Project, Geofence, Task
 from django.contrib.gis.geos import Point
+from datetime import datetime, date
 
 class ProjectSerializer(serializers.ModelSerializer):
     location = serializers.SerializerMethodField()
@@ -30,6 +31,19 @@ class ProjectSerializer(serializers.ModelSerializer):
         instance.assign_employee = validated_data.get('assign_employee', instance.assign_employee)
         instance.status = validated_data.get('status', instance.status)
         instance.address = validated_data.get('address', instance.address)
+
+         # Handle time_in and time_out
+        if 'time_in' in validated_data:
+            time_in = validated_data['time_in']
+            if isinstance(time_in, str):  # Assuming time_in is in "HH:MM" format
+                time_in = datetime.combine(date.today(), datetime.strptime(time_in, "%H:%M").time())
+            instance.time_in = time_in
+
+        if 'time_out' in validated_data:
+            time_out = validated_data['time_out']
+            if isinstance(time_out, str):  # Assuming time_out is in "HH:MM" format
+                time_out = datetime.combine(date.today(), datetime.strptime(time_out, "%H:%M").time())
+            instance.time_out = time_out
 
         instance.save()
         return instance

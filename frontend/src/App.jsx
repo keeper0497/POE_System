@@ -23,6 +23,7 @@ import Register from "./pages/Register"
 import UsersList from "./pages/UserList"
 import UpdateUser from "./pages/UserUpdate"
 import UserDetails from "./components/employee/detail"
+import UpdateTimePage from "./components/project/updatetime"
 
 
 function Logout() {
@@ -189,6 +190,14 @@ function App() {
           element={
             <ProtectedRoute>
               <UserDetails />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/project/:id/update-time" 
+          element={
+            <ProtectedRoute>
+              <UpdateTimePage />
             </ProtectedRoute>
           } 
         />
