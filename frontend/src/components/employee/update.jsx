@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import api from "../../api";
 import "../../styles/employee/update.css";
 import Navbar from "../../components/Navbar";
+import { useNavigate } from "react-router-dom";
 
 function UpdateProfile() {
     const [formData, setFormData] = useState({
@@ -18,6 +19,8 @@ function UpdateProfile() {
         suffix: "",
         email: "",
     });
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchUserProfile();
@@ -48,6 +51,7 @@ function UpdateProfile() {
             .then((res) => {
                 if (res.status === 200) {
                     alert("Profile updated successfully!");
+                    navigate("/view-profile")
                 } else {
                     alert("Failed to update profile.");
                 }
@@ -56,15 +60,15 @@ function UpdateProfile() {
     };
 
     const positions = [
-        "Project Engineer ",
-        "Assistant Project Engineer I",
-        "Assistant Project Engineer II",
+            "Project Engineer ",
+            "Assistant Project Engineer I",
+            "Assistant Project Engineer II",
 
-    ];
-
+        ];
+    
     const divisions = [
-        "Site Engineer",
-    ]
+            "Site Engineer",
+        ]
 
     return (
         <div>
