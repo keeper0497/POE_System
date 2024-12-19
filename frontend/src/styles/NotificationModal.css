@@ -1,43 +1,112 @@
-.notification-modal-container {
-    position: absolute; /* Changed to absolute */
-    top: 50px; /* Adjust this to move the modal down from the bell icon */
-    right: 0; /* Align it to the right */
-    z-index: 1000; /* Ensure it appears above other content */
-}
-
-.notification-modal {
-    background: white;
+/* Overlay to darken the background */
+.notification-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
     padding: 20px;
-    border-radius: 5px;
-    width: 300px;
-    max-height: 300px;
+}
+
+/* Container for the notification modal */
+.notification-modal-container {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    width: 350px;
+    max-height: 80vh;
     overflow-y: auto;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    animation: slide-in 0.3s ease-out;
 }
 
+/* Title styling */
 .notification-modal h2 {
-    margin-top: 0;
+    margin: 0;
+    padding: 15px 20px;
+    background-color: #007bff;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 8px 8px 0 0;
 }
 
+/* Notification list styling */
 .notification-modal ul {
-    list-style-type: none;
+    list-style: none;
+    margin: 0;
     padding: 0;
 }
 
+/* Each notification item */
 .notification-modal li {
-    margin-bottom: 10px;
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 14px;
+    color: #333;
 }
 
-.close-btn {
-    margin-top: 20px;
-    padding: 10px 20px;
+.notification-modal li:last-child {
+    border-bottom: none;
+}
+
+/* Message text */
+.notification-modal li p {
+    margin: 0 0 5px 0;
+    font-weight: 500;
+}
+
+/* Timestamp */
+.notification-modal li small {
+    font-size: 12px;
+    color: #888;
+}
+
+/* Close button */
+.btn.close-btn {
+    width: 100%;
+    padding: 12px;
     border: none;
-    background-color: #007bff;
+    background-color: #f44336;
     color: white;
-    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
     cursor: pointer;
+    border-radius: 0 0 8px 8px;
+    transition: background-color 0.3s;
 }
 
-.close-btn:hover {
-    background-color: #0056b3;
+.btn.close-btn:hover {
+    background-color: #d32f2f;
+}
+
+/* Scrollbar styling for notifications */
+.notification-modal-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.notification-modal-container::-webkit-scrollbar-thumb {
+    background: #cccccc;
+    border-radius: 4px;
+}
+
+.notification-modal-container::-webkit-scrollbar-thumb:hover {
+    background: #aaaaaa;
+}
+
+/* Animation for modal appearance */
+@keyframes slide-in {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }

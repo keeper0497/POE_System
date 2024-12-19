@@ -6,11 +6,13 @@ const NotificationModal = ({ notifications, onClose }) => {
 
     useEffect(() => {
         const handleClickOutside = (event) => {
+            console.log("Clicked:", event.target); // Log the clicked element
             if (modalRef.current && !modalRef.current.contains(event.target)) {
-                onClose(); // Close the modal if clicked outside
+                console.log("Closing modal because click is outside");
+                onClose(); // Close the modal
             }
         };
-
+        
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
             document.removeEventListener("mousedown", handleClickOutside); // Cleanup event listener
