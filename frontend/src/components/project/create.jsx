@@ -66,9 +66,15 @@ function CreateProject() {
 
     // Fetch users/employees from the API
     const fetchEmployees = () => {
-        api.get("/api/users/")  // Assuming your API endpoint for fetching users
-            .then((res) => setEmployees(res.data))
-            .catch((err) => alert(`Error: ${err.message}`));
+        api.get("/api/users/") // Assuming your API endpoint for fetching users
+        .then((res) => {
+            // Filter out superusers
+            const nonSuperusers = res.data.filter(
+                (employee) => !employee.is_superuser && employee.id !== 1
+            );
+            setEmployees(nonSuperusers);
+        })
+        .catch((err) => alert(`Error: ${err.message}`));
     };
 
     // Fetch current user information
