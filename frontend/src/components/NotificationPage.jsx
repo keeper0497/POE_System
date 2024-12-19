@@ -116,7 +116,7 @@ function NotificationsPage() {
         }
 
         // const webSocket = new WebSocket(`ws://localhost:8000/ws/notifications/${currentUser.id}/`);
-        const webSocket = new WebSocket(`wss://poe-system.onrender.com/ws/location/${currentUser.id}/`);
+        const webSocket = new WebSocket(`wss://poe-system.onrender.com/ws/notifications/${currentUser.id}/`);
 
 
         console.log(`Connecting to WebSocket at: wss://poe-system.onrender.com/ws/location/${currentUser.id}/`);

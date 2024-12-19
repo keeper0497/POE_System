@@ -66,7 +66,7 @@ function Home() {
         if (employeeId) {
             console.log(`Setting up WebSocket for employeeId: ${employeeId}`);
             // const ws = new WebSocket(`ws://localhost:8000/ws/notifications/${employeeId}/`);
-            const ws = new WebSocket(`wss://poe-system.onrender.com/ws/location/${employeeId}/`);
+            const ws = new WebSocket(`wss://poe-system.onrender.com/ws/notifications/${employeeId}/`);
 
 
     
