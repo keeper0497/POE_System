@@ -213,9 +213,9 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            # "hosts": [('192.168.230.239', 6379)],
+            # "hosts": [('127.0.0.1', 6379)],
             # "hosts": [os.getenv('REDIS_URL', 'redis://red-cs71lmbtq21c73clh2kg:6379')],
-            "hosts": [("red-cs71lmbtq21c73clh2kg",6379)], # For deployment
+            "hosts": [("red-cs71lmbtq21c73clh2kg",6379)], # For deployment?
         },
     },
 }

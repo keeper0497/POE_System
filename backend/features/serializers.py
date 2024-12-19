@@ -7,7 +7,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ['id', 'project_name', 'location', 'project_start', 'project_end', 'assign_employee', 'status']
+        fields = ['id', 'project_name', 'location', 'project_start', 'project_end', 'assign_employee', 'status', 'time_in', 'time_out', 'address']
 
     def get_location(self, obj):
         if isinstance(obj.location, Point):
@@ -29,6 +29,7 @@ class ProjectSerializer(serializers.ModelSerializer):
         instance.project_end = validated_data.get('project_end', instance.project_end)
         instance.assign_employee = validated_data.get('assign_employee', instance.assign_employee)
         instance.status = validated_data.get('status', instance.status)
+        instance.address = validated_data.get('address', instance.address)
 
         instance.save()
         return instance

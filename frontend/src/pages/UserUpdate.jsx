@@ -1,29 +1,41 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../api";
-import Navbar from "../components/Navbar";  // Assuming you have a Navbar component
-import "../styles/UserUpdate.css"
+import Navbar from "../components/Navbar";
+import "../styles/UserUpdate.css";
 
 function UpdateUser() {
-    const { id } = useParams();  // Get the user ID from URL params
-    const navigate = useNavigate();  // Initialize navigation
+    const { id } = useParams();  // Profile ID passed to the component
+    const navigate = useNavigate();  // For navigation
+    const [userId, setUserId] = useState(null);  // To store the user ID
     const [formData, setFormData] = useState({
         username: "",
         password: "",
     });
     const [error, setError] = useState(null);
 
-    // Fetch user details
+    console.log("Profile ID:", id);
+
+    // Fetch the user profile to get the user ID
     useEffect(() => {
-        api.get(`/api/user/${id}/`)
+        api.get(`/api/user/profile/${id}/`) // Endpoint to fetch profile details
             .then((res) => {
+                console.log("Profile Data:", res.data);
+                const userIdFromProfile = res.data.user; // Extract the user ID
+                setUserId(userIdFromProfile); // Store user ID for the next call
+                
+                // Fetch user details using the user ID
+                return api.get(`/api/user/${userIdFromProfile}/`);
+            })
+            .then((res) => {
+                console.log("User Data:", res.data);
                 setFormData({
                     username: res.data.username,
-                    password: "",  // Password remains blank by default
+                    password: "",  // Password remains blank for security reasons
                 });
             })
             .catch((err) => {
-                setError(`Error fetching user: ${err.message}`);
+                setError(`Error fetching user details: ${err.message}`);
             });
     }, [id]);
 
@@ -36,10 +48,16 @@ function UpdateUser() {
     // Submit the updated data
     const handleSubmit = (e) => {
         e.preventDefault();
-        api.put(`/api/user/update/${id}/`, formData)
+        if (!userId) {
+            setError("User ID not found.");
+            return;
+        }
+
+        // Send updated data to the backend
+        api.put(`/api/user/update/${userId}/`, formData)
             .then(() => {
                 alert("User updated successfully!");
-                navigate("/users-list");  // Redirect to user list page
+                navigate("/users");  // Redirect after success
             })
             .catch((err) => {
                 setError(`Error updating user: ${err.message}`);
@@ -73,7 +91,7 @@ function UpdateUser() {
                             name="password"
                             value={formData.password}
                             onChange={handleChange}
-                            required
+                            placeholder="Enter a new password (optional)"
                         />
                     </label>
                     <button type="submit">Update User</button>

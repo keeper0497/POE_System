@@ -3,8 +3,39 @@ import { useParams, useNavigate } from "react-router-dom";
 import api from "../../api";
 import Navbar from "../../components/Navbar";
 import "../../styles/project/update.css";
-import { MapContainer, TileLayer, Marker, useMapEvents, Popup, Circle } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, useMapEvents, useMap, Popup, Circle } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+
+import { GeoSearchControl, OpenStreetMapProvider } from "leaflet-geosearch";
+import "leaflet/dist/leaflet.css";
+import "leaflet-geosearch/dist/geosearch.css";
+
+
+// Add Search Control to Leaflet Map
+const SearchControl = () => {
+    const map = useMap();
+  
+    useEffect(() => {
+      const provider = new OpenStreetMapProvider();
+  
+      const searchControl = new GeoSearchControl({
+        provider,
+        style: "bar",
+        showMarker: false,
+        showPopup: true,
+        zoom: 20,
+        retainZoomLevel: false,
+        searchLabel: "Enter address",
+      });
+  
+      map.addControl(searchControl);
+      return () => map.removeControl(searchControl);
+    }, [map]);
+  
+    return null;
+  };
+  
+
 
 function UpdateProject() {
     const { id } = useParams();
@@ -16,7 +47,10 @@ function UpdateProject() {
         project_start: "",
         project_end: "",
         assign_employee: "",
+        time_in: "",
+        time_out:"",
         status: "ongoing",  // Add status initialization
+        address: "",
     });
     const [employees, setEmployees] = useState([]);
     const [location, setLocation] = useState(null);  // State for location
@@ -26,12 +60,22 @@ function UpdateProject() {
         api.get(`/api/projects/${id}/`)
             .then((response) => {
                 setProject(response.data);
+                // Extract time from ISO string (HH:MM format)
+                const timeIn = response.data.time_in
+                    ? response.data.time_in.split("T")[1].slice(0, 5)
+                    : "";
+                const timeOut = response.data.time_out
+                    ? response.data.time_out.split("T")[1].slice(0, 5)
+                    : "";
                 setFormData({
                     project_name: response.data.project_name,
                     project_start: response.data.project_start,
                     project_end: response.data.project_end,
                     assign_employee: response.data.assign_employee,
                     status: response.data.status,  // Ensure status is captured
+                    time_in: timeIn,
+                    time_out: timeOut,
+                    address: response.data.address
                 });
                 setLocation({
                     lat: response.data.location.latitude,
@@ -56,12 +100,25 @@ function UpdateProject() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const updatedData = {
+
+        // Combine date and time into ISO 8601 format
+        const timeInDatetime = formData.project_start && formData.time_in
+        ? `${formData.project_start}T${formData.time_in}:00Z`
+        : null;
+ 
+        const timeOutDatetime = formData.project_end && formData.time_out
+            ? `${formData.project_end}T${formData.time_out}:00Z`
+            : null;
+    
+        // Prepare data payload
+        const data = {
             ...formData,
+            time_in: timeInDatetime,
+            time_out: timeOutDatetime,
             location: location ? { latitude: location.lat, longitude: location.lng } : null,
         };
 
-        api.put(`/api/projects/${id}/`, updatedData)
+        api.put(`/api/projects/${id}/`, data)
             .then(() => {
                 navigate(`/detail-project/${id}`);
             })
@@ -73,6 +130,7 @@ function UpdateProject() {
         useMapEvents({
             click(e) {
                 setLocation(e.latlng);
+                getAddressFromCoordinates(e.latlng.lat, e.latlng.lng); // Fetch address on marker placement
             },
         });
 
@@ -88,6 +146,24 @@ function UpdateProject() {
     }
 
     const geofenceRadius = 800;  // 800 meters radius
+
+    // Function to fetch address using reverse geocoding
+    const getAddressFromCoordinates = async (lat, lng) => {
+        try {
+            const response = await fetch(
+                `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`
+            );
+            const data = await response.json();
+            if (data && data.display_name) {
+                setFormData((prevState) => ({
+                    ...prevState,
+                    address: data.display_name,
+                }));
+            }
+        } catch (error) {
+            console.error("Error fetching address:", error);
+        }
+    };
 
     return (
         <div>
@@ -126,6 +202,28 @@ function UpdateProject() {
                         />
                     </label>
                     <label>
+                        Tine In:
+                        <input
+                            type="time"
+                            name="time_in"
+                            value={formData.time_in}
+                            onChange={handleChange}
+                            required
+                            className="time-in"
+                        />
+                    </label>
+                    <label>
+                        Tine out:
+                        <input
+                            type="time"
+                            name="time_out"
+                            value={formData.time_out}
+                            onChange={handleChange}
+                            required
+                            className="time-out"
+                        />  
+                    </label>
+                    <label>
                         Assign Employee:
                         <select
                             name="assign_employee"
@@ -136,8 +234,8 @@ function UpdateProject() {
                         >
                             <option value="">Select Employee</option>
                             {employees.map((employee) => (
-                                <option key={employee.id} value={employee.id}>
-                                    {employee.username}
+                                <option key={employee.user} value={employee.user}>
+                                    {employee.first_name} {employee.last_name}
                                 </option>
                             ))}
                         </select>
@@ -155,6 +253,17 @@ function UpdateProject() {
                             <option value="upcoming">Upcoming</option>
                         </select>
                     </label>
+                    <label>
+                        Address:
+                        <input
+                            type="text"
+                            name="address"
+                            value={formData.address}
+                            onChange={handleChange}
+                            required
+                            className="address"
+                        />
+                    </label>
                     <button type="submit">Update Project</button>
                 </form>
 
@@ -165,6 +274,7 @@ function UpdateProject() {
                         key={location ? location.lat : 'default'} // Force re-render of map on location change
                         style={{ height: "400px", width: "100%" }}
                     >
+                        <SearchControl />
                         <TileLayer
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

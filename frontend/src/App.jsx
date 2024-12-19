@@ -22,6 +22,7 @@ import ViewTask from "./components/task/details_task"
 import Register from "./pages/Register"
 import UsersList from "./pages/UserList"
 import UpdateUser from "./pages/UserUpdate"
+import UserDetails from "./components/employee/detail"
 
 
 function Logout() {
@@ -180,6 +181,14 @@ function App() {
           element={
             <ProtectedRoute>
               <UpdateUser />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/detail-user/:id" 
+          element={
+            <ProtectedRoute>
+              <UserDetails />
             </ProtectedRoute>
           } 
         />

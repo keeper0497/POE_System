@@ -2,6 +2,7 @@ html, body {
   background-color: #FEFAF6;
   margin: 0;
   padding: 0;
+
 }
 
 .create-profile {
@@ -10,8 +11,9 @@ html, body {
     padding: 2rem;
     background-color: #FEFAF6;
     border-radius: 8px;
-    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
-    padding-left: 260px;
+    /* display: flex; Use flexbox for centering */
+    justify-content: center; 
+    align-items: center;   
 }
 
 .create-profile h2 {
@@ -25,7 +27,8 @@ html, body {
     margin-bottom: 1rem;
 }
 
-.create-profile input {
+.create-profile input,
+.create-profile select {
     width: 100%;
     padding: 0.5rem;
     margin-top: 0.5rem;

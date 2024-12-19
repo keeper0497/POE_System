@@ -9,36 +9,22 @@ function UsersList() {
     const [error, setError] = useState(null);
     const navigate = useNavigate();  // Initialize navigation
 
-    // Fetch the list of users when the component mounts
     useEffect(() => {
         fetchUsers();
     }, []);
 
     const fetchUsers = () => {
         api.get("/api/users/")
-            .then((res) => {
-                setUsers(res.data);
-            })
-            .catch((err) => {
-                setError(`Error: ${err.message}`);
-            });
+            .then((res) => setUsers(res.data))
+            .catch((err) => setError(`Error: ${err.message}`));
     };
 
-    // Delete user by ID
-    const handleDelete = (userId) => {
-        api.delete(`/api/user/delete/${userId}/`)
-            .then(() => {
-                alert("User deleted successfully!");
-                fetchUsers();  // Refresh user list after deletion
-            })
-            .catch((err) => {
-                alert(`Error deleting user: ${err.message}`);
-            });
-    };
-
-    // Navigate to update user page
     const handleUpdate = (userId) => {
         navigate(`/update-user/${userId}`);
+    };
+
+    const handleViewDetails = (userId) => {
+        navigate(`/user-details/${userId}`);  // Navigate to user details page
     };
 
     if (error) {
@@ -63,6 +49,10 @@ function UsersList() {
         );
     }
 
+    const handleResigration = () => {
+        navigate("/register")
+    };
+
     return (
         <div>
             <Navbar />
@@ -71,24 +61,29 @@ function UsersList() {
                 <table className="users-table">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Username</th>
-                            <th>Actions</th> {/* New column for actions */}
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Middle Name</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         {users.map((user) => (
                             <tr key={user.id}>
-                                <td>{user.id}</td>
-                                <td>{user.username}</td>
+                                <td>{user.first_name}</td>
+                                <td>{user.last_name}</td>
+                                <td>{user.middle_name}</td>
                                 <td>
                                     <button className="update-btn" onClick={() => handleUpdate(user.id)}>Update</button>
-                                    <button className="delete-btn" onClick={() => handleDelete(user.id)}>Delete</button>
+                                    <button className="view-btn" onClick={() => handleViewDetails(user.id)}>Details</button>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
+                <button onClick={handleResigration} className="button register-btn">
+                            Register
+                </button>
             </div>
         </div>
     );

@@ -6,11 +6,13 @@ from django.contrib.auth.models import User
 
 class Project(models.Model):
     project_name = models.CharField(max_length=100)
-    location = gis_models.PointField(blank=True, null=True)
+    location = gis_models.PointField(geography=False, srid=4326 ,blank=True, null=True)
     project_start = models.DateField()
     project_end = models.DateField()
+    time_in = models.DateTimeField(blank=True, null=True)
+    time_out = models.DateTimeField(blank=True, null=False)
     assign_employee = models.ForeignKey(User, on_delete=models.CASCADE)
-    # created_by = models.IntegerField()
+    address = models.CharField(max_length=2500, blank=True, null=True)
     status = models.CharField(max_length=20, choices=[('ongoing', 'Ongoing'), ('done', 'Done'), ('upcoming', 'Upcoming')], default='upcoming')
 
     def __str__(self):

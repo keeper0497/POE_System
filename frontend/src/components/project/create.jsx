@@ -2,9 +2,39 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";  // Import useNavigate
 import api from "../../api";
 import "../../styles/project/create.css";
-import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, useMapEvents, useMap, ZoomControl } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import Navbar from "../../components/Navbar";
+
+import { GeoSearchControl, OpenStreetMapProvider } from "leaflet-geosearch";
+import "leaflet/dist/leaflet.css";
+import "leaflet-geosearch/dist/geosearch.css";
+
+
+// Add Search Control to Leaflet Map
+const SearchControl = () => {
+    const map = useMap();
+  
+    useEffect(() => {
+      const provider = new OpenStreetMapProvider();
+  
+      const searchControl = new GeoSearchControl({
+        provider,
+        style: "bar",
+        showMarker: false,
+        showPopup: true,
+        zoom: 20,
+        retainZoomLevel: false,
+        searchLabel: "Enter address",
+      });
+  
+      map.addControl(searchControl);
+      return () => map.removeControl(searchControl);
+    }, [map]);
+  
+    return null;
+  };
+  
 
 function CreateProject() {
     const [formData, setFormData] = useState({
@@ -12,7 +42,10 @@ function CreateProject() {
         project_start: "",
         project_end: "",
         assign_employee: "",
+        time_in: "",
+        time_out:"",
         status: "upcoming", // default value
+        address: "",
     });
     const [location, setLocation] = useState(null);
     const [projects, setProjects] = useState([]);
@@ -52,35 +85,57 @@ function CreateProject() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
+    
+        // Combine date and time into ISO 8601 format
+        const timeInDatetime = formData.project_start && formData.time_in
+            ? `${formData.project_start}T${formData.time_in}:00Z`
+            : null;
+    
+        const timeOutDatetime = formData.project_end && formData.time_out
+            ? `${formData.project_end}T${formData.time_out}:00Z`
+            : null;
+    
+        // Prepare data payload
         const data = {
             ...formData,
+            time_in: timeInDatetime,
+            time_out: timeOutDatetime,
             location: location ? { latitude: location.lat, longitude: location.lng } : null,
         };
-
+    
+        // Send the data to the backend API
         api.post("/api/projects/", data)
             .then((res) => {
                 if (res.status === 201) {
                     alert("Project created successfully!");
+    
+                    // Reset form fields
                     setFormData({
                         project_name: "",
                         project_start: "",
                         project_end: "",
+                        time_in: "",
+                        time_out: "",
                         assign_employee: "",
-                        status: "upcoming", // reset to default value
+                        status: "upcoming", // Reset to default
+                        address: "",
                     });
                     setLocation(null);
-                    if (formData.assign_employee !== currentUser.id) {  // Ensure admin doesn't get a notification
+    
+                    // Send notification to assigned employee (exclude the admin)
+                    if (formData.assign_employee !== currentUser.id) {
                         sendNotificationToEmployee(formData.assign_employee, formData.project_name);
                     }
-                    
+    
                     // Redirect to the Home page after project creation
-                    navigate("/");  // Redirect to the Home page
+                    navigate("/");
                 } else {
                     alert("Failed to create project.");
                 }
             })
-            .catch((err) => alert(`Error: ${err.message}`));
+            .catch((err) => {
+                alert(`Error: ${err.response?.data?.detail || err.message}`);
+            });
     };
 
     const sendNotificationToEmployee = (employeeId, projectName) => {
@@ -101,6 +156,7 @@ function CreateProject() {
         useMapEvents({
             click(e) {
                 setLocation(e.latlng);
+                getAddressFromCoordinates(e.latlng.lat, e.latlng.lng); // Fetch address on marker placement
             },
         });
 
@@ -114,21 +170,23 @@ function CreateProject() {
             .catch((err) => alert(`Error: ${err.message}`));
     };
 
-    // const calculateStatusSummary = (projects) => {
-    //     const summary = { done: 0, ongoing: 0, upcoming: 0 };
-
-    //     projects.forEach((project) => {
-    //         if (project.status === "done") {
-    //             summary.done += 1;
-    //         } else if (project.status === "ongoing") {
-    //             summary.ongoing += 1;
-    //         } else if (project.status === "upcoming") {
-    //             summary.upcoming += 1;
-    //         }
-    //     });
-
-    //     setStatusSummary(summary);
-    // };
+    // Function to fetch address using reverse geocoding
+    const getAddressFromCoordinates = async (lat, lng) => {
+        try {
+            const response = await fetch(
+                `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`
+            );
+            const data = await response.json();
+            if (data && data.display_name) {
+                setFormData((prevState) => ({
+                    ...prevState,
+                    address: data.display_name,
+                }));
+            }
+        } catch (error) {
+            console.error("Error fetching address:", error);
+        }
+    };
 
     return (
         <div>
@@ -176,6 +234,28 @@ function CreateProject() {
                             />
                         </label>
                         <label>
+                            Tine In:
+                            <input
+                                type="time"
+                                name="time_in"
+                                value={formData.time_in}
+                                onChange={handleChange}
+                                required
+                                className="time-in"
+                            />
+                        </label>
+                        <label>
+                            Tine out:
+                            <input
+                                type="time"
+                                name="time_out"
+                                value={formData.time_out}
+                                onChange={handleChange}
+                                required
+                                className="time-out"
+                            />  
+                        </label>
+                        <label>
                             Status:
                             <select
                                 name="status"
@@ -200,18 +280,31 @@ function CreateProject() {
                             >
                                 <option value="">Select Employee</option>
                                 {employees.map((employee) => (
-                                    <option key={employee.id} value={employee.id}>
-                                        {employee.username}
+                                    <option key={employee.user} value={employee.user}>
+                                        {employee.first_name} {employee.last_name}
                                     </option>
                                 ))}
                             </select>
                         </label>
+                        <label>
+                            Address:
+                            <input
+                                type="text"
+                                name="address"
+                                value={formData.address}
+                                onChange={handleChange}
+                                required
+                                className="address"
+                            />
+                        </label>
                         <div className="map-container">
                             <MapContainer center={[13.6051, 124.2460]} zoom={13} style={{ height: "400px" }}>
+                            <SearchControl />
                                 <TileLayer
                                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                                 />
+                                
                                 <LocationMarker />
                             </MapContainer>
                         </div>

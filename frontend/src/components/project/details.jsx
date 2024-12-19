@@ -6,6 +6,8 @@ import Navbar from "../../components/Navbar";
 import { MapContainer, TileLayer, Marker, Popup, Circle } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "../../styles/project/detail.css";
+import { format } from "date-fns";
+
 // import NotificationModal from "../../components/NotificationModal"; // Import NotificationModal
 
 const SOCKET_URL = "wss://poe-system.onrender.com/ws/location/";
@@ -215,12 +217,14 @@ function ProjectDetail() {
                 <h2>{project.project_name}</h2>
                 <p><strong>Start Date:</strong> {project.project_start}</p>
                 <p><strong>End Date:</strong> {project.project_end}</p>
+                <p><strong>Time In:</strong> {project.time_in ? format(new Date(project.time_in), "p") : "Not set"}</p>
+                <p><strong>Time Out:</strong> {project.time_out ? format(new Date(project.time_out), "p") : "Not set"}</p>
                 <p><strong>Assigned Employee:</strong> {assignedUser || "Not assigned"}</p>
                 <p><strong>Status:</strong> {project.status}</p>
                 
                 {/* Check if location exists before rendering */}
                 <p><strong>Location:</strong> {project.location ? `${project.location.latitude}, ${project.location.longitude}` : "Not set"}</p>
-
+                <p><strong>Address:</strong> {project.address}</p>
                 <div className="project-button">
                     <div className="project-task">
                         <button onClick={handelTaskDetails} className="btn default-btn">Task Info</button>

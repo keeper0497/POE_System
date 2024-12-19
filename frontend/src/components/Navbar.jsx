@@ -46,21 +46,21 @@ const Navbar = () => {
             {/* Navbar */}
             <nav className={`navbar ${menuActive ? "active" : ""}`}>
                 <div className="navbar-brand">
-                    <h1>PEO System</h1>
+                    <h1>GeoTracker</h1>
                     
                 </div>
 
                 <ul className="navbar-links">
                     <li>
                         <Link to="/" className="navbar-link" onClick={toggleMenu}>
-                            <FaHome className="navbar-icon" /> Overview
+                            <FaHome className="navbar-icon" /> Dashboard
                         </Link>
                     </li>
-                    <li>
+                    {/* <li>
                         <Link to="/view-project" className="navbar-link" onClick={toggleMenu}>
                             <FaBook className="navbar-icon" /> Projects
                         </Link>
-                    </li>
+                    </li> */}
                     <li>
                         <Link to="/calendar-project" className="navbar-link" onClick={toggleMenu}>
                             <FaCalendarAlt className="navbar-icon" /> Calendar
@@ -77,13 +77,13 @@ const Navbar = () => {
                         </Link>
                     </li>
                     {/* Conditionally render the Register link only if the user is an admin */}
-                    {isAdmin && (
+                    {/* {isAdmin && (
                         <li>
                             <Link to="/register" className="navbar-link" onClick={toggleMenu}>
                                 <FaRegistered className="navbar-icon" /> Register
                             </Link>
                         </li>
-                    )}
+                    )} */}
                      {isAdmin && (
                         <li>
                             <Link to="/users" className="navbar-link" onClick={toggleMenu}>

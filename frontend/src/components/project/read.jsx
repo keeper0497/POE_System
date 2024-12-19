@@ -3,7 +3,35 @@ import { useNavigate } from "react-router-dom";
 import api from "../../api";
 import "../../styles/project/read.css";
 import Navbar from "../../components/Navbar";
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import { GeoSearchControl, OpenStreetMapProvider } from "leaflet-geosearch";
+import "leaflet/dist/leaflet.css";
+import "leaflet-geosearch/dist/geosearch.css";
+
+
+// Add Search Control to Leaflet Map
+const SearchControl = () => {
+    const map = useMap();
+  
+    useEffect(() => {
+      const provider = new OpenStreetMapProvider();
+  
+      const searchControl = new GeoSearchControl({
+        provider,
+        style: "bar",
+        showMarker: true,
+        showPopup: true,
+        retainZoomLevel: false,
+        searchLabel: "Enter address",
+      });
+  
+      map.addControl(searchControl);
+      return () => map.removeControl(searchControl);
+    }, [map]);
+  
+    return null;
+  };
+  
 
 function ProjectList() {
     const [projects, setProjects] = useState([]);
@@ -84,12 +112,12 @@ function ProjectList() {
                     <p className="statuscode-upcoming"><strong>Upcoming:</strong> {statusSummary.upcoming}</p>
                 </div>
 
-                {/* Conditionally render "Create New Project" button for superusers */}
+                {/* Conditionally render "Create New Project" button for superusers
                 {isSuperUser && (
                     <button onClick={handleCreateProject} className="create-project-btn">
                         Create New Project
                     </button>
-                )}
+                )} */}
 
                 <div className="map-container">
                     <MapContainer center={[13.6051, 124.2460]} zoom={13}>
@@ -97,6 +125,9 @@ function ProjectList() {
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         />
+                        {/* Add Search Control */}
+                        <SearchControl />
+
                         {projects.map((project) => (
                             <Marker
                                 key={project.id}

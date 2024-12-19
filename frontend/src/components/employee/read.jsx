@@ -59,18 +59,17 @@ function ReadProfile() {
             <div className="profile-container">
                 <h2>User Profile</h2>
                 <div className="profile-details">
+                    <p><strong>First Name:</strong> {profile.first_name}</p>
+                    <p><strong>Last Name:</strong> {profile.last_name}</p>
+                    <p><strong>Middle Name:</strong> {profile.middle_name}</p>
+                    {profile.suffix && <p><strong>Suffix:</strong> {profile.suffix}</p>}
+                    <p><strong>Email:</strong> {profile.email}</p>
                     <p><strong>Position:</strong> {profile.position}</p>
                     <p><strong>Division:</strong> {profile.division}</p>
                     <p><strong>Start Date:</strong> {profile.start_date}</p>
                     {/* <p><strong>Number of Sick Leaves:</strong> {profile.num_sickleave}</p> */}
                     {/* <p><strong>Number of Vacation Leaves:</strong> {profile.num_vacationleave}</p> */} 
                     <p><strong>Contact Number:</strong> {profile.contact_number}</p>
-                    <p><strong>Custom User ID:</strong> {profile.custom_user_id}</p>
-                    <p><strong>First Name:</strong> {profile.first_name}</p>
-                    <p><strong>Last Name:</strong> {profile.last_name}</p>
-                    <p><strong>Middle Name:</strong> {profile.middle_name}</p>
-                    {profile.suffix && <p><strong>Suffix:</strong> {profile.suffix}</p>}
-                    <p><strong>Email:</strong> {profile.email}</p>
                 </div>
                 <div className="profile-buttons">
                     <button onClick={() => navigate('/update-profile')} className="btn edit-btn">Edit Profile</button>

@@ -52,83 +52,32 @@ function UpdateProfile() {
             .catch((err) => alert(`Error: ${err.message}`));
     };
 
+    const positions = [
+        "Manager",
+        "Assistant Manager",
+        "Team Lead",
+        "Senior Developer",
+        "Junior Developer",
+        "HR Specialist",
+        "Accountant",
+        "Intern",
+    ];
+
+    const divisions = [
+        "Human Resources Division",
+        "Management Division",
+        "Finance Division",
+        "Research and development Division",
+        "IT Division",
+    ]
+
     return (
         <div>
             <Navbar />
             <div className="update-profile">
                 <h2>Update User Profile</h2>
                 <form onSubmit={handleSubmit}>
-                    <label>
-                        Position:
-                        <input
-                            type="text"
-                            name="position"
-                            value={formData.position}
-                            onChange={handleChange}
-                            required
-                        />
-                    </label>
-                    <label>
-                        Division:
-                        <input
-                            type="text"
-                            name="division"
-                            value={formData.division}
-                            onChange={handleChange}
-                            required
-                        />
-                    </label>
-                    <label>
-                        Start Date:
-                        <input
-                            type="date"
-                            name="start_date"
-                            value={formData.start_date}
-                            onChange={handleChange}
-                            required
-                        />
-                    </label>
-                    {/* <label>
-                        Number of Sick Leaves:
-                        <input
-                            type="number"
-                            name="num_sickleave"
-                            value={formData.num_sickleave}
-                            onChange={handleChange}
-                            required
-                        />
-                    </label> */}
-                    {/* <label>
-                        Number of Vacation Leaves:
-                        <input
-                            type="number"
-                            name="num_vacationleave"
-                            value={formData.num_vacationleave}
-                            onChange={handleChange}
-                            required
-                        />
-                    </label> */}
-                    <label>
-                        Contact Number:
-                        <input
-                            type="text"
-                            name="contact_number"
-                            value={formData.contact_number}
-                            onChange={handleChange}
-                            required
-                        />
-                    </label>
-                    <label>
-                        Custom User ID:
-                        <input
-                            type="text"
-                            name="custom_user_id"
-                            value={formData.custom_user_id}
-                            onChange={handleChange}
-                            required
-                        />
-                    </label>
-                    <label>
+                <label>
                         First Name:
                         <input
                             type="text"
@@ -155,7 +104,6 @@ function UpdateProfile() {
                             name="middle_name"
                             value={formData.middle_name}
                             onChange={handleChange}
-                            required
                         />
                     </label>
                     <label>
@@ -177,6 +125,59 @@ function UpdateProfile() {
                             required
                         />
                     </label>
+                    <label>
+                        Position:
+                        <select
+                            name="position"
+                            value={formData.position}
+                            onChange={handleChange}
+                            required
+                        >
+                            <option value="" disabled>Select Position</option>
+                            {positions.map((position, index) => (
+                                <option key={index} value={position}>
+                                    {position}
+                                </option>
+                            ))}
+                        </select>
+                    </label>
+                    <label>
+                        Division:
+                        <select
+                            name="division"
+                            value={formData.division}
+                            onChange={handleChange}
+                            required
+                        >
+                            <option value="" disabled>Select Position</option>
+                            {divisions.map((division, index) => (
+                                <option key={index} value={division}>
+                                    {division}
+                                </option>
+                            ))}
+                        </select>
+                    </label>
+                    <label>
+                        Start Date:
+                        <input
+                            type="date"
+                            name="start_date"
+                            value={formData.start_date}
+                            onChange={handleChange}
+                            required
+                        />
+                    </label>
+                    <label>
+                        Contact Number:
+                        <input
+                            type="text"
+                            name="contact_number"
+                            value={formData.contact_number}
+                            onChange={handleChange}
+                            required
+                        />
+                    </label>
+                    
                     <button type="submit">Update Profile</button>
                 </form>
             </div>

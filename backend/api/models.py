@@ -7,13 +7,10 @@ class UserProfile(models.Model):
     position = models.CharField(max_length=2500, blank=False, null=False)
     division = models.CharField(max_length=2500, blank=False, null=False)
     start_date = models.DateField()
-    num_sickleave = models.IntegerField(blank= True, null= True)
-    num_vacationleave = models.IntegerField(blank= True, null= True)
     contact_number = models.CharField(max_length=250, unique=True, blank=False, null=True)
-    custom_user_id = models.CharField(max_length=250, unique=True, blank=False, null=False)
     first_name = models.CharField(max_length=2500, blank=False, null=False)
     last_name = models.CharField(max_length=2500, blank=False, null=False)
-    middle_name = models.CharField(max_length=2500, blank=False, null=False)
+    middle_name = models.CharField(max_length=2500, blank=True, null=True)
     suffix = models.CharField(max_length=500, blank=True, null=True)
     email = models.EmailField(unique=True)
 
@@ -29,3 +26,12 @@ class Notification(models.Model):
 
     def __str__(self):
         return f'Notification for {self.user.username}'
+
+class Message(models.Model):
+    sender = models.ForeignKey(User, related_name="sent_messages", on_delete=models.CASCADE)
+    receiver = models.ForeignKey(User, related_name="received_messages", on_delete=models.CASCADE)
+    content = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Message from {self.sender.username} to {self.receiver.username}"

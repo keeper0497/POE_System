@@ -1,126 +1,125 @@
-.notifications-container {
-    max-width: 1200px;
-    margin: 0 auto;
+.messages-container {
+    max-width: 700px;
+    margin: 20px auto;
     padding: 20px;
-    background-color: #f4f6f8;
-    padding-left: 260px;
-    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-h2 {
-    font-size: 28px;
-    margin-bottom: 25px;
-    color: #333;
-    text-align: center; /* Center-align the title */
-    border-bottom: 2px solid #007bff;
-    padding-bottom: 10px;
+.messages-header {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: #343a40;
+    font-weight: bold;
 }
 
-.notifications-list {
-    display: flex;
-    flex-direction: column;
-    gap: 15px; /* Add space between notification cards */
-}
-
-.notification-card {
-    background-color: #fff;
-    border: 1px solid #dcdcdc;
-    border-radius: 8px;
-    padding: 15px;
+.user-selection {
+    margin-bottom: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
-.notification-card:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Subtle shadow on hover */
-    transform: translateY(-3px); /* Lift effect on hover */
-}
-
-.notification-id {
-    font-size: 12px;
-    color: #888;
-    margin-right: 20px;
-}
-
-.notification-title {
-    font-size: 18px;
+.user-selection label {
+    font-size: 1rem;
+    color: #495057;
     font-weight: bold;
-    flex-grow: 1;
-    color: #333;
 }
 
-.notification-action {
-    margin-left: 20px;
-}
-
-.new-message-button {
-    background-color: #007bff;
-    border: none;
-    padding: 8px 15px;
+.user-selection select {
+    padding: 8px 12px;
+    font-size: 1rem;
+    border: 1px solid #ced4da;
     border-radius: 5px;
+    background-color: #fff;
     cursor: pointer;
-    font-size: 14px;
-    color: #fff;
-    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.new-message-button:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px);
+.messages-list {
+    max-height: 500px;
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid #e9ecef;
+    border-radius: 10px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-/* Responsive Styling for Tablets */
-@media (max-width: 768px) {
-    .notifications-container {
-        padding: 15px;
-        padding-left: 20px; /* Remove left padding to adjust for smaller screens */
-    }
-
-    h2 {
-        font-size: 24px;
-        text-align: left; /* Align title to left on smaller screens */
-    }
-
-    .notification-card {
-        padding: 12px;
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .notification-id,
-    .notification-action {
-        margin: 10px 0;
-    }
-
-    .new-message-button {
-        padding: 8px 12px;
-        font-size: 13px;
-    }
+.message-row {
+    display: flex;
+    align-items: flex-start;
 }
 
-/* Responsive Styling for Mobile */
-@media (max-width: 480px) {
-    .notifications-container {
-        padding: 10px;
-    }
+.user-message {
+    margin-left: auto;
+    background-color: #d1e7dd;
+    color: #0f5132;
+    padding: 10px 15px;
+    border-radius: 15px 15px 0 15px;
+    max-width: 70%;
+    word-wrap: break-word;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: right;
+}
 
-    h2 {
-        font-size: 20px;
-    }
+.admin-message {
+    margin-right: auto;
+    background-color: #f8d7da;
+    color: #842029;
+    padding: 10px 15px;
+    border-radius: 15px 15px 15px 0;
+    max-width: 70%;
+    word-wrap: break-word;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
 
-    .notification-card {
-        padding: 10px;
-    }
+.message-timestamp {
+    font-size: 0.8rem;
+    color: #6c757d;
+    margin-top: 5px;
+    text-align: right;
+}
 
-    .notification-title {
-        font-size: 16px;
-    }
+.message-input-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
 
-    .new-message-button {
-        font-size: 12px;
-        padding: 6px 10px;
-    }
+.message-input {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ced4da;
+    border-radius: 25px;
+    font-size: 1rem;
+    outline: none;
+}
+
+.send-button {
+    background-color: #4caf50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.send-button:hover {
+    background-color: #45a049;
+}
+
+.no-messages {
+    text-align: center;
+    color: #6c757d;
+    font-size: 1rem;
+    margin-top: 20px;
 }
