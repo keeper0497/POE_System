@@ -40,6 +40,9 @@ function UpdateProfile() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        // Prepare payload, excluding username and password
+        const { username, password, ...profileData } = formData;
+
         api
             .put("/api/user-profile-update/", formData)  // Update the profile with the form data
             .then((res) => {
@@ -53,22 +56,14 @@ function UpdateProfile() {
     };
 
     const positions = [
-        "Manager",
-        "Assistant Manager",
-        "Team Lead",
-        "Senior Developer",
-        "Junior Developer",
-        "HR Specialist",
-        "Accountant",
-        "Intern",
+        "Project Engineer ",
+        "Assistant Project Engineer I",
+        "Assistant Project Engineer II",
+
     ];
 
     const divisions = [
-        "Human Resources Division",
-        "Management Division",
-        "Finance Division",
-        "Research and development Division",
-        "IT Division",
+        "Site Engineer",
     ]
 
     return (

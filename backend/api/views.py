@@ -50,12 +50,15 @@ class UserProfileDetailView(generics.RetrieveAPIView):
         return queryset.first()
 
 class UserProfileUpdateView(generics.UpdateAPIView):
-    serializer_class = UserUpdateSerializer
+    serializer_class = UserProfileSerializer
     permission_classes = [IsAuthenticated]
 
     def get_object(self):
         return UserProfile.objects.get(user=self.request.user)
-
+    
+    def partial_update(self, request, *args, **kwargs):
+        kwargs['partial'] = True
+        return super().partial_update(request, *args, **kwargs)
 
 class UserProfileDeleteView(generics.DestroyAPIView):
     queryset = UserProfile.objects.all()
@@ -157,6 +160,7 @@ class UserNotifications(APIView):
 
             # Notify all admin users
             admin_users = User.objects.filter(is_superuser=True)
+            print(f"Admin users fetched: {list(admin_users)}")  # Debugging log
             for admin in admin_users:
                 Notification.objects.create(user=admin, message=message)
 

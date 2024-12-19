@@ -51,22 +51,14 @@
                 .catch((err) => alert(`Error: ${err.message}`));
         };
         const positions = [
-            "Manager",
-            "Assistant Manager",
-            "Team Lead",
-            "Senior Developer",
-            "Junior Developer",
-            "HR Specialist",
-            "Accountant",
-            "Intern",
+            "Project Engineer ",
+            "Assistant Project Engineer I",
+            "Assistant Project Engineer II",
+
         ];
     
         const divisions = [
-            "Human Resources Division",
-            "Management Division",
-            "Finance Division",
-            "Research and development Division",
-            "IT Division",
+            "Site Engineer",
         ]
 
         return (
