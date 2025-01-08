@@ -3,14 +3,18 @@ import { useNavigate } from "react-router-dom";
 import api from "../../api";
 import "../../styles/employee/read.css";
 import Navbar from "../../components/Navbar";
+import NotificationModal from "../../components/NotificationModal";
 
 function ReadProfile() {
     const [profile, setProfile] = useState(null);
     const [error, setError] = useState(null);
+    const [notifications, setNotifications] = useState([]);
+    const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
         fetchUserProfile();
+        fetchNotifications();
     }, []);
 
     const fetchUserProfile = () => {
@@ -24,8 +28,15 @@ function ReadProfile() {
             });
     };
 
+    const fetchNotifications = () => {
+        api.get("/api/notifications/")
+            .then((res) => {
+                setNotifications(res.data);
+            })
+            .catch((err) => console.error(`Error fetching notifications: ${err.message}`));
+    };
+
     const handleLogout = () => {
-        // Add your logout logic here, e.g., clearing tokens, etc.
         navigate('/login');
     };
 
@@ -33,6 +44,12 @@ function ReadProfile() {
         return (
             <div>
                 <Navbar />
+                <div className="bell-icon-container">
+                    <span className="bell-icon" onClick={() => setShowModal(true)}>
+                        <i className="fa fa-bell"></i>
+                        {notifications.length > 0 && <span className="notification-count">{notifications.length}</span>}
+                    </span>
+                </div>
                 <div className="profile-container">
                     <h2>{error}</h2>
                     <button onClick={() => navigate('/create-profile')} className="btn default-btn">Create Profile</button>
@@ -46,6 +63,12 @@ function ReadProfile() {
         return (
             <div>
                 <Navbar />
+                <div className="bell-icon-container">
+                    <span className="bell-icon" onClick={() => setShowModal(true)}>
+                        <i className="fa fa-bell"></i>
+                        {notifications.length > 0 && <span className="notification-count">{notifications.length}</span>}
+                    </span>
+                </div>
                 <div className="profile-container">
                     <h2>Loading Profile...</h2>
                 </div>
@@ -56,6 +79,12 @@ function ReadProfile() {
     return (
         <div>
             <Navbar />
+            <div className="bell-icon-container">
+                <span className="bell-icon" onClick={() => setShowModal(true)}>
+                    <i className="fa fa-bell"></i>
+                    {notifications.length > 0 && <span className="notification-count">{notifications.length}</span>}
+                </span>
+            </div>
             <div className="profile-container">
                 <h2>User Profile</h2>
                 <div className="profile-details">
@@ -67,8 +96,6 @@ function ReadProfile() {
                     <p><strong>Position:</strong> {profile.position}</p>
                     <p><strong>Division:</strong> {profile.division}</p>
                     <p><strong>Start Date:</strong> {profile.start_date}</p>
-                    {/* <p><strong>Number of Sick Leaves:</strong> {profile.num_sickleave}</p> */}
-                    {/* <p><strong>Number of Vacation Leaves:</strong> {profile.num_vacationleave}</p> */} 
                     <p><strong>Contact Number:</strong> {profile.contact_number}</p>
                 </div>
                 <div className="profile-buttons">
@@ -76,6 +103,13 @@ function ReadProfile() {
                     <button onClick={handleLogout} className="btn logout-btn">Log Out</button>
                 </div>
             </div>
+
+            {showModal && (
+                <NotificationModal 
+                    notifications={notifications} 
+                    onClose={() => setShowModal(false)} 
+                />
+            )}
         </div>
     );
 }

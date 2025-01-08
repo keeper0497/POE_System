@@ -205,7 +205,7 @@ function UpdateProject() {
                         />
                     </label>
                     <label>
-                        Tine In:
+                        Time In:
                         <input
                             type="time"
                             name="time_in"
@@ -216,7 +216,7 @@ function UpdateProject() {
                         />
                     </label>
                     <label>
-                        Tine out:
+                        Time out:
                         <input
                             type="time"
                             name="time_out"

@@ -5,20 +5,22 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import api from "../../api";
 import "../../styles/project/calendar.css";
 import Navbar from "../../components/Navbar";
+import NotificationModal from "../../components/NotificationModal";
 
 const localizer = momentLocalizer(moment);
 
 function ProjectCalendar() {
-    const [projects, setProjects] = useState([]); // State for projects
+    const [projects, setProjects] = useState([]);
     const [events, setEvents] = useState([]);
     const [statusSummary, setStatusSummary] = useState({
         done: 0,
         ongoing: 0,
         upcoming: 0,
-    }); // State for status summary
+    });
+    const [notifications, setNotifications] = useState([]);
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
-        // Fetch the projects and convert them to calendar events
         api.get("/api/projects/")
             .then((response) => {
                 const projects = response.data;
@@ -29,30 +31,39 @@ function ProjectCalendar() {
                         start: new Date(project.project_start),
                         end: new Date(project.project_end),
                         allDay: true,
-                        status: project.status // Assuming you have a status field
+                        status: project.status
                     };
                 });
 
                 setEvents(events);
             })
             .catch((err) => console.error(err));
+
+        fetchNotifications();
     }, []);
 
-    // Customizing event colors based on project status
+    const fetchNotifications = () => {
+        api.get("/api/notifications/")
+            .then((res) => {
+                setNotifications(res.data);
+            })
+            .catch((err) => console.error(`Error fetching notifications: ${err.message}`));
+    };
+
     const eventStyleGetter = (event) => {
         let backgroundColor;
         switch (event.status) {
             case "ongoing":
-                backgroundColor = "#FFD700"; // yellow
+                backgroundColor = "#FFD700";
                 break;
             case "done":
-                backgroundColor = "#4CAF50"; // green
+                backgroundColor = "#4CAF50";
                 break;
             case "upcoming":
-                backgroundColor = "#1E90FF"; // blue
+                backgroundColor = "#1E90FF";
                 break;
             default:
-                backgroundColor = "#888"; // grey
+                backgroundColor = "#888";
         }
 
         return {
@@ -65,32 +76,6 @@ function ProjectCalendar() {
                 display: "block",
             },
         };
-    };
-
-    useEffect(() => {
-        fetchProjects();
-    }, []);
-
-    const fetchProjects = () => {
-        api
-            .get("/api/projects/")
-            .then((res) => setProjects(res.data))
-            .catch((err) => alert(`Error: ${err.message}`));
-    };
-
-    useEffect(() => {
-        getProjects(); // Fetch projects on component mount
-    }, []);
-
-    const getProjects = () => {
-        api
-            .get("/api/projects/")
-            .then((res) => res.data)
-            .then((data) => {
-                setProjects(data);
-                calculateStatusSummary(data); // Calculate the status summary
-            })
-            .catch((err) => alert(err));
     };
 
     const calculateStatusSummary = (projects) => {
@@ -109,10 +94,15 @@ function ProjectCalendar() {
         setStatusSummary(summary);
     };
 
-
     return (
         <div>
             <Navbar />
+            <div className="bell-icon-container">
+                <span className="bell-icon" onClick={() => setShowModal(true)}>
+                    <i className="fa fa-bell"></i>
+                    {notifications.length > 0 && <span className="notification-count">{notifications.length}</span>}
+                </span>
+            </div>
             <div className="calendar-container">
                 <h2>Calendar</h2>
                 <div className="status-summary">
@@ -129,6 +119,13 @@ function ProjectCalendar() {
                     eventPropGetter={eventStyleGetter}
                 />
             </div>
+
+            {showModal && (
+                <NotificationModal 
+                    notifications={notifications} 
+                    onClose={() => setShowModal(false)} 
+                />
+            )}
         </div>
     );
 }

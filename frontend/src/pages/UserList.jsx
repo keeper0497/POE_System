@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
 import api from "../api";
-import Navbar from "../components/Navbar";  // Assuming you have a Navbar component
-import { useNavigate } from "react-router-dom"; // For navigating to update page
-import "../styles/UserList.css";  // Assuming you'll create a CSS file for styling
+import Navbar from "../components/Navbar";  
+import NotificationModal from "../components/NotificationModal";
+import { useNavigate } from "react-router-dom"; 
+import "../styles/UserList.css";  
 
 function UsersList() {
     const [users, setUsers] = useState([]);
     const [error, setError] = useState(null);
-    const navigate = useNavigate();  // Initialize navigation
+    const [notifications, setNotifications] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchUsers();
+        fetchNotifications();
     }, []);
 
     const fetchUsers = () => {
@@ -19,18 +23,36 @@ function UsersList() {
             .catch((err) => setError(`Error: ${err.message}`));
     };
 
+    const fetchNotifications = () => {
+        api.get("/api/notifications/")
+            .then((res) => {
+                setNotifications(res.data);
+            })
+            .catch((err) => console.error(`Error fetching notifications: ${err.message}`));
+    };
+
     const handleUpdate = (userId) => {
         navigate(`/update-user/${userId}`);
     };
 
     const handleViewDetails = (userId) => {
-        navigate(`/user-details/${userId}`);  // Navigate to user details page
+        navigate(`/user-details/${userId}`);
+    };
+
+    const handleResigration = () => {
+        navigate("/register")
     };
 
     if (error) {
         return (
             <div>
                 <Navbar />
+                <div className="bell-icon-container">
+                    <span className="bell-icon" onClick={() => setShowModal(true)}>
+                        <i className="fa fa-bell"></i>
+                        {notifications.length > 0 && <span className="notification-count">{notifications.length}</span>}
+                    </span>
+                </div>
                 <div className="users-container">
                     <h2>{error}</h2>
                 </div>
@@ -42,6 +64,12 @@ function UsersList() {
         return (
             <div>
                 <Navbar />
+                <div className="bell-icon-container">
+                    <span className="bell-icon" onClick={() => setShowModal(true)}>
+                        <i className="fa fa-bell"></i>
+                        {notifications.length > 0 && <span className="notification-count">{notifications.length}</span>}
+                    </span>
+                </div>
                 <div className="users-container">
                     <h2>No users found</h2>
                 </div>
@@ -49,13 +77,15 @@ function UsersList() {
         );
     }
 
-    const handleResigration = () => {
-        navigate("/register")
-    };
-
     return (
         <div>
             <Navbar />
+            <div className="bell-icon-container">
+                <span className="bell-icon" onClick={() => setShowModal(true)}>
+                    <i className="fa fa-bell"></i>
+                    {notifications.length > 0 && <span className="notification-count">{notifications.length}</span>}
+                </span>
+            </div>
             <div className="users-container">
                 <h2>Users List</h2>
                 <table className="users-table">
@@ -82,9 +112,16 @@ function UsersList() {
                     </tbody>
                 </table>
                 <button onClick={handleResigration} className="button register-btn">
-                            Register
+                    Register
                 </button>
             </div>
+
+            {showModal && (
+                <NotificationModal 
+                    notifications={notifications} 
+                    onClose={() => setShowModal(false)} 
+                />
+            )}
         </div>
     );
 }
