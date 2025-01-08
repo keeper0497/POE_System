@@ -31,14 +31,24 @@ class UserUpdateSerializer(serializers.ModelSerializer):
         model = User
         fields = ['username', 'password']  # Exclude password here
 
-    def update(self, instance, validated_data):
-        # If password is present in the data, set it properly using set_password
-        password = validated_data.pop('password', None)
-        if password:
-            instance.set_password(password)
+    
+        def update(self, instance, validated_data):
+            # Handle the password separately to use set_password if provided
+            password = validated_data.pop('password', None)
+            if password:
+                instance.set_password(password)
 
-        return super().update(instance, validated_data)
+            # Update the username only if it's provided
+            username = validated_data.pop('username', None)
+            if username:
+                instance.username = username
 
+            # Update other fields
+            for attr, value in validated_data.items():
+                setattr(instance, attr, value)
+
+            instance.save()
+            return instance
 
 class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
