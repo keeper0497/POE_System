@@ -11,12 +11,14 @@ import { format } from "date-fns";
 // Import Leaflet and marker assets
 import L from "leaflet";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
+import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
 
-// Configure default Leaflet marker icon paths
+// Fix for marker paths
 L.Icon.Default.mergeOptions({
-  iconUrl: markerIcon,
-  shadowUrl: markerShadow,
+    iconUrl: markerIcon,
+    iconRetinaUrl: markerIcon2x,
+    shadowUrl: markerShadow,
 });
 
 // import NotificationModal from "../../components/NotificationModal"; // Import NotificationModal
