@@ -8,6 +8,17 @@ import "leaflet/dist/leaflet.css";
 import "../../styles/project/detail.css";
 import { format } from "date-fns";
 
+// Import Leaflet and marker assets
+import L from "leaflet";
+import markerIcon from "leaflet/dist/images/marker-icon.png";
+import markerShadow from "leaflet/dist/images/marker-shadow.png";
+
+// Configure default Leaflet marker icon paths
+L.Icon.Default.mergeOptions({
+  iconUrl: markerIcon,
+  shadowUrl: markerShadow,
+});
+
 // import NotificationModal from "../../components/NotificationModal"; // Import NotificationModal
 
 const SOCKET_URL = "wss://poe-system.onrender.com/ws/location/";

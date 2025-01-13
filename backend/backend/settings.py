@@ -22,24 +22,24 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Set the GDAL library path
-GDAL_LIBRARY_PATH = os.path.join(os.getenv('OSGEO4W_ROOT', r'C:\OSGeo4W'), 'bin', 'gdal309.dll')
-# GDAL_LIBRARY_PATH = os.getenv('GDAL_LIBRARY_PATH', '/usr/lib/libgdal.so')  # For deployment
+# GDAL_LIBRARY_PATH = os.path.join(os.getenv('OSGEO4W_ROOT', r'C:\OSGeo4W'), 'bin', 'gdal309.dll')
+GDAL_LIBRARY_PATH = os.getenv('GDAL_LIBRARY_PATH', '/usr/lib/libgdal.so')  # For deployment
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = os.getenv('SECRET_KEY', 'your-default-secret-key') # For deployment
-SECRET_KEY = "django-insecure-nma=xi6x2p-crjg^ifqqkapyu1qjd0l=+wn)-rijk_o%$!k3w_"
+SECRET_KEY = os.getenv('SECRET_KEY', 'your-default-secret-key') # For deployment
+# SECRET_KEY = "django-insecure-nma=xi6x2p-crjg^ifqqkapyu1qjd0l=+wn)-rijk_o%$!k3w_"
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = os.getenv('DEBUG', 'False') == 'True' # For deployment
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'False') == 'True' # For deployment
+# DEBUG = True
 
 
-# ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',') # For deployment
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',') # For deployment
+# ALLOWED_HOSTS = ["*"]
 
 
 REST_FRAMEWORK = {
@@ -112,17 +112,17 @@ ASGI_APPLICATION = 'backend.asgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.contrib.gis.db.backends.postgis",
-        # "ENGINE": "django.db.backends.postgresql",
-        "NAME": "geofence",
-        "USER": "postgres",
-        "PASSWORD": "password",
-        "HOST": "127.0.0.1",
-        "PORT": "5432",
-    }
-}
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.contrib.gis.db.backends.postgis",
+#         # "ENGINE": "django.db.backends.postgresql",
+#         "NAME": "geofence",
+#         "USER": "postgres",
+#         "PASSWORD": "password",
+#         "HOST": "127.0.0.1",
+#         "PORT": "5432",
+#     }
+# }
 
 
 # For deployment 1.0
@@ -138,16 +138,16 @@ DATABASES = {
 # }
 
 # For deployment 2.0
-# DATABASES = {
-#     'default': {
-#             'ENGINE': 'django.contrib.gis.db.backends.postgis',
-#             'NAME': 'geodb_e48a',
-#             'USER': 'geodb_e48a_user',
-#             'PASSWORD': 'OeGGHrVEYxbIh75IVg753OKQHDDLBKLi',
-#             'HOST': 'dpg-cthvm02j1k6c739ibrm0-a',
-#             'PORT': '5432',
-#         }
-# }
+DATABASES = {
+    'default': {
+            'ENGINE': 'django.contrib.gis.db.backends.postgis',
+            'NAME': 'geodb_e48a',
+            'USER': 'geodb_e48a_user',
+            'PASSWORD': 'OeGGHrVEYxbIh75IVg753OKQHDDLBKLi',
+            'HOST': 'dpg-cthvm02j1k6c739ibrm0-a',
+            'PORT': '5432',
+        }
+}
 
 # Explicitly set the engine to PostGIS if not already present
 if not DATABASES['default'].get('ENGINE'):
@@ -225,9 +225,9 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
+            # "hosts": [('127.0.0.1', 6379)],
             # "hosts": [os.getenv('REDIS_URL', 'redis://red-cs71lmbtq21c73clh2kg:6379')],
-            # "hosts": [("red-cs71lmbtq21c73clh2kg",6379)], # For deployment?
+            "hosts": [("red-cs71lmbtq21c73clh2kg",6379)], # For deployment?
         },
     },
 }
