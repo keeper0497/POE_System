@@ -10,6 +10,8 @@ function TaskList() {
     const [projectName, setProjectName] = useState("");
     const navigate = useNavigate();
     const [isSuperUser, setIsSuperUser] = useState(false);
+    const [notifications, setNotifications] = useState([]); // Notifications state
+    const [showModal, setShowModal] = useState(false); // Modal visibility state
 
     // Fetch project details and tasks when the project ID changes
     useEffect(() => {
@@ -19,6 +21,10 @@ function TaskList() {
             fetchUserDetails();
         }
     }, [id]);
+
+    useEffect(() => {
+        fetchNotifications(); // Fetch notifications
+    }, []);
 
     // Fetch user details
     const fetchUserDetails = () => {
@@ -67,9 +73,46 @@ function TaskList() {
         return "";
     };
 
+    // Fetch notifications for the current user
+    const fetchNotifications = async () => {
+        try {
+            const response = await api.get("/api/notifications/");
+            setNotifications(response.data);
+        } catch (error) {
+            console.error("Error fetching notifications:", error);
+        }
+    };
+
+    const handleModalToggle = () => {
+        setShowModal(!showModal);
+    };
+
     return (
         <div className="tasklist-container">
             <Navbar />
+            <div className="bell-icon-container">
+                <span className="bell-icon" onClick={handleModalToggle}>
+                    <i className="fa fa-bell"></i>
+                    {notifications.length > 0 && (
+                        <span className="notification-count">{notifications.length}</span>
+                    )}
+                </span>
+            </div>
+            {showModal && (
+                <div className="notification-modal">
+                    <div className="modal-content">
+                        <h3>Notifications</h3>
+                        <ul>
+                            {notifications.map((notification, index) => (
+                                <li key={index}>{notification.message}</li>
+                            ))}
+                        </ul>
+                        <button onClick={handleModalToggle} className="close-modal-btn">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            )}
             <h2 className="project-title">Tasks for Project: {projectName}</h2>
             
             

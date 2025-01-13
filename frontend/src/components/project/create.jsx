@@ -56,12 +56,15 @@ function CreateProject() {
     });
     const [employees, setEmployees] = useState([]);  // State for employees
     const [currentUser, setCurrentUser] = useState(null);  // Track current user
+    const [notifications, setNotifications] = useState([]); // Notifications state
+    const [showModal, setShowModal] = useState(false); // Modal visibility state
     const navigate = useNavigate();  // Initialize useNavigate hook
 
     useEffect(() => {
         fetchEmployees();  // Fetch employees when component mounts
         fetchProjects();    // Fetch projects
         fetchCurrentUser(); // Fetch current user information
+        fetchNotifications(); // Fetch notifications
     }, []);
 
     // Fetch users/employees from the API
@@ -77,6 +80,16 @@ function CreateProject() {
         .catch((err) => alert(`Error: ${err.message}`));
     };
 
+    // Fetch notifications for the current user
+    const fetchNotifications = async () => {
+        try {
+            const response = await api.get("/api/notifications/");
+            setNotifications(response.data);
+        } catch (error) {
+            console.error("Error fetching notifications:", error);
+        }
+    };
+
     // Fetch current user information
     const fetchCurrentUser = () => {
         api.get("/api/user/")  // Assuming your API endpoint for fetching current user
@@ -87,6 +100,10 @@ function CreateProject() {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
+    };
+
+    const handleModalToggle = () => {
+        setShowModal(!showModal);
     };
 
     const handleSubmit = (e) => {
@@ -202,6 +219,29 @@ function CreateProject() {
     return (
         <div>
             <Navbar />
+            <div className="bell-icon-container">
+                <span className="bell-icon" onClick={handleModalToggle}>
+                    <i className="fa fa-bell"></i>
+                    {notifications.length > 0 && (
+                        <span className="notification-count">{notifications.length}</span>
+                    )}
+                </span>
+            </div>
+            {showModal && (
+                <div className="notification-modal">
+                    <div className="modal-content">
+                        <h3>Notifications</h3>
+                        <ul>
+                            {notifications.map((notification, index) => (
+                                <li key={index}>{notification.message}</li>
+                            ))}
+                        </ul>
+                        <button onClick={handleModalToggle} className="close-modal-btn">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            )}
             <div className="create-project">
                 <h2>Create Project</h2>
                 {/* <div className="status-summary">

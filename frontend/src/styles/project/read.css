@@ -110,3 +110,68 @@
       padding: 10px;
   }
 }
+
+.notification-modal {
+  position: fixed;
+  top: 50px; /* Adjust as needed */
+  right: 20px; /* Adjust as needed */
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  z-index: 3000; /* Ensure it's in front of the map */
+  width: 300px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 15px;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.notification-modal h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.notification-modal ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.notification-modal ul li {
+  padding: 8px 10px;
+  border-bottom: 1px solid #eee;
+  color: #444;
+}
+
+.close-modal-btn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 10px;
+}
+
+.close-modal-btn:hover {
+  background-color: #d32f2f;
+}
+
+.leaflet-control-geosearch {
+  z-index: 1000 !important; /* Set it lower than the modal */
+}
+
+.leaflet-container {
+  z-index: 1; /* Ensure the map stays below the modal */
+}
+
+.notification-modal-open .leaflet-control-geosearch {
+  pointer-events: none;
+}

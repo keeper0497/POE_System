@@ -14,6 +14,19 @@ function NotificationsPage() {
     const [adminId, setAdminId] = useState(null); // Admin user ID
     const [ws, setWs] = useState(null); // WebSocket connection
     const [allUsers, setAllUsers] = useState([]); // To store all users
+    const [notifications, setNotifications] = useState([]); // Notifications state
+    const [showModal, setShowModal] = useState(false); // Modal visibility state
+
+
+    // Fetch notifications for the current user
+    const fetchNotifications = async () => {
+        try {
+            const response = await api.get("/api/notifications/");
+            setNotifications(response.data);
+        } catch (error) {
+            console.error("Error fetching notifications:", error);
+        }
+    };
 
     // Fetch all users
     const fetchAllUsers = async () => {
@@ -173,7 +186,12 @@ function NotificationsPage() {
         fetchCurrentUser();
         fetchAdminId();
         fetchMessages();
+        fetchNotifications();
     }, []);
+    // Handle modal visibility
+    const handleModalToggle = () => {
+        setShowModal(!showModal);
+    };
 
     useEffect(() => {
         if (currentUser) {
@@ -193,6 +211,16 @@ function NotificationsPage() {
     return (
         <div>
             <Navbar />
+            {/* Bell Icon for Notifications */}
+            <div className="bell-icon-container">
+                <span className="bell-icon" onClick={handleModalToggle}>
+                    <i className="fa fa-bell"></i>
+                    {notifications.length > 0 && (
+                        <span className="notification-count">{notifications.length}</span>
+                    )}
+                </span>
+            </div>
+
             <div className="messages-container">
                 <h2 className="messages-header">
                     {isAdmin ? "Messages from Users" : "Messages with Admin"}
@@ -276,6 +304,24 @@ function NotificationsPage() {
                     </button>
                 </div>
             </div>
+
+            {/* Notification Modal */}
+            {showModal && (
+                <div className="notification-modal">
+                    <div className="modal-content">
+                        <h3>Notifications</h3>
+                        <ul>
+                            {notifications.map((notification, index) => (
+                                <li key={index}>{notification.message}</li>
+                            ))}
+                        </ul>
+                        <button onClick={handleModalToggle} className="close-modal-btn">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            )}
+            
         </div>
     );
 }

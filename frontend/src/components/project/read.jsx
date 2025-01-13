@@ -36,6 +36,8 @@ const SearchControl = () => {
 function ProjectList() {
     const [projects, setProjects] = useState([]);
     const [isSuperUser, setIsSuperUser] = useState(false); // State to track superuser status
+    const [notifications, setNotifications] = useState([]); // Notifications state
+    const [showModal, setShowModal] = useState(false); // Modal visibility state
     const [statusSummary, setStatusSummary] = useState({
         done: 0,
         ongoing: 0,
@@ -92,6 +94,7 @@ function ProjectList() {
     useEffect(() => {
         fetchUserDetails(); // Fetch user details to check superuser status
         fetchProjects();
+        fetchNotifications(); // Fetch notifications
     }, []);
 
     const getStatusClassName = (status) => {
@@ -101,9 +104,51 @@ function ProjectList() {
         return "";
     };
 
+    // Fetch notifications for the current user
+    const fetchNotifications = async () => {
+        try {
+            const response = await api.get("/api/notifications/");
+            setNotifications(response.data);
+        } catch (error) {
+            console.error("Error fetching notifications:", error);
+        }
+    };
+
+    const handleModalToggle = () => {
+        setShowModal(!showModal);
+        if (!showModal) {
+            document.body.classList.add('notification-modal-open');
+        } else {
+            document.body.classList.remove('notification-modal-open');
+        }
+    };
+
     return (
         <div>
             <Navbar />
+            <div className="bell-icon-container">
+                <span className="bell-icon" onClick={handleModalToggle}>
+                    <i className="fa fa-bell"></i>
+                    {notifications.length > 0 && (
+                        <span className="notification-count">{notifications.length}</span>
+                    )}
+                </span>
+            </div>
+            {showModal && (
+                <div className="notification-modal">
+                    <div className="modal-content">
+                        <h3>Notifications</h3>
+                        <ul>
+                            {notifications.map((notification, index) => (
+                                <li key={index}>{notification.message}</li>
+                            ))}
+                        </ul>
+                        <button onClick={handleModalToggle} className="close-modal-btn">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            )}
             <div className="project-list">
                 <h2>Projects</h2>
                 <div className="status-summary">

@@ -10,11 +10,17 @@ function ViewTask() {
     const [loading, setLoading] = useState(true); // Loading state
     const [isSuperUser, setIsSuperUser] = useState(null);  // Initialize as null
     const navigate = useNavigate(); // For navigation
+    const [notifications, setNotifications] = useState([]); // Notifications state
+    const [showModal, setShowModal] = useState(false); // Modal visibility state
 
     useEffect(() => {
         fetchTaskDetails(); // Fetch task details when component mounts
         fetchUserDetails();  // Fetch the user details to know if the user is a superuser
     }, [id]);
+
+    useEffect(() => {
+        fetchNotifications(); // Fetch notifications
+    }, []);
 
      // Fetch user details
      const fetchUserDetails = () => {
@@ -24,6 +30,20 @@ function ViewTask() {
                 setIsSuperUser(res.data.is_superuser);  // Set if the user is a superuser
             })
             .catch((err) => alert(`Error: ${err.message}`));
+    };
+
+    // Fetch notifications for the current user
+    const fetchNotifications = async () => {
+        try {
+            const response = await api.get("/api/notifications/");
+            setNotifications(response.data);
+        } catch (error) {
+            console.error("Error fetching notifications:", error);
+        }
+    };
+
+    const handleModalToggle = () => {
+        setShowModal(!showModal);
     };
 
     const fetchTaskDetails = () => {
@@ -49,6 +69,29 @@ function ViewTask() {
     return (
         <div className="view-task-container">
             <Navbar />
+            <div className="bell-icon-container">
+                <span className="bell-icon" onClick={handleModalToggle}>
+                    <i className="fa fa-bell"></i>
+                    {notifications.length > 0 && (
+                        <span className="notification-count">{notifications.length}</span>
+                    )}
+                </span>
+            </div>
+            {showModal && (
+                <div className="notification-modal">
+                    <div className="modal-content">
+                        <h3>Notifications</h3>
+                        <ul>
+                            {notifications.map((notification, index) => (
+                                <li key={index}>{notification.message}</li>
+                            ))}
+                        </ul>
+                        <button onClick={handleModalToggle} className="close-modal-btn">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            )}
             <div className="task-details-box">
                 <h2 className="task-title">{task.task_name}</h2> 
                 <div className="task-info">

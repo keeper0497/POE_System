@@ -7,6 +7,8 @@ import Navbar from '../../components/Navbar';
 const CreateTask = ({ currentUser }) => {
   const { id } = useParams();  // Get the project ID from the URL
   const navigate = useNavigate();  // Initialize useNavigate for redirection
+  const [notifications, setNotifications] = useState([]); // Notifications state
+  const [showModal, setShowModal] = useState(false); // Modal visibility state
   const [formData, setFormData] = useState({
     task_name: '',
     task_duration_start: '',
@@ -31,6 +33,21 @@ const CreateTask = ({ currentUser }) => {
     fetchProject();
   }, [id]);
 
+  useEffect(() =>{
+    fetchNotifications(); // Fetch notifications
+
+  }, []);
+
+  // Fetch notifications for the current user
+  const fetchNotifications = async () => {
+    try {
+        const response = await api.get("/api/notifications/");
+        setNotifications(response.data);
+    } catch (error) {
+        console.error("Error fetching notifications:", error);
+    }
+};
+
   // Check if the current user is assigned to the project
   const isUserAssigned = project && currentUser?.id === project.assign_employee.id;
 
@@ -41,6 +58,10 @@ const CreateTask = ({ currentUser }) => {
 
   const handleFileChange = (e) => {
     setFormData({ ...formData, file_attachment: e.target.files[0] });
+  };
+
+  const handleModalToggle = () => {
+    setShowModal(!showModal);
   };
 
   const handleSubmit = async (e) => {
@@ -78,6 +99,29 @@ const CreateTask = ({ currentUser }) => {
   return (
     <div>
       <Navbar />
+      <div className="bell-icon-container">
+          <span className="bell-icon" onClick={handleModalToggle}>
+              <i className="fa fa-bell"></i>
+              {notifications.length > 0 && (
+                  <span className="notification-count">{notifications.length}</span>
+              )}
+          </span>
+      </div>
+      {showModal && (
+          <div className="notification-modal">
+              <div className="modal-content">
+                  <h3>Notifications</h3>
+                  <ul>
+                      {notifications.map((notification, index) => (
+                          <li key={index}>{notification.message}</li>
+                      ))}
+                  </ul>
+                  <button onClick={handleModalToggle} className="close-modal-btn">
+                      Close
+                  </button>
+              </div>
+          </div>
+      )}
       <div className="create-task">
         <h2>Create a New Task</h2>
         {!isUserAssigned ? (

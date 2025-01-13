@@ -10,6 +10,8 @@ function UpdateTask() {
     const [task, setTask] = useState(null);
     const [error, setError] = useState(null);
     const [isSuperUser, setIsSuperUser] = useState(null);  // Initialize as null
+    const [notifications, setNotifications] = useState([]); // Notifications state
+    const [showModal, setShowModal] = useState(false); // Modal visibility state
     const [formData, setFormData] = useState({
         task_name: "",
         task_duration_start: "",
@@ -50,7 +52,19 @@ function UpdateTask() {
 
     useEffect(() => {
         fetchUserDetails();  // Fetch the user details to know if the user is a superuser
+        fetchNotifications(); // Fetch notifications
     }, []);
+
+    // Fetch notifications for the current user
+    const fetchNotifications = async () => {
+        try {
+            const response = await api.get("/api/notifications/");
+            setNotifications(response.data);
+        } catch (error) {
+            console.error("Error fetching notifications:", error);
+        }
+    };
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -59,6 +73,10 @@ function UpdateTask() {
 
     const handleFileChange = (e) => {
         setFormData({ ...formData, file_attachment: e.target.files[0] });  // Update file field
+    };
+
+    const handleModalToggle = () => {
+        setShowModal(!showModal);
     };
 
     const handleSubmit = (e) => {
@@ -99,6 +117,29 @@ function UpdateTask() {
     return (
         <div>
             <Navbar />
+            <div className="bell-icon-container">
+                <span className="bell-icon" onClick={handleModalToggle}>
+                    <i className="fa fa-bell"></i>
+                    {notifications.length > 0 && (
+                        <span className="notification-count">{notifications.length}</span>
+                    )}
+                </span>
+            </div>
+            {showModal && (
+                <div className="notification-modal">
+                    <div className="modal-content">
+                        <h3>Notifications</h3>
+                        <ul>
+                            {notifications.map((notification, index) => (
+                                <li key={index}>{notification.message}</li>
+                            ))}
+                        </ul>
+                        <button onClick={handleModalToggle} className="close-modal-btn">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            )}
             <div className="update-task">
                 <h2>Update Task</h2>
                 <form onSubmit={handleSubmit} encType="multipart/form-data">

@@ -211,6 +211,10 @@ function ProjectDetail() {
     const handelTaskDetails = () => navigate(`/task/${id}/list`);
     const handleCloseModal = () => setShowModal(false);
 
+    const handleModalToggle = () => {
+        setShowModal(!showModal);
+    };
+
     if (error) {
         return <div>Error: {error}</div>;
     }
@@ -234,6 +238,31 @@ function ProjectDetail() {
     return (
         <div>
             <Navbar />
+
+            <div className="bell-icon-container">
+                <span className="bell-icon" onClick={handleModalToggle}>
+                    <i className="fa fa-bell"></i>
+                    {notifications.length > 0 && (
+                        <span className="notification-count">{notifications.length}</span>
+                    )}
+                </span>
+            </div>
+            {showModal && (
+                <div className="notification-modal">
+                    <div className="modal-content">
+                        <h3>Notifications</h3>
+                        <ul>
+                            {notifications.map((notification, index) => (
+                                <li key={index}>{notification.message}</li>
+                            ))}
+                        </ul>
+                        <button onClick={handleModalToggle} className="close-modal-btn">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            )}
+            
             <div className="project-detail">
                 
                 <h2>{project.project_name}</h2>
