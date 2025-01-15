@@ -11,7 +11,7 @@ class Project(models.Model):
     project_end = models.DateField()
     time_in = models.TimeField(blank=True, null=True)
     time_out = models.TimeField(blank=True, null=False)
-    assign_employee = models.ForeignKey(User, on_delete=models.CASCADE)
+    assign_employees = models.ManyToManyField(User, related_name="assigned_projects")
     address = models.CharField(max_length=2500, blank=True, null=True)
     status = models.CharField(max_length=20, choices=[('ongoing', 'Ongoing'), ('done', 'Done'), ('upcoming', 'Upcoming')], default='upcoming')
 

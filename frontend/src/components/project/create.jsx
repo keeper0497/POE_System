@@ -321,17 +321,26 @@ function CreateProject() {
                             </select>
                         </label>
                         <label>
-                            Assign Employee:
+                            Assign Employees:
                             <select
-                                name="assign_employee"
-                                value={formData.assign_employee}
-                                onChange={handleChange}
+                                name="assign_employees"
+                                multiple
+                                value={formData.assign_employees}
+                                onChange={(e) => {
+                                    const options = e.target.options;
+                                    const selectedValues = [];
+                                    for (let i = 0; i < options.length; i++) {
+                                        if (options[i].selected) {
+                                            selectedValues.push(options[i].value);
+                                        }
+                                    }
+                                    setFormData({ ...formData, assign_employees: selectedValues });
+                                }}
                                 required
-                                className="select-employee"
+                                className="select-employees"
                             >
-                                <option value="">Select Employee</option>
                                 {employees.map((employee) => (
-                                    <option key={employee.user} value={employee.user}>
+                                    <option key={employee.id} value={employee.id}>
                                         {employee.first_name} {employee.last_name}
                                     </option>
                                 ))}

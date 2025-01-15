@@ -37,6 +37,9 @@ class ProjectListCreateAPIView(generics.ListCreateAPIView):
         return Project.objects.filter(assign_employee=user)  # Regular users see only their assigned projects
 
     def perform_create(self, serializer):
+        project = serializer.save()
+        assign_employees = self.request.data.get('assign_employees', [])
+        project.assign_employees.set(assign_employees)
         # Get the location data from the request
         location_data = self.request.data.get('location')
         if location_data:

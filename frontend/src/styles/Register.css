@@ -97,3 +97,26 @@ html, body {
         padding: 0.6rem;
     }
 }
+
+.password-strength {
+    margin-top: 5px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.password-strength.very-weak {
+    color: red;
+}
+
+.password-strength.weak {
+    color: orange;
+}
+
+.password-strength.strong {
+    color: green;
+}
+
+.error-message {
+    color: red;
+    margin-top: 10px;
+}

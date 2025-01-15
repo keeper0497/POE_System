@@ -58,7 +58,7 @@
         ];
     
         const divisions = [
-            "Site Engineer",
+            "Construction Section",
         ]
 
         return (
