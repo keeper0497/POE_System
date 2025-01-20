@@ -22,7 +22,7 @@ ENV GDAL_LIBRARY_PATH=/usr/lib/libgdal.so.28
 ENV GEOS_LIBRARY_PATH=/usr/lib/libgeos_c.so
 
 # Set the environment variable for the database URL
-ENV DATABASE_URL=postgresql://geodb_e48a_user:OeGGHrVEYxbIh75IVg753OKQHDDLBKLi@dpg-cthvm02j1k6c739ibrm0-a/geodb_e48a
+ENV DATABASE_URL=postgresql://geodatabase_1_user:VC4mSiJU6Yz6KDHdqRNwHmFDjn72amgg@dpg-cu6s2gi3esus73fde7j0-a.oregon-postgres.render.com/geodatabase_1
 
 # Environment variables for superuser
 ENV DJANGO_SUPERUSER_USERNAME=admin
