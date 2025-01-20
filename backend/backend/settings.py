@@ -126,28 +126,28 @@ ASGI_APPLICATION = 'backend.asgi.application'
 
 
 # For deployment 1.0
-# DATABASES = {
-#     'default': {
-#             'ENGINE': 'django.contrib.gis.db.backends.postgis',
-#             'NAME': 'geodatabase_1',
-#             'USER': 'geodatabase_1_user',
-#             'PASSWORD': 'VC4mSiJU6Yz6KDHdqRNwHmFDjn72amgg',
-#             'HOST': 'dpg-cu6s2gi3esus73fde7j0-a',
-#             'PORT': '5432',
-#         }
-# }
-
-# # For deployment 2.0
 DATABASES = {
     'default': {
             'ENGINE': 'django.contrib.gis.db.backends.postgis',
-            'NAME': 'geodb_e48a',
-            'USER': 'geodb_e48a_user',
-            'PASSWORD': 'OeGGHrVEYxbIh75IVg753OKQHDDLBKLi',
-            'HOST': 'dpg-cthvm02j1k6c739ibrm0-a',
+            'NAME': 'geodatabase_1',
+            'USER': 'geodatabase_1_user',
+            'PASSWORD': 'VC4mSiJU6Yz6KDHdqRNwHmFDjn72amgg',
+            'HOST': 'dpg-cu6s2gi3esus73fde7j0-a',
             'PORT': '5432',
         }
 }
+
+# # For deployment 2.0
+# DATABASES = {
+#     'default': {
+#             'ENGINE': 'django.contrib.gis.db.backends.postgis',
+#             'NAME': 'geodb_e48a',
+#             'USER': 'geodb_e48a_user',
+#             'PASSWORD': 'OeGGHrVEYxbIh75IVg753OKQHDDLBKLi',
+#             'HOST': 'dpg-cthvm02j1k6c739ibrm0-a',
+#             'PORT': '5432',
+#         }
+# }
 
 
 # Explicitly set the engine to PostGIS if not already present
