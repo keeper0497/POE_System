@@ -5,14 +5,14 @@ from datetime import datetime, date
 
 class ProjectSerializer(serializers.ModelSerializer):
     location = serializers.SerializerMethodField()
-    assign_employees = serializers.PrimaryKeyRelatedField(
-        many=True,
-        queryset=User.objects.all()
-    )
+    # assign_employees = serializers.PrimaryKeyRelatedField(
+    #     many=True,
+    #     queryset=User.objects.all()
+    # )
 
     class Meta:
         model = Project
-        fields = ['id', 'project_name', 'location', 'project_start', 'project_end', 'assign_employees', 'status', 'time_in', 'time_out', 'address']
+        fields = ['id', 'project_name', 'location', 'project_start', 'project_end', 'assign_employee', 'status', 'time_in', 'time_out', 'address']
 
     def get_location(self, obj):
         if isinstance(obj.location, Point):
