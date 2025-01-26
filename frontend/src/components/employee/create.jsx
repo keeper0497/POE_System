@@ -117,7 +117,14 @@
                         </label>
                         <label>
                             Position:
-                            <select
+                            <input
+                                type="text"
+                                name="position"
+                                value={formData.position}
+                                onChange={handleChange}
+                                defaultValue={"Project Engineer"}
+                            />
+                            {/* <select
                             name="position"
                             value={formData.position}
                             onChange={handleChange}
@@ -129,11 +136,18 @@
                                         {position}
                                     </option>
                                 ))}
-                            </select>
+                            </select> */}
                         </label>
                         <label>
                             Division:
-                            <select
+                            <input
+                                type="text"
+                                name="division"
+                                value={formData.division}
+                                onChange={handleChange}
+                                defaultValue={"Construction Section"}
+                            />
+                            {/* <select
                             name="division"
                             value={formData.division}
                             onChange={handleChange}
@@ -145,7 +159,7 @@
                                         {division}
                                     </option>
                                 ))}
-                            </select>
+                            </select> */}
                         </label>
                         <label>
                             Start Date:
